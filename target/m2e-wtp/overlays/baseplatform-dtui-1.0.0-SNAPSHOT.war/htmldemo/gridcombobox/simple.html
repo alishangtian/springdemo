@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>表格下拉框</title>
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css" />
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/jqgrid/grid.locale-cn.js" type="text/javascript"></script>
+    <script src="../../dtui/js/jqgrid/jquery.jqGrid.js" type="text/javascript"></script>
+	<script src="../../dtui/js/dtui.grid.js" type="text/javascript"></script>
+	<script src="../../dtui/js/dtui.util.js"></script>
+	<script src="../../dtui/js/dtui.abscombobox.js"></script>
+	<script src="../../dtui/js/dtui.gridcombobox.js"></script>
+	<link rel="stylesheet" href="../../htmldemo/demos.css" />
+	<script type="text/javascript">
+		
+	var mystr =
+		"<?xml version='1.0' encoding='utf-8'?><invoices><rows>"
+        +"<row><cell>1</cell><cell>data1</cell><cell>data1</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>2</cell><cell>data2</cell><cell>data2</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>3</cell><cell>data3</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>4</cell><cell>data4</cell><cell>data4</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>5</cell><cell>data5</cell><cell>data5</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>6</cell><cell>data6</cell><cell>data6</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>7</cell><cell>data7</cell><cell>data7</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>8</cell><cell>data8</cell><cell>data8</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>9</cell><cell>data9</cell><cell>data9</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>10</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>11</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>12</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>13</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>14</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>15</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>16</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>17</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>18</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>19</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>20</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>21</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>22</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>23</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>24</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>25</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>26</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>27</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>28</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>29</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>30</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>31</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>32</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>33</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>34</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>35</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>36</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>37</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>38</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>39</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>40</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>41</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"<row><cell>42</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+        +"</rows></invoices>"; 
+		                                 
+		$(document).ready(function(){
+			$("#select1").dtgridcombobox({
+			valueField: 'invid',
+			textField: 'amount',
+			initValue: '3,5',
+			initText: 'data3,data5',
+			gridOption:{
+				datatype: 'xmlstring', 
+			    datastr : mystr, 
+			    colNames:['InvID','Date', 'Amount','Tax','Total','Notes'], 
+			    
+			    colModel :[ 
+			      {name:'invid', index:'invid', width:55, sorttype:'int',editable:true}, 
+			      {name:'invdate', index:'invdate', width:90, sorttype:'date', datefmt:'Y-m-d',editable:true}, 
+			      {name:'amount', index:'amount', width:80, align:'right', sorttype:'float',editable:true}, 
+			      {name:'tax', index:'tax', width:80, align:'right', sorttype:'float',editable:true}, 
+			      {name:'total', index:'total', width:80, align:'right', sorttype:'float',editable:true}, 
+			      {name:'note', index:'note', width:150, sortable:false,editable:true} ], 
+			    
+			    multiselect: true,
+			    rowList:[10,20,30],
+			    rowNum:10, 
+			    showPager: true,
+			    viewrecords: true, 
+			    sortname:'invid',
+			    sortorder:"desc",
+			    //table 名字
+			    caption: 'My first grid' 
+			}});
+			
+			$('#btnSetValue').click(function(){
+				$("#select1").dtgridcombobox('value', $('#txtComboValue').val());
+			});
+			$('#btnGetValue').click(function(){
+				alert($("#select1").dtgridcombobox('value'));
+			});
+			$('#btnGetText').click(function(){
+				alert($("#select1").dtgridcombobox('text'));
+			});
+			
+			/*
+			$('#tmd').dtgrid({datatype: 'xmlstring', 
+			    datastr : mystr, 
+			    colNames:['InvID','Date', 'Amount','Tax','Total','Notes'], 
+			    
+			    colModel :[ 
+			      {name:'invid', index:'invid', width:55, sorttype:'int',editable:true}, 
+			      {name:'invdate', index:'invdate', width:90, sorttype:'date', datefmt:'Y-m-d',editable:true}, 
+			      {name:'amount', index:'amount', width:80, align:'right', sorttype:'float',editable:true}, 
+			      {name:'tax', index:'tax', width:80, align:'right', sorttype:'float',editable:true}, 
+			      {name:'total', index:'total', width:80, align:'right', sorttype:'float',editable:true}, 
+			      {name:'note', index:'note', width:150, sortable:false,editable:true} ], 
+			    
+			    multiselect: true,
+			    rowList:[10,20,30],
+			    rowNum:10, 
+			    showPager: true,
+			    viewrecords: true, 
+			    sortname:'invid',
+			    sortorder:"desc",
+			    //table 名字
+			    caption: 'My first grid' 
+			});
+			*/
+		});
+		
+	</script>
+</head>
+<body>
+下拉框:<div id="select1"></div>
+<br/>
+<input id='txtComboValue' type="text" value='1,6'/>
+<button id='btnSetValue'>设置值</button>
+<button id='btnGetValue'>获取值</button>
+<button id='btnGetText'>获取文本</button>
+<div class="demo-description">
+	<h3>本实例功能</h3>
+	<ul>
+		<li>通过组合下拉控件和表格控件 组合而成的下拉表格控件</li>
+	</ul>
+</div>
+</body>
+</html>

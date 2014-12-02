@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	 ">
+
+	<!-- components -->
+	<bean id="functionComponent"
+		class="com.cattsoft.baseplatform.func.sm.component.FunctionComponent">
+		<property name="functionMapper" ref="functionMapper" />
+		<property name="sysUserMapper" ref="sysUserMapper" />
+	</bean>
+	<bean id="staffComponent"
+		class="com.cattsoft.baseplatform.func.sm.component.StaffComponent">
+		<property name="staffMapper" ref="staffMapper" />
+		<property name="sysDeptMapper" ref="sysDeptMapper" />
+	</bean>
+	<bean id="sysDeptComponent"
+		class="com.cattsoft.baseplatform.func.sm.component.SysDeptComponent">
+		<property name="sysDeptMapper" ref="sysDeptMapper" />
+	</bean>
+	<bean id="sysRoleComponent"
+		class="com.cattsoft.baseplatform.func.sm.component.SysRoleComponent">
+		<property name="sysRoleMapper" ref="sysRoleMapper" />
+		<property name="roleFuncAllocMapper" ref="roleFuncAllocMapper" />
+		<property name="roleFuncItemAllocMapper" ref="roleFuncItemAllocMapper" />
+		<property name="userRoleAllocMapper" ref="userRoleAllocMapper" />
+		<property name="functionMapper" ref="functionMapper" />
+		<property name="sysUserMapper" ref="sysUserMapper" />
+	</bean>
+	<bean id="sysUserComponent"
+		class="com.cattsoft.baseplatform.func.sm.component.SysUserComponent">
+		<property name="sysUserMapper" ref="sysUserMapper" />
+		<property name="userRoleAllocMapper" ref="userRoleAllocMapper" />
+		<property name="userFuncAllocMapper" ref="userFuncAllocMapper" />
+		<property name="userFuncItemAllocMapper" ref="userFuncItemAllocMapper" />
+		<property name="staffMapper" ref="staffMapper" />
+		<property name="sysRoleMapper" ref="sysRoleMapper" />
+		<property name="functionMapper" ref="functionMapper" />
+		<property name="userOwnerRelaMapper" ref="userOwnerRelaMapper" />
+		<property name="sysDeptMapper" ref="sysDeptMapper" />
+	</bean>
+	<bean id="adminDivisionComponent"
+		class="com.cattsoft.baseplatform.func.sm.component.AdminDivisionComponent">
+		<property name="adminDivisionMapper" ref="adminDivisionMapper" />
+	</bean>
+	<bean id="customizeAreaComponent"
+		class="com.cattsoft.baseplatform.func.sm.component.CustomizeAreaComponent">
+		<property name="customizeAreaMapper" ref="customizeAreaMapper" />
+	</bean>
+	<bean id="bulletinComponent"
+		class="com.cattsoft.baseplatform.func.sm.component.BulletinComponent">
+		<property name="bulletinMapper" ref="bulletinMapper" />
+
+	</bean>
+	<bean id="userPageSettingComponent"
+		class="com.cattsoft.baseplatform.func.sm.component.UserPageSettingComponent">
+		<property name="userPageSettingMapper" ref="userPageSettingMapper" />
+	</bean>
+	<bean id="pageComponentComponent"
+		class="com.cattsoft.baseplatform.func.sm.component.PageComponentComponent">
+		<property name="pageComponentMapper" ref="pageComponentMapper" />
+	</bean>
+	<bean id="pageLayoutComponent"
+		class="com.cattsoft.baseplatform.func.sm.component.PageLayoutComponent">
+		<property name="pageLayoutMapper" ref="pageLayoutMapper" />
+	</bean>
+	<bean id="userEmailComponent"
+		class="com.cattsoft.baseplatform.func.sm.component.UserEmailComponent">
+		<property name="userEmailMapper" ref="userEmailMapper" />
+	</bean>
+	<bean id="sysLogComponent"
+		class="com.cattsoft.baseplatform.func.sm.component.SysLogComponent">
+		<property name="sysLogMapper" ref="sysLogMapper" />
+		<property name="idConverter" ref="idConverter" />
+	</bean>
+	<bean id="loginLogComponent"
+		class="com.cattsoft.baseplatform.func.sm.component.LoginLogComponent">
+		<property name="loginLogMapper" ref="loginLogMapper" />
+	</bean>
+	<bean id="unitComponent"
+		class="com.cattsoft.baseplatform.func.sm.component.UnitComponent">
+		<property name="unitMapper" ref="unitMapper" />
+	</bean>
+	<bean id="sysMsgComponent"
+		class="com.cattsoft.baseplatform.func.sm.component.SysMsgComponent">
+		<property name="sysMsgMapper" ref="sysMsgMapper" />
+	</bean>
+
+	<!-- services -->
+	<bean id="functionService"
+		class="com.cattsoft.baseplatform.func.sm.service.FunctionServiceImpl">
+		<property name="functionComponent" ref="functionComponent" />
+	</bean>
+	<bean id="staffService"
+		class="com.cattsoft.baseplatform.func.sm.service.StaffServiceImpl">
+		<property name="staffComponent" ref="staffComponent" />
+		<property name="sysUserComponent" ref="sysUserComponent" />
+	</bean>
+	<bean id="sysDeptService"
+		class="com.cattsoft.baseplatform.func.sm.service.SysDeptServiceImpl">
+		<property name="sysDeptComponent" ref="sysDeptComponent" />
+		<property name="sysUserComponent" ref="sysUserComponent" />
+	</bean>
+	<bean id="ideaRoleService"
+		class="com.cattsoft.baseplatform.func.sm.service.SysRoleServiceImpl">
+		<property name="sysRoleComponent" ref="sysRoleComponent" />
+		<property name="functionComponent" ref="functionComponent" />
+		<property name="sysUserComponent" ref="sysUserComponent" />
+	</bean>
+	<bean id="ideaUserService"
+		class="com.cattsoft.baseplatform.func.sm.service.SysUserServiceImpl">
+		<property name="sysUserComponent" ref="sysUserComponent" />
+		<property name="functionComponent" ref="functionComponent" />
+	</bean>
+
+	<bean id="adminDivisionService"
+		class="com.cattsoft.baseplatform.func.sm.service.AdminDivisionServiceImpl">
+		<property name="adminDivisionComponent" ref="adminDivisionComponent" />
+	</bean>
+	<bean id="customizeAreaService"
+		class="com.cattsoft.baseplatform.func.sm.service.CustomizeAreaServiceImpl">
+		<property name="customizeAreaComponent" ref="customizeAreaComponent" />
+	</bean>
+	<bean id="bulletinService"
+		class="com.cattsoft.baseplatform.func.sm.service.BulletinServiceImpl">
+		<property name="bulletinComponent" ref="bulletinComponent" />
+	</bean>
+	<bean id="pageSettingService"
+		class="com.cattsoft.baseplatform.func.sm.service.PageSettingServiceImpl">
+		<property name="userPageSettingComponent" ref="userPageSettingComponent" />
+		<property name="pageComponentComponent" ref="pageComponentComponent" />
+		<property name="pageLayoutComponent" ref="pageLayoutComponent" />
+	</bean>
+	<!-- 历史资料查询：用户、员工、部门 -->
+	<bean id="historyDataQueryService"
+		class="com.cattsoft.baseplatform.func.sm.service.HistoryDataQueryServiceImpl">
+		<property name="sysUserComponent" ref="sysUserComponent" />
+		<property name="staffComponent" ref="staffComponent" />
+		<property name="sysDeptComponent" ref="sysDeptComponent" />
+	</bean>
+	<bean id="userEmailService"
+		class="com.cattsoft.baseplatform.func.sm.service.UserEmailServiceImpl">
+		<property name="userEmailComponent" ref="userEmailComponent" />
+	</bean>
+	<bean id="sysLogService"
+		class="com.cattsoft.baseplatform.func.sm.service.SysLogServiceImpl">
+		<property name="sysLogComponent" ref="sysLogComponent" />
+	</bean>
+	<bean id="loginLogService"
+		class="com.cattsoft.baseplatform.func.sm.service.LoginLogServiceImpl">
+		<property name="loginLogComponent" ref="loginLogComponent" />
+	</bean>
+	<bean id="unitService"
+		class="com.cattsoft.baseplatform.func.sm.service.UnitServiceImpl">
+		<property name="unitComponent" ref="unitComponent" />
+	</bean>
+	<bean id="sysMsgService"
+		class="com.cattsoft.baseplatform.func.sm.service.SysMsgServiceImpl">
+		<property name="sysMsgComponent" ref="sysMsgComponent" />
+	</bean>
+
+</beans>

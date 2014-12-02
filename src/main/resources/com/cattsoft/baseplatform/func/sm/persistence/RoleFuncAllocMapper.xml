@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.cattsoft.baseplatform.func.sm.persistence.RoleFuncAllocMapper">
+	<insert id="insert" parameterType="RoleFuncAlloc" useGeneratedKeys="true" keyProperty="roleFuncAllocId">
+		INSERT INTO ROLE_FUNC_ALLOC(ROLE_ID, FUNC_NODE_ID, DESIGNATE, STS, STS_TIME, CREATE_TIME)
+		VALUES(#{roleId}, #{funcNodeId}, #{designate}, #{sts}, #{stsTime}, #{createTime})
+	</insert>
+	<!-- 收回角色的功能授权roldId+funcNodeId -->
+	<update id="retake" parameterType="RoleFuncAuthQuery">
+		UPDATE ROLE_FUNC_ALLOC
+		   SET STS = 'P', STS_TIME = NOW()
+		 WHERE STS = 'A'
+		   AND ROLE_ID = #{roleId}
+		   AND FUNC_NODE_ID = #{funcNodeId}
+	</update>
+	<!-- 角色注销时，注销角色对应的功能授权信息 -->
+	<update id="destroyRole" parameterType="long">
+		UPDATE ROLE_FUNC_ALLOC
+		   SET STS = 'P', STS_TIME = NOW()
+		 WHERE STS = 'A'
+		   AND ROLE_ID = #{roleId}
+	</update>
+	<!-- 获取角色在某功能目录下的所有功能授权信息 -->
+	<select id="selectAllocFuncs" parameterType="RoleFuncAuthQuery" resultType="RoleFuncAlloc">
+		SELECT A.ROLE_FUNC_ALLOC_ID roleFuncAllocId,
+		       A.ROLE_ID            roleId,
+		       A.FUNC_NODE_ID       funcNodeId,
+		       A.DESIGNATE          designate,
+		       A.STS                sts,
+		       A.STS_TIME           stsTime,
+		       A.CREATE_TIME        createTime
+		  FROM ROLE_FUNC_ALLOC A, FUNC_NODE B
+		 WHERE A.FUNC_NODE_ID = B.FUNC_NODE_ID
+		   AND B.STS = 'A'
+		   AND A.STS = 'A'
+		   AND A.ROLE_ID = #{roleId}
+		   AND B.NODE_TREE_ID = #{nodeTreeId}
+	</select>
+	<!-- 获取角色的指定功能的授权信息 -->
+	<select id="selectAllocFunc" parameterType="RoleFuncAlloc" resultType="RoleFuncAlloc">
+		SELECT A.ROLE_FUNC_ALLOC_ID roleFuncAllocId,
+		       A.ROLE_ID            roleId,
+		       A.FUNC_NODE_ID       funcNodeId,
+		       A.DESIGNATE          designate,
+		       A.STS                sts,
+		       A.STS_TIME           stsTime,
+		       A.CREATE_TIME        createTime
+		  FROM ROLE_FUNC_ALLOC A
+		 WHERE A.FUNC_NODE_ID = #{funcNodeId}
+		   AND A.ROLE_ID = #{roleId}
+		   AND A.STS = 'A' limit 0,1
+	</select>
+	<!-- 更新用户功能授权的委派标识 -->
+	<update id="modifyDesignate" parameterType="RoleFuncAlloc">
+		UPDATE ROLE_FUNC_ALLOC
+		   SET DESIGNATE = #{designate}, STS_TIME = NOW()
+		 WHERE ROLE_FUNC_ALLOC_ID = #{roleFuncAllocId}
+	</update>
+</mapper>

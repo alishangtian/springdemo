@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css"/>
+<script src="../../dtui/js/jquery/jquery.js"></script>
+<script src="../../dtui/js/jqueryui/jquery-ui.min.js"></script>
+<script src="../../dtui/js/dtui.util.js" type="text/javascript"></script>
+<script src="../../dtui/js/dtui.dialog.js" type="text/javascript"></script>
+<script src="../../dtui/js/dtui.messagebox.js" type="text/javascript"></script>
+<script src="../../dtui/js/dtui.textarea.js" type="text/javascript"></script>
+<link rel="stylesheet" href="../../htmldemo/demos.css" />
+
+
+<script type="text/javascript">
+	function show(name){
+		console.log(name);
+	}
+	$(document).ready(function(){
+	    $("#textarea1").dttextarea({
+	    	label:"文本框",
+	    	cols:50,
+	    	rows:15,
+	    	required:true,
+	    	immValidate:true,
+	    	showWordCount: true,
+	    	minwords:10,
+	    	maxwords: 20,
+	    	onselect:'show("选择了值")'
+	    });
+	
+		$("#gettext").click(function(){
+			 alert($("#textarea1").dttextarea('getText'));
+		});
+		$("#btnSetRequired").click(function(){
+			 var r = $("#textarea1").dttextarea('option','required');
+			 $("#textarea1").dttextarea('option','required', !r);
+		});
+	}); 
+						
+ </script> 
+</head>
+<body>
+    <textarea rows="" cols="" ></textarea>
+    <br>
+    <textarea id="textarea1" rows="5" cols="5"></textarea>
+    <br>
+    <input type="button" id="gettext" value='显示当前值'></input>
+    <input type="button" id="btnSetRequired" value='设置必填'></input>
+	<div class="demo-description">
+	<h3>本实例功能</h3>
+	<ul>
+		<li>各个输入框根据各自的校验功能,当输入框失去焦点时开始校验,输入错误会提示错误信息.</li>
+	</ul>
+	</div>
+</body>
+</html>

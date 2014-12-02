@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.ny.base.persistence.MsgAlarmMapper">
+
+	<!-- Oracle分页查询 -->
+	<sql id="pagingHeader">SELECT * FROM(SELECT ROW_.*,ROWNUM ROWNUM_ FROM(</sql>
+	<sql id="pagingFooter">) ROW_ WHERE ROWNUM &lt;= #{pagingInfo.endIdx}) WHERE ROWNUM_ &gt;= #{pagingInfo.startIdx}</sql>
+	<sql id="countingHeader">SELECT COUNT(*) FROM(</sql>
+	<sql id="countingFooter">)</sql>
+
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="com.cattsoft.ny.base.entity.MsgAlarm">
+		<selectKey keyProperty="alarmId" resultType="String" order="BEFORE">
+			SELECT SYS_GUID() FROM DUAL
+		</selectKey>
+		<![CDATA[
+			INSERT INTO msg_alarm
+		]]>
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			ALARM_ID,
+	    <if test="alarmTypeId != null" >
+			ALARM_TYPE_ID,
+	    </if>
+	    <if test="sensorId != null" >
+			SENSOR_ID,
+	    </if>
+	    <if test="houseId != null" >
+			HOUSE_ID,
+	    </if>
+	    <if test="equipStateTypeId != null" >
+			EQUIP_STATE_TYPE_ID,
+	    </if>
+	    <if test="alarmLevel != null" >
+			ALARM_LEVEL,
+	    </if>
+	    <if test="detail != null" >
+			DETAIL,
+	    </if>
+	    <if test="state != null" >
+			STATE,
+	    </if>
+	    <if test="time != null" >
+			TIME,
+	    </if>
+	    <if test="ctime != null" >
+			C_TIME,
+	    </if>
+	    <if test="dealingUser != null" >
+			DEALING_USER,
+	    </if>
+	    <if test="remark != null" >
+			REMARK,
+	    </if>
+	  </trim>
+	  <trim prefix="values (" suffix=")" suffixOverrides="," >
+	  	#{alarmId},
+	    <if test="alarmTypeId != null" >
+			#{alarmTypeId},
+	    </if>
+	    <if test="sensorId != null" >
+			#{sensorId},
+	    </if>
+	    <if test="houseId != null" >
+			#{houseId},
+	    </if>
+	    <if test="equipStateTypeId != null" >
+			#{equipStateTypeId},
+	    </if>
+	    <if test="alarmLevel != null" >
+			#{alarmLevel},
+	    </if>
+	    <if test="detail != null" >
+			#{detail},
+	    </if>
+	    <if test="state != null" >
+			#{state},
+	    </if>
+	    <if test="time != null" >
+			#{time},
+	    </if>
+	    <if test="ctime != null" >
+			#{ctime},
+	    </if>
+	    <if test="dealingUser != null" >
+			#{dealingUser},
+	    </if>
+	    <if test="remark != null" >
+			#{remark},
+	    </if>
+	  </trim>
+	</insert>
+
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="long">
+		<![CDATA[
+			DELETE FROM msg_alarm
+				WHERE ALARM_ID = #{alarmId}
+		]]>
+	</delete>
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.cattsoft.ny.base.entity.MsgAlarm">
+	    <![CDATA[
+			UPDATE msg_alarm 
+	    ]]>
+		<set>
+		<if test="alarmTypeId != null">
+    	<![CDATA[ ALARM_TYPE_ID = #{alarmTypeId}, ]]>
+		</if>
+		<if test="sensorId != null">
+    	<![CDATA[ SENSOR_ID = #{sensorId}, ]]>
+		</if>
+		<if test="houseId != null">
+    	<![CDATA[ HOUSE_ID = #{houseId}, ]]>
+		</if>
+		<if test="equipStateTypeId != null">
+    	<![CDATA[ EQUIP_STATE_TYPE_ID = #{equipStateTypeId}, ]]>
+		</if>
+		<if test="alarmLevel != null">
+    	<![CDATA[ ALARM_LEVEL = #{alarmLevel}, ]]>
+		</if>
+		<if test="detail != null">
+    	<![CDATA[ DETAIL = #{detail}, ]]>
+		</if>
+		<if test="state != null">
+    	<![CDATA[ STATE = #{state}, ]]>
+		</if>
+		<if test="time != null">
+    	<![CDATA[ TIME = #{time}, ]]>
+		</if>
+		<if test="ctime != null">
+    	<![CDATA[ C_TIME = #{ctime}, ]]>
+		</if>
+		<if test="dealingUser != null">
+    	<![CDATA[ DEALING_USER = #{dealingUser}, ]]>
+		</if>
+		<if test="remark != null">
+    	<![CDATA[ REMARK = #{remark}, ]]>
+		</if>
+		</set>
+	    <![CDATA[
+	        WHERE ALARM_ID = #{alarmId}
+	    ]]>
+	</update>
+
+	<!-- 根据主键查询记录 -->
+	<select id="select" parameterType="long" resultMap="msgAlarmList">
+		<include refid="sqlSelectAllById" />
+		<![CDATA[
+			WHERE ALARM_ID = #{alarmId}
+			
+		]]>
+	</select>
+
+	<!-- 条件查询所有记录 -->
+	<select id="selectList" parameterType="com.cattsoft.ny.base.entity.querybean.MsgAlarmQB"
+		resultMap="msgAlarmList">
+		<include refid="sqlSelectList" />
+	</select>
+
+	<!-- 分页条件查询所有记录 -->
+	<select id="selectPage" parameterType="PagingQueryBean"
+		resultMap="msgAlarmList">
+		<include refid="pagingHeader" />
+		<include refid="sqlSelectPage" />
+		<include refid="pagingFooter" />
+	</select>
+	<!-- 查询记录总数 -->
+	<select id="selectCount" parameterType="PagingQueryBean"
+		resultType="int">
+		<include refid="countingHeader" />
+		<include refid="sqlSelectPage" />
+		<include refid="countingFooter" />
+	</select>
+
+	<resultMap id="msgAlarmList" type="com.cattsoft.ny.base.entity.MsgAlarm">
+		<result property="alarmId" column="ALARM_ID" />
+		<result property="alarmTypeId" column="ALARM_TYPE_ID" />
+		<result property="sensorId" column="SENSOR_ID" />
+		<result property="houseId" column="HOUSE_ID" />
+		<result property="equipStateTypeId" column="EQUIP_STATE_TYPE_ID" />
+		<result property="alarmLevel" column="ALARM_LEVEL" />
+		<result property="detail" column="DETAIL" />
+		<result property="state" column="STATE" />
+		<result property="time" column="TIME" />
+		<result property="ctime" column="C_TIME" />
+		<result property="dealingUser" column="DEALING_USER" />
+		<result property="remark" column="REMARK" />
+	</resultMap>
+
+	<sql id="sqlSelectList">
+		<include refid="sqlSelectAll" />
+		<where>
+			a.HOUSE_ID=b.id and b.BASE_ID=c.ID and c.CUST_ID=#{custId}
+			<if test="alarmId != null">
+			<![CDATA[ AND ALARM_ID = #{alarmId} ]]>
+			</if>
+			<if test="alarmTypeId != null">
+			<![CDATA[ AND ALARM_TYPE_ID = #{alarmTypeId} ]]>
+			</if>
+			<if test="sensorId != null">
+			<![CDATA[ AND SENSOR_ID = #{sensorId} ]]>
+			</if>
+			<if test="houseId != null">
+			<![CDATA[ AND HOUSE_ID = #{houseId} ]]>
+			</if>
+			<if test="equipStateTypeId != null">
+			<![CDATA[ AND EQUIP_STATE_TYPE_ID = #{equipStateTypeId} ]]>
+			</if>
+			<if test="alarmLevel != null">
+			<![CDATA[ AND ALARM_LEVEL = #{alarmLevel} ]]>
+			</if>
+			<if test="detail != null">
+			<![CDATA[ AND DETAIL = #{detail} ]]>
+			</if>
+			<if test="state != null">
+			<![CDATA[ AND STATE = #{state} ]]>
+			</if>
+			<if test="time != null">
+			<![CDATA[ AND TIME = #{time} ]]>
+			</if>
+			<if test="ctime != null">
+			<![CDATA[ AND C_TIME = #{ctime} ]]>
+			</if>
+			<if test="dealingUser != null">
+			<![CDATA[ AND DEALING_USER = #{dealingUser} ]]>
+			</if>
+			<if test="remark != null">
+			<![CDATA[ AND REMARK = #{remark} ]]>
+			</if>
+
+			
+		</where>
+	</sql>
+	
+	<sql id="sqlSelectPage">
+		<include refid="sqlSelectAll" />
+		<where>	     				
+		
+	    <if test="queryBean.alarmId != null">
+		<![CDATA[ AND ALARM_ID = #{queryBean.alarmId} ]]>
+		</if>
+	    <if test="queryBean.alarmTypeId != null">
+		<![CDATA[ AND ALARM_TYPE_ID = #{queryBean.alarmTypeId} ]]>
+		</if>
+	    <if test="queryBean.sensorId != null">
+		<![CDATA[ AND SENSOR_ID = #{queryBean.sensorId} ]]>
+		</if>
+	    <if test="queryBean.houseId != null">
+		<![CDATA[ AND HOUSE_ID = #{queryBean.houseId} ]]>
+		</if>
+	    <if test="queryBean.equipStateTypeId != null">
+		<![CDATA[ AND EQUIP_STATE_TYPE_ID = #{queryBean.equipStateTypeId} ]]>
+		</if>
+	    <if test="queryBean.alarmLevel != null">
+		<![CDATA[ AND ALARM_LEVEL = #{queryBean.alarmLevel} ]]>
+		</if>
+	    <if test="queryBean.detail != null">
+		<![CDATA[ AND DETAIL = #{queryBean.detail} ]]>
+		</if>
+	    <if test="queryBean.state != null">
+		<![CDATA[ AND STATE = #{queryBean.state} ]]>
+		</if>
+	    <if test="queryBean.time != null">
+		<![CDATA[ AND TIME = #{queryBean.time} ]]>
+		</if>
+	    <if test="queryBean.ctime != null">
+		<![CDATA[ AND C_TIME = #{queryBean.ctime} ]]>
+		</if>
+	    <if test="queryBean.dealingUser != null">
+		<![CDATA[ AND DEALING_USER = #{queryBean.dealingUser} ]]>
+		</if>
+	    <if test="queryBean.remark != null">
+		<![CDATA[ AND REMARK = #{queryBean.remark} ]]>
+		</if>
+		</where>
+	</sql>
+	<sql id="sqlSelectAllById">
+			SELECT
+				<include refid="sqlColumn" />
+			FROM msg_alarm
+	</sql>
+	
+	<sql id="sqlSelectAll">
+			SELECT
+				a.ALARM_ID,a.ALARM_TYPE_ID,a.SENSOR_ID,a.HOUSE_ID,a.EQUIP_STATE_TYPE_ID,a.ALARM_LEVEL,a.DETAIL,a.STATE,a.TIME,a.C_TIME,a.DEALING_USER,a.REMARK 
+			FROM msg_alarm a,base_green_house_info b,base_info c 
+	</sql>
+	<sql id="sqlColumn">
+		ALARM_ID,ALARM_TYPE_ID,SENSOR_ID,HOUSE_ID,EQUIP_STATE_TYPE_ID,ALARM_LEVEL,DETAIL,STATE,TIME,C_TIME,DEALING_USER,REMARK
+	</sql>
+</mapper>

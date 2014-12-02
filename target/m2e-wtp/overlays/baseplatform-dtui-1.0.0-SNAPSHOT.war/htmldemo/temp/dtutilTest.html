@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>jQuery UI Button - Default functionality</title>
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css">
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/dtui.util.js"></script>
+	<script src="../../dtui/js/dtui.button.js"></script>
+	<link rel="stylesheet" href="../demos.css">
+	<script type="text/javascript">
+		$(function() {
+			$( "#btnTestLength" )
+				.dtbutton()
+				.click(function( event ) {
+					var len1 = $.dtutil.strutil.getLength($('#text1').val());
+					var len2 = $.dtutil.strutil.getLength($('#text2').val());
+					var len3 = $.dtutil.strutil.getLength($('#text3').val());
+					$('#label1').text(len1);
+					$('#label2').text(len2);
+					$('#label3').text(len3);
+				});
+			
+			$( "#btnTestCreateTip")
+				.dtbutton()
+				.click(function(event){
+					$.dtui.util.createTip($('#tempInput1'), '测试提示信息测试提示信息测试提示信息测试提示信息测试提示信息');
+					$.dtui.util.createTip($('#tempInput2'), '测试提示信息');
+				});
+			$( "#btnTestCloseTip")
+			.dtbutton()
+			.click(function(event){
+				$('.dtui-tip').remove();
+			});
+		
+			
+		});
+	</script>
+</head>
+<body>
+
+<button id="btnTestLength">测试长度</button>
+<div>
+	<input id='text1' value='测试1'> 长度：<label id = 'label1'></label>
+</div>
+<div>
+	<input id='text2' value='wwfwf1'> 长度： <label id = 'label2'></label>
+</div>
+<div>
+	<input id='text3' value='aa测试1'> 长度：<label id = 'label3'></label>
+</div>
+
+<div>
+<button id="btnTestCreateTip">显示提示信息</button>
+<button id="btnTestCloseTip">关闭提示信息</button>
+<table>
+	<tr>
+		<td>提示输入框1</td>
+		<td><input type="text" id='tempInput1'></td>
+	</tr>
+	<tr>
+		<td>提示输入框2</td>
+		<td><input type="text" id='tempInput2'></td>
+	</tr>
+</table>
+
+</div>
+
+<p id="results1"><b>test Results: </b><br> </p>
+
+</body>
+
+</html>

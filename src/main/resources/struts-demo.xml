@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC  
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="demo" namespace="/demo" extends="default">
+		<action name="demoActiom" class="com.cattsoft.baseplatform.func.sm.demo.DemoAction">
+			<result>/pages/demo/index.jsp</result>
+			<result name="getDuanxin">/pages/demo/duanxin.jsp</result>
+			<result type="json" name="doGetNameList">
+				<param name="root">nameList</param> 
+			</result>
+			<result type="json" name="doGetNickList">
+				<param name="root">nickList</param> 
+			</result>
+			<result type="json" name="doHisList">
+				<param name="root">listResult</param> 
+			</result>
+			<result type="json" name="doBookList">
+				<param name="root">listResult</param> 
+			</result>
+			<result type="json" name="ajaxsuccess">
+				<param name="includeProperties">result, msg</param> 
+			</result>
+		</action>
+	</package>
+</struts>

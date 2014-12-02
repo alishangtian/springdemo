@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>jQuery MultiSelect Widget Demo</title>
+<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css" />
+<script type="text/javascript" src="../../dtui/js/jquery/jquery.js"></script>
+<script type="text/javascript" src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+<script type="text/javascript" src="../../dtui/js/dtui.combox.js"></script>
+	<link rel="stylesheet" href="../demos.css"/>
+<script type="text/javascript">
+	$(function() {
+		$("#select1").dtcombox({
+			keyField : "key",
+			valueField : "value",
+			onChange : onChange,
+			datasource : [ {
+				key : "dalian",
+				value : "大连"
+			}, {
+				key : "beijing",
+				value : "北京"
+			}, {
+				key : "shanghai",
+				value : "上海"
+			}, {
+				key : "changchun",
+				value : "长春"
+			} ]
+		});
+		function onChange() {
+			alert($(this).dtcombox('selectValue'));
+		}
+		$('#btnGetText').click(function(){
+			alert($("#select1").dtcombox('selectText'));
+		})
+		$('#btnGetValue').click(function(){
+			alert($("#select1").dtcombox('selectValue'));
+		})
+		$('#btnGetIndex').click(function(){
+			alert($("#select1").dtcombox('selectIndex'));
+		})
+		$('#btnSetValue').click(function(){
+			$("#select1").dtcombox('selectValue','shanghai');
+		})
+		$('#btnSetIndex').click(function(){
+			$("#select1").dtcombox('selectIndex', 3);
+		})
+	});
+</script>
+</head>
+<body>
+	<p>
+		下拉框:<select id="select1"></select>
+	</p>
+	
+	<button id="btnGetText">获取选择文本</button>
+	<button id="btnGetValue">获取选择值</button>
+	<button id="btnGetIndex">获取索引</button>
+	<button id="btnSetValue">设置值(上海)</button>
+	<button id="btnSetIndex">设置索引(长春)</button>
+
+	<div class="demo-description">
+		<h3>本示例功能</h3>
+		<ul>
+			<li>使用json对象数组初始化下拉框</li>
+			<li>调用下拉框方法获取、设置当前选择的值和文本</li>
+		</ul>
+	</div>
+
+</body>
+</html>

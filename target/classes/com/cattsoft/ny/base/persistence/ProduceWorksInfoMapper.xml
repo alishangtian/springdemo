@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.ny.base.persistence.ProduceWorksInfoMapper">
+	<!-- Oracle分页查询 -->
+	<sql id="pagingFooter"> limit ${pagingInfo.startIdx-1},#{pagingInfo.pageRows}</sql>
+	<sql id="countingHeader">SELECT COUNT(*) FROM(</sql>
+	<sql id="countingFooter">) t</sql>
+
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="com.cattsoft.ny.base.entity.ProduceWorksInfo" useGeneratedKeys="true" keyProperty="id">
+		<![CDATA[
+			INSERT INTO produce_works_info
+		]]>
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+	    <if test="userId != null" >
+			USER_ID,
+	    </if>
+	    <if test="houseId != null" >
+			HOUSE_ID,
+	    </if>
+	    <if test="produceSeasonId != null" >
+			PRODUCE_SEASON_ID,
+	    </if>
+	    <if test="workType != null" >
+			WORK_TYPE,
+	    </if>
+	    <if test="type != null" >
+			TYPE,
+	    </if>
+	    <if test="amount != null" >
+			AMOUNT,
+	    </if>
+	    <if test="beginTime != null" >
+			BEGIN_TIME,
+	    </if>
+	    <if test="endTime != null" >
+			END_TIME,
+	    </if>
+	    <if test="remark != null" >
+			REMARK,
+	    </if>
+	  </trim>
+	  <trim prefix="values (" suffix=")" suffixOverrides="," >
+	    <if test="userId != null" >
+			#{userId},
+	    </if>
+	    <if test="houseId != null" >
+			#{houseId},
+	    </if>
+	    <if test="produceSeasonId != null" >
+			#{produceSeasonId},
+	    </if>
+	    <if test="workType != null" >
+			#{workType},
+	    </if>
+	    <if test="type != null" >
+			#{type},
+	    </if>
+	    <if test="amount != null" >
+			#{amount},
+	    </if>
+	    <if test="beginTime != null" >
+			#{beginTime},
+	    </if>
+	    <if test="endTime != null" >
+			#{endTime},
+	    </if>
+	    <if test="remark != null" >
+			#{remark},
+	    </if>
+	  </trim>
+	</insert>
+
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="long">
+		<![CDATA[
+			DELETE FROM produce_works_info
+				WHERE ID = #{id}
+		]]>
+	</delete>
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.cattsoft.ny.base.entity.ProduceWorksInfo">
+	    <![CDATA[
+			UPDATE produce_works_info 
+	    ]]>
+		<set>
+		<if test="userId != null">
+    	<![CDATA[ USER_ID = #{userId}, ]]>
+		</if>
+		<if test="houseId != null">
+    	<![CDATA[ HOUSE_ID = #{houseId}, ]]>
+		</if>
+		<if test="produceSeasonId != null">
+    	<![CDATA[ PRODUCE_SEASON_ID = #{produceSeasonId}, ]]>
+		</if>
+		<if test="workType != null">
+    	<![CDATA[ WORK_TYPE = #{workType}, ]]>
+		</if>
+		<if test="type != null">
+    	<![CDATA[ TYPE = #{type}, ]]>
+		</if>
+		<if test="amount != null">
+    	<![CDATA[ AMOUNT = #{amount}, ]]>
+		</if>
+		<if test="beginTime != null">
+    	<![CDATA[ BEGIN_TIME = #{beginTime}, ]]>
+		</if>
+		<if test="endTime != null">
+    	<![CDATA[ END_TIME = #{endTime}, ]]>
+		</if>
+		<if test="remark != null">
+    	<![CDATA[ REMARK = #{remark}, ]]>
+		</if>
+		</set>
+	    <![CDATA[
+	        WHERE ID = #{id}
+	    ]]>
+	</update>
+
+	<!-- 根据主键查询记录 -->
+	<select id="select" parameterType="long" resultMap="produceWorksInfoList">
+		SELECT
+				<include refid="sqlColumn" />
+			FROM produce_works_info
+		<![CDATA[
+			WHERE ID = #{id}
+		]]>
+	</select>
+
+	<!-- 条件查询所有记录 -->
+	<select id="selectList" parameterType="com.cattsoft.ny.base.entity.querybean.ProduceWorksInfoQB"
+		resultMap="produceWorksInfoList">
+		<include refid="sqlSelectList" />
+	</select>
+
+	<!-- 分页条件查询所有记录 -->
+	<select id="selectPage" parameterType="PagingQueryBean"
+		resultMap="produceWorksInfoList">
+		<include refid="sqlSelectPage" />
+		<include refid="pagingFooter" />
+	</select>
+	<!-- 查询记录总数 -->
+	<select id="selectCount" parameterType="PagingQueryBean"
+		resultType="int">
+		<include refid="countingHeader" />
+		<include refid="sqlSelectPage" />
+		<include refid="countingFooter" />
+	</select>
+
+	<resultMap id="produceWorksInfoList" type="com.cattsoft.ny.base.entity.ProduceWorksInfo">
+		<result property="id" column="ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="userName" column="USER_Name" />
+		<result property="houseId" column="HOUSE_ID" />
+		<result property="produceSeasonId" column="PRODUCE_SEASON_ID" />
+		<result property="workType" column="WORK_TYPE" />
+		<result property="type" column="TYPE" />
+		<result property="amount" column="AMOUNT" />
+		<result property="beginTime" column="BEGIN_TIME" />
+		<result property="endTime" column="END_TIME" />
+		<result property="remark" column="REMARK" />
+	</resultMap>
+
+	<sql id="sqlSelectList">
+		<include refid="sqlSelectAll" />
+		<where>
+			<if test="id != null">
+			<![CDATA[ AND ID = #{id} ]]>
+			</if>
+			<if test="userId != null">
+			<![CDATA[ AND USER_ID = #{userId} ]]>
+			</if>
+			<if test="houseId != null">
+			<![CDATA[ AND HOUSE_ID = #{houseId} ]]>
+			</if>
+			<if test="produceSeasonId != null">
+			<![CDATA[ AND PRODUCE_SEASON_ID = #{produceSeasonId} ]]>
+			</if>
+			<if test="workType != null">
+			<![CDATA[ AND WORK_TYPE = #{workType} ]]>
+			</if>
+			<if test="type != null">
+			<![CDATA[ AND TYPE = #{type} ]]>
+			</if>
+			<if test="amount != null">
+			<![CDATA[ AND AMOUNT = #{amount} ]]>
+			</if>
+			<if test="beginTime != null">
+			<![CDATA[ AND BEGIN_TIME = #{beginTime} ]]>
+			</if>
+			<if test="endTime != null">
+			<![CDATA[ AND END_TIME = #{endTime} ]]>
+			</if>
+			<if test="remark != null">
+			<![CDATA[ AND REMARK = #{remark} ]]>
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="sqlSelectPage">
+		<include refid="sqlSelectAll" />
+		<where>	     				
+		domain_id=88
+	    <if test="queryBean.id != null">
+		<![CDATA[ AND ID = #{queryBean.id} ]]>
+		</if>
+	    <if test="queryBean.userId != null">
+		<![CDATA[ AND USER_ID = #{queryBean.userId} ]]>
+		</if>
+	    <if test="queryBean.houseId != null">
+		<![CDATA[ AND HOUSE_ID = #{queryBean.houseId} ]]>
+		</if>
+	    <if test="queryBean.produceSeasonId != null">
+		<![CDATA[ AND PRODUCE_SEASON_ID = #{queryBean.produceSeasonId} ]]>
+		</if>
+	    <if test="queryBean.workType != null">
+		<![CDATA[ AND WORK_TYPE = #{queryBean.workType} ]]>
+		</if>
+	    <if test="queryBean.type != null">
+		<![CDATA[ AND TYPE = #{queryBean.type} ]]>
+		</if>
+	    <if test="queryBean.amount != null">
+		<![CDATA[ AND AMOUNT = #{queryBean.amount} ]]>
+		</if>
+	    <if test="queryBean.beginTime != null">
+		<![CDATA[ AND BEGIN_TIME > #{queryBean.beginTime} ]]>
+		</if>
+	    <if test="queryBean.endTime != null">
+		<![CDATA[ AND END_TIME < #{queryBean.endTime} ]]>
+		</if>
+	    <if test="queryBean.remark != null">
+		<![CDATA[ AND REMARK = #{queryBean.remark} ]]>
+		</if>
+		</where>
+	</sql>
+	<sql id="sqlSelectAll">
+			SELECT
+				pwi.*,dv.value_name 'typeName',iu.login_name 'USER_Name'
+			FROM produce_works_info pwi left join domain_value dv on pwi.type=dv.value_code left join idea_user iu on pwi.USER_ID = iu.user_id
+	</sql>
+	<sql id="sqlColumn">
+		ID,USER_ID,HOUSE_ID,PRODUCE_SEASON_ID,WORK_TYPE,TYPE,AMOUNT,BEGIN_TIME,END_TIME,REMARK
+	</sql>
+</mapper>

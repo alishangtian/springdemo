@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.ny.base.persistence.PrdcConsumerAccidentsMapper">
+
+	<!-- MySql分页查询 -->
+	<sql id="pagingFooter"> limit ${pagingInfo.startIdx-1},#{pagingInfo.pageRows}</sql>
+	<sql id="countingHeader">SELECT COUNT(*) FROM(</sql>
+	<sql id="countingFooter">) t</sql>
+
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="com.cattsoft.ny.base.entity.PrdcConsumerAccidents">
+	 
+		<![CDATA[
+			INSERT INTO prdc_consumer_accidents
+		]]>
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			 
+	    <if test="houseId != null" >
+			HOUSE_ID,
+	    </if>
+	    <if test="produceSeasonId != null" >
+			PRODUCE_SEASON_ID,
+	    </if>
+	    <if test="detail != null" >
+			DETAIL,
+	    </if>
+	    <if test="complainant != null" >
+			COMPLAINANT,
+	    </if>
+	    <if test="phone != null" >
+			PHONE,
+	    </if>
+	    <if test="accidentsDate != null" >
+			ACCIDENTS_DATE,
+	    </if>
+	    <if test="email != null" >
+			EMAIL,
+	    </if>
+	    <if test="state != null" >
+			STATE,
+	    </if>
+	    <if test="createDate != null" >
+			CREATE_DATE,
+	    </if>
+	    <if test="operator != null" >
+			OPERATOR,
+	    </if>
+	    <if test="solve != null" >
+			SOLVE,
+	    </if>
+	    <if test="solveDate != null" >
+			SOLVE_DATE,
+	    </if>
+	  </trim>
+	  <trim prefix="values (" suffix=")" suffixOverrides="," >
+	   
+	    <if test="houseId != null" >
+			#{houseId},
+	    </if>
+	    <if test="produceSeasonId != null" >
+			#{produceSeasonId},
+	    </if>
+	    <if test="detail != null" >
+			#{detail},
+	    </if>
+	    <if test="complainant != null" >
+			#{complainant},
+	    </if>
+	    <if test="phone != null" >
+			#{phone},
+	    </if>
+	    <if test="accidentsDate != null" >
+			#{accidentsDate},
+	    </if>
+	    <if test="email != null" >
+			#{email},
+	    </if>
+	    <if test="state != null" >
+			#{state},
+	    </if>
+	    <if test="createDate != null" >
+			#{createDate},
+	    </if>
+	    <if test="operator != null" >
+			#{operator},
+	    </if>
+	    <if test="solve != null" >
+			#{solve},
+	    </if>
+	    <if test="solveDate != null" >
+			#{solveDate},
+	    </if>
+	  </trim>
+	</insert>
+
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="long">
+		<![CDATA[
+			DELETE FROM prdc_consumer_accidents
+				WHERE ID = #{id}
+		]]>
+	</delete>
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.cattsoft.ny.base.entity.PrdcConsumerAccidents">
+	    <![CDATA[
+			UPDATE prdc_consumer_accidents 
+	    ]]>
+		<set>
+		<if test="houseId != null">
+    	<![CDATA[ HOUSE_ID = #{houseId}, ]]>
+		</if>
+		<if test="produceSeasonId != null">
+    	<![CDATA[ PRODUCE_SEASON_ID = #{produceSeasonId}, ]]>
+		</if>
+		<if test="detail != null">
+    	<![CDATA[ DETAIL = #{detail}, ]]>
+		</if>
+		<if test="complainant != null">
+    	<![CDATA[ COMPLAINANT = #{complainant}, ]]>
+		</if>
+		<if test="phone != null">
+    	<![CDATA[ PHONE = #{phone}, ]]>
+		</if>
+		<if test="accidentsDate != null">
+    	<![CDATA[ ACCIDENTS_DATE = #{accidentsDate}, ]]>
+		</if>
+		<if test="email != null">
+    	<![CDATA[ EMAIL = #{email}, ]]>
+		</if>
+		<if test="state != null">
+    	<![CDATA[ STATE = #{state}, ]]>
+		</if>
+		<if test="createDate != null">
+    	<![CDATA[ CREATE_DATE = #{createDate}, ]]>
+		</if>
+		<if test="operator != null">
+    	<![CDATA[ OPERATOR = #{operator}, ]]>
+		</if>
+		<if test="solve != null">
+    	<![CDATA[ SOLVE = #{solve}, ]]>
+		</if>
+		<if test="solveDate != null">
+    	<![CDATA[ SOLVE_DATE = #{solveDate}, ]]>
+		</if>
+		</set>
+	    <![CDATA[
+	        WHERE ID = #{id}
+	    ]]>
+	</update>
+
+	<!-- 根据主键查询记录 -->
+	<select id="select" parameterType="long" resultMap="prdcConsumerAccidentsList">
+		<include refid="sqlSelectAll" />
+		<![CDATA[
+			WHERE ID = #{id}
+		]]>
+	</select>
+
+	<!-- 条件查询所有记录 -->
+	<select id="selectList" parameterType="com.cattsoft.ny.base.entity.querybean.PrdcConsumerAccidentsQB"
+		resultMap="prdcConsumerAccidentsList">
+		<include refid="sqlSelectList" />
+	</select>
+
+	<!-- 分页条件查询所有记录 -->
+	<select id="selectPage" parameterType="PagingQueryBean"
+		resultMap="prdcConsumerAccidentsList">
+		<include refid="sqlSelectPage" />
+		<include refid="pagingFooter" />
+	</select>
+	<!-- 查询记录总数 -->
+	<select id="selectCount" parameterType="PagingQueryBean"
+		resultType="int">
+		<include refid="countingHeader" />
+		<include refid="sqlSelectPage" />
+		<include refid="countingFooter" />
+	</select>
+
+	<resultMap id="prdcConsumerAccidentsList" type="com.cattsoft.ny.base.entity.PrdcConsumerAccidents">
+		<result property="id" column="ID" />
+		<result property="houseId" column="HOUSE_ID" />
+		<result property="produceSeasonId" column="PRODUCE_SEASON_ID" />
+		<result property="detail" column="DETAIL" />
+		<result property="complainant" column="COMPLAINANT" />
+		<result property="phone" column="PHONE" />
+		<result property="accidentsDate" column="ACCIDENTS_DATE" />
+		<result property="email" column="EMAIL" />
+		<result property="state" column="STATE" />
+		<result property="createDate" column="CREATE_DATE" />
+		<result property="operator" column="OPERATOR" />
+		<result property="solve" column="SOLVE" />
+		<result property="solveDate" column="SOLVE_DATE" />
+	</resultMap>
+
+	<sql id="sqlSelectList">
+		<include refid="sqlSelectAll" />
+		<where>
+			<if test="id != null">
+			<![CDATA[ AND ID = #{id} ]]>
+			</if>
+			<if test="houseId != null">
+			<![CDATA[ AND HOUSE_ID = #{houseId} ]]>
+			</if>
+			<if test="produceSeasonId != null">
+			<![CDATA[ AND PRODUCE_SEASON_ID = #{produceSeasonId} ]]>
+			</if>
+			<if test="detail != null">
+			<![CDATA[ AND DETAIL = #{detail} ]]>
+			</if>
+			<if test="complainant != null">
+			<![CDATA[ AND COMPLAINANT = #{complainant} ]]>
+			</if>
+			<if test="phone != null">
+			<![CDATA[ AND PHONE = #{phone} ]]>
+			</if>
+			<if test="accidentsDate != null">
+			<![CDATA[ AND ACCIDENTS_DATE = #{accidentsDate} ]]>
+			</if>
+			<if test="email != null">
+			<![CDATA[ AND EMAIL = #{email} ]]>
+			</if>
+			<if test="state != null">
+			<![CDATA[ AND STATE = #{state} ]]>
+			</if>
+			<if test="createDate != null">
+			<![CDATA[ AND CREATE_DATE = #{createDate} ]]>
+			</if>
+			<if test="operator != null">
+			<![CDATA[ AND OPERATOR = #{operator} ]]>
+			</if>
+			<if test="solve != null">
+			<![CDATA[ AND SOLVE = #{solve} ]]>
+			</if>
+			<if test="solveDate != null">
+			<![CDATA[ AND SOLVE_DATE = #{solveDate} ]]>
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="sqlSelectPage">
+		<include refid="sqlSelectAll" />
+		<where>	     				
+	    <if test="queryBean.id != null">
+		<![CDATA[ AND ID = #{queryBean.id} ]]>
+		</if>
+	    <if test="queryBean.houseId != null">
+		<![CDATA[ AND HOUSE_ID = #{queryBean.houseId} ]]>
+		</if>
+	    <if test="queryBean.produceSeasonId != null">
+		<![CDATA[ AND PRODUCE_SEASON_ID = #{queryBean.produceSeasonId} ]]>
+		</if>
+	    <if test="queryBean.detail != null">
+		<![CDATA[ AND DETAIL = #{queryBean.detail} ]]>
+		</if>
+	    <if test="queryBean.complainant != null">
+		<![CDATA[ AND COMPLAINANT = #{queryBean.complainant} ]]>
+		</if>
+	    <if test="queryBean.phone != null">
+		<![CDATA[ AND PHONE = #{queryBean.phone} ]]>
+		</if>
+	    <if test="queryBean.accidentsDate != null">
+		<![CDATA[ AND ACCIDENTS_DATE = #{queryBean.accidentsDate} ]]>
+		</if>
+	    <if test="queryBean.email != null">
+		<![CDATA[ AND EMAIL = #{queryBean.email} ]]>
+		</if>
+	    <if test="queryBean.state != null">
+		<![CDATA[ AND STATE = #{queryBean.state} ]]>
+		</if>
+	    <if test="queryBean.createDate != null">
+		<![CDATA[ AND CREATE_DATE = #{queryBean.createDate} ]]>
+		</if>
+	    <if test="queryBean.operator != null">
+		<![CDATA[ AND OPERATOR = #{queryBean.operator} ]]>
+		</if>
+	    <if test="queryBean.solve != null">
+		<![CDATA[ AND SOLVE = #{queryBean.solve} ]]>
+		</if>
+	    <if test="queryBean.solveDate != null">
+		<![CDATA[ AND SOLVE_DATE = #{queryBean.solveDate} ]]>
+		</if>
+		</where>
+	</sql>
+	<sql id="sqlSelectAll">
+			SELECT
+				<include refid="sqlColumn" />
+			FROM prdc_consumer_accidents 
+	</sql>
+	<sql id="sqlColumn">
+		ID,HOUSE_ID,PRODUCE_SEASON_ID,DETAIL,COMPLAINANT,PHONE,ACCIDENTS_DATE,EMAIL,STATE,CREATE_DATE,OPERATOR,SOLVE,SOLVE_DATE
+	</sql>
+</mapper>

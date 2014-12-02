@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>简单横向菜单</title>
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css" />
+	<style type="text/css">
+	body {
+		font-size: 62.5%;
+		font-family: "Trebuchet MS", "Arial", "Helvetica", "Verdana", "sans-serif";
+	}
+	</style>
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/dtui.navbar.js"></script>
+	<script type="text/javascript">
+		//页面加载完成创建布局
+		$(function(){
+			$('#nav').dtnavbar({
+				showSubMenu: true,
+				select: function(){
+					console.log(this);
+				}
+			});
+			$('#nav').dtnavbar('addExtBar', '<span>扩展内容从这里加入</span>');
+			$('#addMenuBtn').click(function(){
+				$('#nav').dthmenu('addMenu', {
+					title: '测试',
+					children: [{
+						title: '子菜单一'
+					},{
+						title: '子菜单二'
+					}]
+				});
+			});
+			
+			$('#delMenuBtn').click(function(){
+				$('#nav').dtnavbar('removeMenu', '#timer');
+			});
+			
+			$('#delItemBtn').click(function(){
+				$('#nav').dtnavbar('removeMenu', '#haha');
+			});
+		});
+		
+	</script>
+</head>
+<body>
+	<div>
+		<button id="addMenuBtn">增加菜单</button>
+		<button id="delMenuBtn">删除定时器管理</button>
+		<button id="delItemBtn">删除子菜单2-1</button>
+	</div>
+	<div id="nav">
+		<div class="dt-navmain">
+			<ul>
+				<li><a href="#tmd">系统管理</a></li>
+				<li><a href="#">考核评价</a></li>
+				<li><a href="#">用户终端管理</a></li>
+				<li id="timer"><a href="#">定时器管理</a></li>
+			</ul>
+		</div>
+		<div class="dt-navsub">
+			<ul>
+				<li><a href="#">缓存管理</a></li>
+				<li><a href="#">日志管理</a></li>
+				<li><a href="#">公告管理</a></li>
+				<li><a href="#">资料查询</a></li>
+			</ul>
+			<ul>
+				<li id="haha"><a href="#">子菜单2-1</a></li>
+				<li><a href="#">子菜单2-2</a></li>
+				<li><a href="#">子菜单2-3</a></li>
+				<li><a href="#">子菜单2-4</a></li>
+				<li><a href="#">子菜单2-5</a></li>
+			</ul>
+			<ul>
+				<li><a href="#">子菜单3-1</a></li>
+				<li><a href="#">子菜单3-2</a></li>
+				<li><a href="#">子菜单3-3</a></li>
+				<li><a href="#">子菜单3-4</a></li>
+				<li><a href="#">子菜单3-5</a></li>
+			</ul>
+			<ul>
+				<li><a href="#">子菜单4-1</a></li>
+				<li><a href="#">子菜单4-2</a></li>
+				<li><a href="#">子菜单4-3</a></li>
+				<li><a href="#">子菜单4-4</a></li>
+				<li><a href="#">子菜单4-5</a>
+					<ul>
+					  <li><a href="#">Item 1</a></li>
+					  <li><a href="#">Item 2</a></li>
+					  <li><a href="#">Item 3</a>
+					    <ul>
+					      <li><a href="#">Item 3-1</a></li>
+					      <li><a href="#">Item 3-2</a></li>
+					      <li><a href="#">Item 3-3</a></li>
+					      <li><a href="#">Item 3-4</a></li>
+					      <li><a href="#">Item 3-5</a></li>
+					    </ul>
+					  </li>
+					  <li><a href="#">Item 4</a></li>
+					  <li><a href="#">Item 5</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+<div class="demo-description">
+	<h3>本实例功能</h3>
+	<ul>
+		<li>静态数据生成简单横向菜单,并带有一些简单的菜单操作</li>
+	</ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.ny.base.persistence.EquipDataEnvdataMapper">
+
+	<!-- Oracle分页查询 -->
+	<sql id="pagingFooter"> limit ${pagingInfo.startIdx-1},#{pagingInfo.pageRows}</sql>
+	<sql id="countingHeader">SELECT COUNT(*) FROM(</sql>
+	<sql id="countingFooter">) t</sql>
+
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="com.cattsoft.ny.base.entity.EquipDataEnvdata">
+	 
+		<![CDATA[
+			INSERT INTO equip_data_envdata
+		]]>
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			 
+	    <if test="value != null" >
+			VALUE,
+	    </if>
+	    <if test="ctime != null" >
+			C_TIME,
+	    </if>
+	    <if test="equipDataTypeId != null" >
+			EQUIP_DATA_TYPE_ID,
+	    </if>
+	  </trim>
+	  <trim prefix="values (" suffix=")" suffixOverrides="," >
+	   
+	    <if test="value != null" >
+			#{value},
+	    </if>
+	    <if test="ctime != null" >
+			#{ctime},
+	    </if>
+	    <if test="equipDataTypeId != null" >
+			#{equipDataTypeId},
+	    </if>
+	  </trim>
+	</insert>
+
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="long">
+		<![CDATA[
+			DELETE FROM equip_data_envdata
+				WHERE DATA_ID = #{dataId}
+		]]>
+	</delete>
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.cattsoft.ny.base.entity.EquipDataEnvdata">
+	    <![CDATA[
+			UPDATE equip_data_envdata 
+	    ]]>
+		<set>
+		<if test="value != null">
+    	<![CDATA[ VALUE = #{value}, ]]>
+		</if>
+		<if test="ctime != null">
+    	<![CDATA[ C_TIME = #{ctime}, ]]>
+		</if>
+		<if test="equipDataTypeId != null">
+    	<![CDATA[ EQUIP_DATA_TYPE_ID = #{equipDataTypeId}, ]]>
+		</if>
+		</set>
+	    <![CDATA[
+	        WHERE DATA_ID = #{dataId}
+	    ]]>
+	</update>
+
+	<!-- 根据主键查询记录 -->
+	<select id="select" parameterType="long" resultMap="equipDataEnvdataList">
+		<include refid="sqlSelectAll" />
+		<![CDATA[
+			WHERE DATA_ID = #{dataId}
+		]]>
+	</select>
+
+	<!-- 条件查询所有记录 -->
+	<select id="selectList" parameterType="com.cattsoft.ny.base.entity.querybean.EquipDataEnvdataQB"
+		resultMap="equipDataEnvdataList">
+		<include refid="sqlSelectList" />
+	</select>
+
+	<!-- 条件查询所有记录 -->
+	<select id="selectListTime" parameterType="com.cattsoft.ny.base.entity.querybean.EquipDataEnvdataQB"
+		resultMap="equipDataEnvdataList">
+		<include refid="sqlSelectListInfo" />
+	</select>
+	<!-- 分页条件查询所有记录 -->
+	<select id="selectPage" parameterType="PagingQueryBean"
+		resultMap="equipDataEnvdataList">
+		<!-- <include refid="pagingHeader" /> -->
+		<include refid="sqlSelectPage" />
+		<include refid="pagingFooter" />
+	</select>
+	<!-- 查询记录总数 -->
+	<select id="selectCount" parameterType="PagingQueryBean"
+		resultType="int">
+		<include refid="countingHeader" />
+		<include refid="sqlSelectPage" />
+		<include refid="countingFooter" />
+	</select>
+	<!-- 查询满足条件的最大值最小值 -->
+	<select id="maxEnvdata" parameterType="com.cattsoft.ny.base.entity.querybean.EquipDataEnvdataQB"
+		resultMap="maxMinList">
+		SELECT MAX(`VALUE`) 'MAX',MIN(`VALUE`) 'MIN'from equip_data_envdata
+		<where>
+			<if test="equipDataTypeId != null">
+				<![CDATA[ AND EQUIP_DATA_TYPE_ID = #{equipDataTypeId} ]]>
+			</if>
+		</where>
+	</select>
+	<resultMap id="maxMinList" type="com.cattsoft.ny.base.entity.EquipDataEnvdata">
+		<result property="max" column="MAX" />
+		<result property="min" column="MIN" />
+	</resultMap>
+
+	<resultMap id="equipDataEnvdataList" type="com.cattsoft.ny.base.entity.EquipDataEnvdata">
+		<result property="dataId" column="DATA_ID" />
+		<result property="value" column="VALUE" />
+		<result property="ctime" column="C_TIME" />
+		<result property="equipDataTypeId" column="EQUIP_DATA_TYPE_ID" />
+	</resultMap>
+
+	
+	<sql id="sqlSelectList">
+		<include refid="sqlSelectAll" />
+		<where>
+			<if test="dataId != null">
+			<![CDATA[ AND DATA_ID = #{dataId} ]]>
+			</if>
+			<if test="value != null">
+			<![CDATA[ AND VALUE = #{value} ]]>
+			</if>
+			<if test="ctime != null">
+			<![CDATA[ C_TIME >#{ctime} ]]>
+			</if>
+			<if test="equipDataTypeId != null">
+			<![CDATA[ AND EQUIP_DATA_TYPE_ID = #{equipDataTypeId} ]]>
+			</if>
+		</where>
+	</sql>
+		<sql id="sqlSelectListInfo">
+		<include refid="sqlSelectAll" />
+		<where>
+			<if test="dataId != null">
+			<![CDATA[ AND DATA_ID = #{dataId} ]]>
+			</if>
+			<if test="value != null">
+			<![CDATA[ AND VALUE = #{value} ]]>
+			</if>
+			<if test="ctime != null">
+			<![CDATA[ C_TIME =#{ctime} ]]>
+			</if>
+			<if test="equipDataTypeId != null">
+			<![CDATA[ AND EQUIP_DATA_TYPE_ID = #{equipDataTypeId} ]]>
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="sqlSelectPage">
+		<include refid="sqlSelectAll" />
+		<where>	     				
+	    <if test="queryBean.dataId != null">
+		<![CDATA[ AND DATA_ID = #{queryBean.dataId} ]]>
+		</if>
+	    <if test="queryBean.value != null">
+		<![CDATA[ AND VALUE = #{queryBean.value} ]]>
+		</if>
+	    <if test="queryBean.ctime != null">
+		<![CDATA[ AND C_TIME > #{queryBean.ctime} ]]>
+		</if>
+	    <if test="queryBean.equipDataTypeId != null">
+		<![CDATA[ AND EQUIP_DATA_TYPE_ID = #{queryBean.equipDataTypeId} ]]>
+		</if>
+		</where>
+	</sql>
+	<sql id="sqlSelectAll">
+			SELECT
+				<include refid="sqlColumn" />
+			FROM equip_data_envdata 
+	</sql>
+	<sql id="sqlColumn">
+		DATA_ID,VALUE,C_TIME,EQUIP_DATA_TYPE_ID
+	</sql>
+	<select id="selectListInfo" parameterType="long" resultMap="equipDataEnvdataListInfo">
+	select 
+	   A.DATA_ID,
+	   A.C_TIME,
+	   A.VALUE,
+	   A.EQUIP_DATA_TYPE_ID,
+	   B.NAME,
+	   B.UNITS
+ 	from  
+ 		EQUIP_DATA_ENVDATA A , 
+ 		EQUIP_DATA_TYPE B , 
+ 		EQUIP_INFO C
+	where 
+		A.EQUIP_DATA_TYPE_ID = B.ID  
+		and B.EQUIP_INFO_ID=C.ID
+		<![CDATA[ AND C.TYPE = #{typeid} ]]>
+		ORDER BY A.DATA_ID desc LIMIT 0,2
+	</select>
+		<resultMap id="equipDataEnvdataListInfo" type="com.cattsoft.ny.base.entity.EquipDataEnvdataInfo">
+		<result property="dataId" column="DATA_ID" />
+		<result property="ctime" column="C_TIME" />
+		<result property="value" column="VALUE" />
+		<result property="equipDataTypeId" column="EQUIP_DATA_TYPE_ID" />
+		<result property="name" column="NAME" />
+		<result property="units" column="UNITS" />
+	</resultMap>
+	
+</mapper>

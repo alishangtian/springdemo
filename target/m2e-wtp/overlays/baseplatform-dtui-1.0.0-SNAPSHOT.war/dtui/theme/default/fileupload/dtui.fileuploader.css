@@ -1,0 +1,104 @@
+.filecontrol {
+    /* position:absolute; */
+    cursor: pointer;
+    float: left;
+    left:-3px;
+    margin-top: -2em;
+    filter:alpha(opacity=0);
+    -moz-opacity:0;
+    opacity:0;
+    z-index:1;
+    size:1;
+    width: 65px;
+    height:25px;
+}
+
+.pstyle{
+    white-space: nowrap;
+    font-size:12px;
+    height:20px;
+}
+
+.spanstyle{
+    display:inline-block;
+}
+
+.prompt {
+    color: #9A9A9A;
+    float: left;
+    position:absolute;
+    font-size:12px;
+    line-height: 21px;
+    margin: 0 0 0 5px;
+}
+
+.panel {
+    overflow: auto;
+}
+
+.ui-upload{
+	/*width:400px;*/
+}
+.ui-upload-header{
+	 position: relative;
+	 font-weight:bold; 
+	 margin-top: 1px;
+	 zoom: 1;
+	 border-top:1px solid #aaaaaa;
+	 border-left:1px solid #aaaaaa;
+	 border-right:1px solid #aaaaaa;
+	 border-bottom:0;
+	 padding:0.2em 0.3em 0.4em 0.3em;	 
+}
+.ui-upload-content{ 
+	position: relative;  
+	zoom: 1;
+	height:100px;
+	overflow-x:hidden;
+	overflow-y:scroll;
+}
+.ui-upload-foot{
+	 position: relative;
+	 font-weight:bold; 
+	 zoom: 1;
+	 border-bottom:1px solid #aaaaaa;
+	 border-left:1px solid #aaaaaa;
+	 border-right:1px solid #aaaaaa;
+	 border-top:0;
+	 padding:0em 0.3em 0.5em 0.3em;
+}
+.ui-upload-line{
+	border-bottom:#E4E4E4 1px solid;
+}
+.ui-upload table{
+	width:100%;
+	cellpadding:0;
+	cellspacing:0;
+	padding:0.3em;	
+}
+
+.ui-upload .ui-upload-header tr, 
+.ui-upload .ui-upload-content tr,
+.ui-upload .ui-upload-foot tr{
+	height: 20px;
+	line-height: 20px;
+}
+
+.ui-upload .ui-upload-header td, 
+.ui-upload .ui-upload-content td,
+.ui-upload .ui-upload-foot td{
+	border: none;
+	font-family: "宋体";
+	font-size: 1em;
+	line-height: 22px;
+	padding: 0;
+}
+
+.ui-upload table .remove{
+	width:15%;
+	text-align:right;
+}
+.ui-upload table .file-number{
+	width:17%;
+	text-align:left;
+}

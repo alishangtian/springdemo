@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" " http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+	<title>对话框默认功能</title>
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css">
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/dtui.button.js"></script>
+	<script src="../../dtui/js/dtui.dialog.js"></script>
+	<link rel="stylesheet" href="../demos.css">
+	<script type="text/javascript">
+		$(function() {
+			$( "#btnInnerShow" ).dtbutton().click(function( event ) {
+				$.dtdialog.showModal({width: 600, url:"fragment1.html"});
+			});
+			$( "#btnTopShow" ).dtbutton().click(function( event ) {
+				//从顶层窗口的链接位置开始
+				$.dtdialog.showModal({width: 600, url:"dialog/fragment_top.html"},top);
+			});
+		});
+	</script>
+</head>
+<body>
+
+<button id = "btnInnerShow">iframe内显示窗口</button>
+<button id = "btnTopShow">iframe外显示窗口</button>
+
+
+</body>
+
+</html>

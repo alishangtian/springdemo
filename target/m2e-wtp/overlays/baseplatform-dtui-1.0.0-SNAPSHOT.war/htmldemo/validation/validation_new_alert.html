@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+
+<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css" />
+<script src="../../dtui/js/jquery/jquery.js"></script>
+<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+<script src="../../dtui/js/dtui.util.js" type="text/javascript"></script>
+<link rel="stylesheet" href="../demos.css">
+<script type="text/javascript" src="../../dtui/js/dtui.validation.js"></script>
+
+
+<script type="text/javascript">
+	$(function(){
+		/* $("#datepicker").dtdatepicker({required:true,formatNeed:true});
+		$("#combobox").dtcombobox({
+		    id : 'shengfen',name : 'shengfen',
+		    required:true,
+				hasNull:true,
+				selectIndex : '-1',
+				width : '100',
+				keyField : 'key',
+				valueField : 'value',
+				datasource : [ {
+					key : "dalian",
+					value : "大连"
+				}, {
+					key : "beijing",
+					value : "北京"
+				}, {
+					key : "shanghai",
+					value : "上海"
+				}, {
+					key : "changchun",
+					value : "长春"
+				} ]
+			});
+	  
+	  
+	  $('#radiogroup1').dtradiogroup({
+			items : [ {
+				value : 'nan',
+				text : '男'
+			}, {
+				value : 'nv',
+				text : '女'
+			}],
+			name : 'person.sex',
+			title : '性别',
+			//value : 'nan',
+			col : 2,
+			height: 60,
+			width: 120,
+			keyField:'value',
+			valueField:'text',
+			required: true
+			
+		}); */
+		
+		$("#submitId").click(function(){
+			return $.dtvalidate("#form1","alert",{
+   			 /* rules:[{firstname: "required"},{email: [{required: true},{email: true}]}],
+   			 messages:[{firstname: "请输入姓名"},{email:[{required: "请输入Email地址"},{email: "请输入正确的email地址"}]}] */
+    			rules:[
+    					{intId:  [{required:true},{digits:true}]},
+    					{floatId:[{required:true},{floating:true}]},
+    					{mailId:[{required: true},{email: true}]},
+    					{mobileId:[{required: true},{mobile:true}]},
+    					{telId:[{required:true},{tel:true}]},
+    					{urlId:[{required:true},{url:true}]},
+    					{passwordId:[{required:true},{maxlength:12},{minlength:6},{password:true}]},
+    					{confirm_passwordId:[{required:true},{equalTo:"passwordId"}]},
+    					{zipcodeId:[{required:true},{zipcode:true}]},
+    					{customId:[{required:true},{custom:/^t[a|b]n$/}]}/* ,
+    					{datepicker:[{required:true},{formatNeed:true}]},
+    					{combobox:[{required:true}]},
+    					{radiogroup1:[{required:true}]} */
+    					],
+  			 messages:[
+  						{intId:  [{required:"请输入整数"},{digits:"请输入正确格式的整数"}]},
+    					{floatId:[{required:"请输入浮点数"},{floating:"请输入正确格式的浮点数"}]},
+    					{mailId:[{required: "请输入Email地址"},{email: "请输入正确格式的Email地址"}]},
+    					{mobileId:[{required:"请输入手机号"},{mobile:"请输入正确格式的手机号"}]},
+    					{telId:[{required:"请输入座机号"},{tel:"请输入正确格式的座机号"}]},
+    					{urlId:[{required:"请输入url地址"},{url:"请输入正确格式的url地址"}]},
+    					{passwordId:[{required:"请输入密码"},{maxlength:"密码最大长度不能高于12位"},{minlength:"密码最小长度不能低于6位"},{password:"密码格式错误"}]},
+    					{confirm_passwordId:[{required:"请输入确认密码"},{equalTo:"两次密码输入不一致"}]},
+    					{zipcodeId:[{required:"请输入邮编地址"},{zipcode:"请输入正确格式的邮编地址"}]},
+    					{customId:[{required:"请输入值"},{custom:"不符合正则表达式"}]}/* ,
+    					{datepicker:[{required:"请选择日期值"},{formatNeed:"日期格式不正确"}]},
+    					{combobox:[{required:"请选择值"}]},
+    					{radiogroup1:[{required:"请选择值""}]} */
+  						]
+			});
+	  			/* $("#form1").dtvalidate({
+				    			// rules:[{firstname: "required"},{email: [{required: true},{email: true}]}],
+				    			// messages:[{firstname: "请输入姓名"},{email:[{required: "请输入Email地址"},{email: "请输入正确的email地址"}]}] 
+				     			rules:[
+				     					{intId:  [{required:true},{digits:true}]},
+				     					{floatId:[{required:true},{floating:true}]},
+				     					{mailId:[{required: true},{email: true}]},
+				     					{mobileId:[{required: true},{mobile:true}]},
+				     					{telId:[{required:true},{tel:true}]},
+				     					{urlId:[{required:true},{url:true}]},
+				     					{passwordId:"required"},
+				     					{confirm_passwordId:[{required:true},{equalTo:"passwordId"}]},
+				     					{zipcodeId:[{required:true},{zipcode:true}]},
+				     					{customId:[{required:true},{custom:/^t[a|b]n$/}]}
+				     					],
+				   			 messages:[
+				   						{intId:  [{required:"请输入整数"},{digits:"请输入正确格式的整数"}]},
+				     					{floatId:[{required:"请输入浮点数"},{floating:"请输入正确格式的浮点数"}]},
+				     					{mailId:[{required: "请输入Email地址"},{email: "请输入正确格式的Email地址"}]},
+				     					{mobileId:[{required:"请输入手机号"},{mobile:"请输入正确格式的手机号"}]},
+				     					{telId:[{required:"请输入座机号"},{tel:"请输入正确格式的座机号"}]},
+				     					{urlId:[{required:"请输入url地址"},{url:"请输入正确格式的url地址"}]},
+				     					{passwordId:"请输入密码"},
+				     					{confirm_passwordId:[{required:"请输入确认密码"},{equalTo:"两次密码输入不一致"}]},
+				     					{zipcodeId:[{required:"请输入邮编地址"},{zipcode:"请输入正确格式的邮编地址"}]},
+				     					{customId:[{required:"请输入值"},{custom:"不符合正则表达式"}]}
+				   						]
+							}); */
+						/* $("#form1").dtvalidate('validate');
+						var flag=$("#form1").dtvalidate('option', 'flag');
+						alert(flag);
+						return flag; */
+						
+		});
+	});
+
+</script>
+</head>
+<body>
+<form  action id="form1" >
+	<label id="intIdlabelId">整数</label>
+	<input type="text" id="intId" name="intId" value="">
+	<span id="intIdrequiredId" style="color: red;">*</span>
+	
+	<br><br>
+	<label id="floatIdlabelId">浮点数</label>
+	<input type="text" id="floatId" name="floatId" value="">
+	<span id="floatIdrequiredId" style="color: red;">*</span>
+	
+	<br><br>
+	<label id="mailIdlabelId">邮箱</label>
+	<input type="text" id="mailId" name="mailId" value="">
+	<span id="mailIdrequiredId" style="color: red;">*</span>
+	
+	<br><br>
+	<label id="mobileIdlabelId">手机号</label>
+	<input type="text" id="mobileId" name="mobileId" value="">
+	<span id="mobileIdrequiredId" style="color: red;">*</span>
+	
+	<br><br>
+	<label id="telIdlabelId">座机号</label>
+	<input type="text" id="telId" name="telId" value="">
+	<span id="telIdrequiredId" style="color: red;">*</span>
+	
+	<br><br>
+	<label id="urlIdlabelId">URL</label>
+	<input type="text" id="urlId" name="urlId" value="">
+	<span id="urlIdrequiredId" style="color: red;">*</span>
+	
+	<br><br>
+
+	<label id="passwordIdlabelId">密码</label>
+	<input type="password" id="passwordId" name="passwordId" value="">
+	<span id="passwordIdrequiredId" style="color: red;">*</span>
+	  提示 ：第一位 为字母的数字字母混合 串 不低于6位不高于12位
+	<br><br>
+	<label id="confirm_passwordIdlabelId">确认密码</label>
+	<input type="password" id="confirm_passwordId" name="confirm_passwordId" value="">
+	<span id="confirm_passwordIdrequiredId" style="color: red;">*</span>
+	
+	<br><br>
+	<label id="zipcodeIdlabelId">邮编</label>
+	<input type="text" id="zipcodeId" name="zipcodeId" value="">
+	<span id="zipcodeIdrequiredId" style="color: red;">*</span>
+
+	<br><br>
+	<label id="customIdlabelId">用户自定义校验</label>
+	<input type="text" id="customId" name="customId" value="">
+	<span id="customIdrequiredId" style="color: red;">*</span>
+    提示 ：输入tan|tbn
+	<br><br>
+	<!-- 
+	<label id="datepickerlabelId">日期组件</label>
+	<input type="text" id="datepicker" name="datepicker"></input>
+	<span id="datepickerrequiredId" style="color: red;">*</span>
+	<br/><br/>
+	
+	<label id="comboboxlabelId">下拉控件</label>
+    <div id="combobox"></div>
+    <span id="comboboxrequiredId" style="color: red;">*</span>
+    <br/><br/>
+    
+    <label id="radiogroup1labelId">单选按钮组</label>
+    <div id="radiogroup1" style='display:block'></div>
+    <span id="radiogroup1requiredId" style="color: red;">*</span>
+    <br/><br/> -->
+	
+	<input type="submit" id="submitId" value="校验">
+
+</form>
+
+<div>
+<h3>本实例功能</h3>
+<ul>
+	<li>通过JSON格式的数组 生成校验规则和校验提示消息</li>
+	<li>校验规则和提示消息支持用户自定义,不支持提交表单前的一些校验</li>
+	<li>提示消息显示方式为提示框的方式</li>
+</ul>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.ny.base.persistence.EquipAttributeMapper">
+
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="com.cattsoft.ny.base.entity.EquipAttribute"
+		useGeneratedKeys="true" keyProperty="id" >
+	 
+		<![CDATA[
+			INSERT INTO equip_attribute
+		]]>
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			name,value,equip_info_id,
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="value != null">
+				#{value},
+			</if>
+			<if test="equipId != null">
+				#{equipId},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="long">
+		<![CDATA[
+			DELETE FROM equip_attribute
+				WHERE ID = #{id}
+		]]>
+	</delete>
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.cattsoft.ny.base.entity.EquipAttribute">
+	    <![CDATA[
+			UPDATE equip_attribute
+	    ]]>
+		<set>
+			<if test="value != null">
+    	<![CDATA[ value = #{value}, ]]>
+			</if>
+		</set>
+	    <![CDATA[
+	        WHERE equip_info_id = #{equipId} and name = #{name}
+	    ]]>
+	</update>
+
+	<!-- 根据主键查询记录 -->
+	<select id="select" parameterType="long" resultMap="equipAttributeList">
+		<include refid="sqlSelectAll" />
+		<![CDATA[
+			WHERE ID = #{id}
+		]]>
+	</select>
+	
+	<!-- 根据设备id和属性名称查询记录 -->
+	<select id="selectByEqidAndName" parameterType="com.cattsoft.ny.base.entity.EquipAttribute"  resultMap="equipAttributeList">
+		<include refid="sqlSelectAll" />
+		<![CDATA[
+			WHERE equip_info_id = #{equipId} and name = #{name}
+		]]>
+	</select>
+
+	<!-- 条件查询所有记录 -->
+	<select id="selectList" parameterType="com.cattsoft.ny.base.entity.EquipAttribute"
+		resultMap="equipAttributeList">
+		<include refid="sqlSelectList" />
+	</select>
+
+	<resultMap id="equipAttributeList" type="com.cattsoft.ny.base.entity.EquipAttribute">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="value" column="value" />
+		<result property="equipId" column="equip_info_id" />
+	</resultMap>
+
+	<sql id="sqlSelectList">
+		<include refid="sqlSelectAll" />
+		<where>
+			<if test="id != null">
+			<![CDATA[ AND id = #{id} ]]>
+			</if>
+			<if test="name != null">
+			<![CDATA[ AND name = #{name} ]]>
+			</if>
+			<if test="value != null">
+			<![CDATA[ AND value = #{value} ]]>
+			</if>
+			<if test="equipId != null">
+			<![CDATA[ AND equip_info_id = #{equipId} ]]>
+			</if>
+		</where>
+	</sql>
+
+	<sql id="sqlSelectAll">
+		SELECT
+		<include refid="sqlColumn" />
+		FROM equip_attribute
+	</sql>
+
+	<sql id="sqlColumn">
+		id,name,value,equip_info_id
+	</sql>
+</mapper>

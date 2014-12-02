@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>jQuery UI Button - Icons</title>
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css">
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/dtui.button.js"></script>
+
+	<link rel="stylesheet" href="../demos.css">
+	<script>
+	$(function() {
+		$( "button:first" ).dtbutton({
+			icons: {
+				primary: "ui-icon-locked"
+			},
+			text: false
+		}).next().dtbutton({
+			icons: {
+				primary: "ui-icon-locked"
+			}
+		}).next().dtbutton({
+			icons: {
+				primary: "ui-icon-gear",
+				secondary: "ui-icon-triangle-1-s"
+			}
+		}).next().dtbutton({
+			icons: {
+				primary: "ui-icon-gear",
+				secondary: "ui-icon-triangle-1-s"
+			},
+			text: false
+		});
+	});
+	</script>
+</head>
+<body>
+
+<button>Button with icon only</button>
+<button>Button with icon on the left</button>
+<button>Button with two icons</button>
+<button>Button with two icons and no text</button>
+
+<div class="demo-description">
+<h3>本示例功能</h3>
+<ul>
+<li>用各式各样的文本和图标 组合成的一些button</li>
+</ul>
+</div>
+
+</body>
+</html>

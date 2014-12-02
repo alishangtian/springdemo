@@ -1,0 +1,86 @@
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>jQuery UI Datepicker - Icon trigger</title>
+<link rel="stylesheet" href="../dtui/theme/dtui.css" type="text/css" />
+<link rel="stylesheet" href="./qunit/qunit.css" type="text/css" />
+<script src="../dtui/js/jquery/jquery.js"></script>
+<script src="../dtui/js/jqueryui/jquery-ui.js"></script>
+<script src="./qunit/qunit.js"></script>
+<script src="../dtui/js/dtui.util.js" type="text/javascript"></script>
+<script src="../dtui/js/dtui.datepicker.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../htmldemo/demos.css" type="text/css"/>
+
+<script type="text/javascript">
+	$(function() {
+		var testDate = new Date(Date.parse("2010-02-02 10:30:59"));
+		var testDate2 = new Date(2010,1,2,10,30,59);
+		//$console.log(testDate);
+		$("#datepicker1").dtdatepicker({
+			label:"DatePicker1:",
+			required:true,
+			width: 100,
+			dateFormat: "yy-mm-dd HH:mi:ss",
+			defaultDate: testDate,
+			showTimePanel: true,
+			showOn : "button",
+			buttonImage : "../dtui/theme/default/datepicker/images/calendar.gif",
+			buttonImageOnly : true,
+			onClose: function(){
+				var curDate = $("#datepicker1").dtdatepicker('getDate');
+				$("#datepicker2").dtdatepicker('option', 'minDate', curDate);
+				var required = $("#datepicker2").dtdatepicker('option', 'required');
+				
+				$("#datepicker2").dtdatepicker('option', 'required', !required);
+			}
+		});
+		//$("#datepicker1").dtdatepicker('setDate',testDate);
+		
+		$("#datepicker2").dtdatepicker({
+			label:"DatePicker2:",
+			required:true,
+			width: 100,
+			dateFormat: "yy-mm-dd HH:mi:ss",
+			defaultDate: testDate2,
+			showTimePanel: true,
+			showOn : "button",
+			buttonImage : "../dtui/theme/default/datepicker/images/calendar.gif",
+			buttonImageOnly : true
+		});
+		
+		test('重置测试', function(){
+			$("#datepicker1").dtdatepicker('setDate', new Date());
+			var f = $("form")[0];
+			f.reset();
+			var date1 = $("#datepicker1").dtdatepicker('getDate');
+			equal(date1.getTime(), testDate.getTime());
+			//equal('', $("#datepicker2").val());
+		});
+		$('#btnShowTime').click(function(){
+			var f = $("form")[0];
+			f.reset();
+		});
+	});
+</script>
+</head>
+<body>
+<form name="" action="">
+	<table border="1">
+		<tr>
+			<td width="100px">
+				<input type="text" id="datepicker1" /> 
+			</td>
+			<td width="100px">
+				<input type="text" id="datepicker2" /> 
+			</td>
+		</tr>
+	</table>
+	<input type="reset" id="btnReset" name="重置" >
+	<input type="button" id="btnShowTime" name="显示日期" >
+</form>
+  <div id="qunit"></div>
+  <div id="qunit-fixture"></div>
+
+</body>
+</html>

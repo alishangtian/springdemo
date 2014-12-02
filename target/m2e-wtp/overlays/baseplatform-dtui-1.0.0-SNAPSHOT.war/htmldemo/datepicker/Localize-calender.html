@@ -1,0 +1,40 @@
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>jQuery UI Datepicker - Localize calendar</title>
+
+<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css"/>
+<script src="../../dtui/js/jquery/jquery.js"></script>
+<script src="../../dtui/js/dtui.util.js" type="text/javascript"></script>
+<script src="../../dtui/js/dtui.datepicker.js" type="text/javascript"></script>
+<script src="../../dtui/js/jqueryui/jquery.ui.datepicker-zh-CN.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+	 $(function() {
+		$("#datepicker").dtdatepicker($.dtdatepicker.regional["fr"]);
+		$("#locale").change(
+				function() {
+					$("#datepicker").dtdatepicker("option",$.dtdatepicker.regional[$(this).val()]);
+				});
+	}); 
+</script>
+</head>
+<body>
+	<p>
+		Date: <input type="text" id="datepicker" />&nbsp; <select id="locale">
+			<option value="ar">Arabic (‫(العربية</option>
+			<option value="zh-TW">Chinese Traditional (繁體中文)</option>
+			<option value="">English</option>
+			<option value="fr" selected="selected">French (Français)</option>
+			<option value="he">Hebrew (‫(עברית</option>
+		</select>
+	</p>
+	
+	<div class="demo-description">
+		<h3>本实例功能</h3>
+		<ul>
+			<li>本地化的日期控件根据用户选择 显示不同地域的日期显示格式</li>
+		</ul>
+	</div>
+</body>
+</html>

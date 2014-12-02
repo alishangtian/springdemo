@@ -1,0 +1,42 @@
+.dtui-radio{
+/* 	margin: 0 auto; */
+/* 	MARGIN-RIGHT: auto; MARGIN-LEFT: auto; */
+/* 	display:table-cell; */
+/* 	vertical-align: middle; */
+}
+
+.dtui-radio a,
+.dtui-radio a:link,
+.dtui-radio a:visited {
+	color: #2779aa;
+	text-decoration: none;
+}
+
+.ui-state-disabled a {
+	cursor: default;
+}
+
+.dtui-radio-container {
+	display:table-cell;
+	vertical-align: middle;
+}
+
+.dtui-radiogroup-container {
+/* 	margin-bottom: 25px; */
+}
+.dtui-radiogroup-fieldset {
+	display:inline;
+}
+
+.dtui-radiogroup-item {
+ 	padding-left: 15px; 
+ 	padding-right: 15px; 
+ 	display: inline;
+}
+
+/*
+.dtui-radiogroup{
+	heigth: 100%;
+	weidth: 100%;
+}
+*/

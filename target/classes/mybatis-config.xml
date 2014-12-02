@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 设定MyBatis在运行时的行为方式 -->
+	<settings>
+		<setting name="cacheEnabled" value="false" />
+		<setting name="lazyLoadingEnabled" value="false" />
+		<setting name="aggressiveLazyLoading" value="true" />
+		<setting name="multipleResultSetsEnabled" value="true" />
+		<setting name="useColumnLabel" value="true" />
+		<setting name="useGeneratedKeys" value="false" />
+		<setting name="autoMappingBehavior" value="PARTIAL" />
+		<setting name="defaultExecutorType" value="SIMPLE" />
+		<setting name="defaultStatementTimeout" value="10000" />
+	</settings>
+
+	<!-- 类型别名是为Java类型命名一个短的名字, 它只和XML配置有关，用来减少类完全限定名的多余部分 -->
+	<typeAliases>
+		<!-- core -->
+		<typeAlias alias="PagingQueryBean" type="com.cattsoft.baseplatform.core.entity.PagingQueryBean" />
+		<typeAlias alias="SysParam" type="com.cattsoft.baseplatform.core.entity.SysParam" />
+		<typeAlias alias="BusiParam" type="com.cattsoft.baseplatform.core.entity.BusiParam" />
+		<typeAlias alias="Domain" type="com.cattsoft.baseplatform.core.entity.Domain" />
+		<typeAlias alias="DomainValue" type="com.cattsoft.baseplatform.core.entity.DomainValue" />
+
+		<!-- sm -->
+		<typeAlias alias="SysUser" type="com.cattsoft.baseplatform.func.sm.entity.SysUser" />
+		<typeAlias alias="UserOwnerRela" type="com.cattsoft.baseplatform.func.sm.entity.UserOwnerRela" />
+		<typeAlias alias="UserShortcut" type="com.cattsoft.baseplatform.func.sm.entity.UserShortcut" />
+		<typeAlias alias="Staff" type="com.cattsoft.baseplatform.func.sm.entity.Staff" />
+		<typeAlias alias="FuncTree" type="com.cattsoft.baseplatform.func.sm.entity.FuncTree" />
+		<typeAlias alias="FuncNode" type="com.cattsoft.baseplatform.func.sm.entity.FuncNode" />
+		<typeAlias alias="FuncItem" type="com.cattsoft.baseplatform.func.sm.entity.FuncItem" />
+		<typeAlias alias="RoleFuncAlloc" type="com.cattsoft.baseplatform.func.sm.entity.RoleFuncAlloc" />
+		<typeAlias alias="RoleFuncItemAlloc" type="com.cattsoft.baseplatform.func.sm.entity.RoleFuncItemAlloc" />
+		<typeAlias alias="SysDept" type="com.cattsoft.baseplatform.func.sm.entity.SysDept" />
+		<typeAlias alias="SysRole" type="com.cattsoft.baseplatform.func.sm.entity.SysRole" />
+		<typeAlias alias="UserFuncAlloc" type="com.cattsoft.baseplatform.func.sm.entity.UserFuncAlloc" />
+		<typeAlias alias="UserFuncItemAlloc" type="com.cattsoft.baseplatform.func.sm.entity.UserFuncItemAlloc" />
+		<typeAlias alias="UserRoleAlloc" type="com.cattsoft.baseplatform.func.sm.entity.UserRoleAlloc" />
+		<typeAlias alias="RoleFuncAuthQuery" type="com.cattsoft.baseplatform.func.sm.entity.query.RoleFuncAuthQuery" />
+		<typeAlias alias="UserFuncAuthQuery" type="com.cattsoft.baseplatform.func.sm.entity.query.UserFuncAuthQuery" />
+		<typeAlias alias="UserRoleAuthQuery" type="com.cattsoft.baseplatform.func.sm.entity.query.UserRoleAuthQuery" />
+		<typeAlias alias="SysUserQuery" type="com.cattsoft.baseplatform.func.sm.entity.query.SysUserQuery" />
+		<typeAlias alias="SysRoleQuery" type="com.cattsoft.baseplatform.func.sm.entity.query.SysRoleQuery" />
+		<typeAlias alias="StaffQuery" type="com.cattsoft.baseplatform.func.sm.entity.query.StaffQuery" />
+		<typeAlias alias="SysLogQuery" type="com.cattsoft.baseplatform.func.sm.entity.query.SysLogQuery" />
+		<typeAlias alias="SysLog" type="com.cattsoft.baseplatform.func.sm.entity.SysLog" />
+		<typeAlias alias="LoginLogQuery" type="com.cattsoft.baseplatform.func.sm.entity.query.LoginLogQuery" />
+		<typeAlias alias="LoginLog" type="com.cattsoft.baseplatform.func.sm.entity.LoginLog" />
+		<typeAlias alias="RoleAllocUserCtrl" type="com.cattsoft.baseplatform.func.sm.entity.ctrl.RoleAllocUserCtrl" />
+		<typeAlias alias="AdminDivision" type="com.cattsoft.baseplatform.func.sm.entity.AdminDivision" />
+		<typeAlias alias="CustomizeArea" type="com.cattsoft.baseplatform.func.sm.entity.CustomizeArea" />
+		<typeAlias alias="Bulletin" type="com.cattsoft.baseplatform.func.sm.entity.Bulletin" />
+		<typeAlias alias="BulletinPublishMethodInst" type="com.cattsoft.baseplatform.func.sm.entity.BulletinPublishMethodInst" />
+		<typeAlias alias="BulletinPublishRangeInst" type="com.cattsoft.baseplatform.func.sm.entity.BulletinPublishRangeInst" />
+		<typeAlias alias="BulletinFeedback" type="com.cattsoft.baseplatform.func.sm.entity.BulletinFeedback" />
+		<typeAlias alias="UserPageSetting" type="com.cattsoft.baseplatform.func.sm.entity.UserPageSetting" />
+		<typeAlias alias="PageLayout" type="com.cattsoft.baseplatform.func.sm.entity.PageLayout" />
+		<typeAlias alias="PageComponent" type="com.cattsoft.baseplatform.func.sm.entity.PageComponent" />
+		<typeAlias alias="Unit" type="com.cattsoft.baseplatform.func.sm.entity.Unit" />
+		<typeAlias alias="SysMsg" type="com.cattsoft.baseplatform.func.sm.entity.SysMsg" />	    
+	    <typeAlias alias="UserEmail" type="com.cattsoft.baseplatform.func.sm.entity.UserEmail" />
+	</typeAliases>
+</configuration>

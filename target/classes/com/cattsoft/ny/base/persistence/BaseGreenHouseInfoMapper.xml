@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.ny.base.persistence.BaseGreenHouseInfoMapper">
+
+	<!-- Oracle分页查询 -->
+	<sql id="pagingFooter"> limit ${pagingInfo.startIdx-1},#{pagingInfo.pageRows}</sql>
+	<sql id="countingHeader">SELECT COUNT(*) FROM(</sql>
+	<sql id="countingFooter">) t</sql>
+
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="com.cattsoft.ny.base.entity.BaseGreenHouseInfo">
+		
+		<![CDATA[
+			INSERT INTO base_green_house_info
+		]]>
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			
+	    <if test="crops != null" >
+			CROPS,
+	    </if>
+	    <if test="name != null" >
+			NAME,
+	    </if>
+	    <if test="seedSource != null" >
+			SEED_SOURCE,
+	    </if>
+	    <if test="ctime != null" >
+			C_TIME,
+	    </if>
+	    <if test="gps != null" >
+			GPS,
+	    </if>
+	    <if test="acreage != null" >
+			ACREAGE,
+	    </if>
+	    <if test="state != null" >
+			STATE,
+	    </if>
+	    <if test="remark != null" >
+			REMARK,
+	    </if>
+	    <if test="uuid != null" >
+			UUID,
+	    </if>
+	    <if test="baseId != null" >
+			BASE_ID,
+	    </if>
+	    <if test="geoInfo != null" >
+			GEO_INFO,
+	    </if>
+	  </trim>
+	  <trim prefix="values (" suffix=")" suffixOverrides="," >
+	  
+	    <if test="crops != null" >
+			#{crops},
+	    </if>
+	    <if test="name != null" >
+			#{name},
+	    </if>
+	    <if test="seedSource != null" >
+			#{seedSource},
+	    </if>
+	    <if test="ctime != null" >
+			#{ctime},
+	    </if>
+	    <if test="gps != null" >
+			#{gps},
+	    </if>
+	    <if test="acreage != null" >
+			#{acreage},
+	    </if>
+	    <if test="state != null" >
+			#{state},
+	    </if>
+	    <if test="remark != null" >
+			#{remark},
+	    </if>
+	    <if test="uuid != null" >
+			#{uuid},
+	    </if>
+	    <if test="baseId != null" >
+			#{baseId},
+	    </if>
+	    <if test="geoInfo != null" >
+			#{geoInfo},
+	    </if>
+	  </trim>
+	</insert>
+
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="long">
+		<![CDATA[
+			DELETE FROM base_green_house_info
+				WHERE ID = #{id}
+		]]>
+	</delete>
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.cattsoft.ny.base.entity.BaseGreenHouseInfo">
+	    <![CDATA[
+			UPDATE base_green_house_info 
+	    ]]>
+		<set>
+		<if test="crops != null">
+    	<![CDATA[ CROPS = #{crops}, ]]>
+		</if>
+		<if test="name != null">
+    	<![CDATA[ NAME = #{name}, ]]>
+		</if>
+		<if test="seedSource != null">
+    	<![CDATA[ SEED_SOURCE = #{seedSource}, ]]>
+		</if>
+		<if test="ctime != null">
+    	<![CDATA[ C_TIME = #{ctime}, ]]>
+		</if>
+		<if test="gps != null">
+    	<![CDATA[ GPS = #{gps}, ]]>
+		</if>
+		<if test="acreage != null">
+    	<![CDATA[ ACREAGE = #{acreage}, ]]>
+		</if>
+		<if test="state != null">
+    	<![CDATA[ STATE = #{state}, ]]>
+		</if>
+		<if test="remark != null">
+    	<![CDATA[ REMARK = #{remark}, ]]>
+		</if>
+		<if test="uuid != null">
+    	<![CDATA[ UUID = #{uuid}, ]]>
+		</if>
+		<if test="baseId != null">
+    	<![CDATA[ BASE_ID = #{baseId}, ]]>
+		</if>
+		<if test="geoInfo != null">
+    	<![CDATA[ GEO_INFO = #{geoInfo}, ]]>
+		</if>
+		</set>
+	    <![CDATA[
+	        WHERE ID = #{id}
+	    ]]>
+	</update>
+
+	<!-- 根据主键查询记录 -->
+	<select id="select" parameterType="long" resultMap="baseGreenHouseInfoList">
+		<include refid="sqlSelectAll" />
+		<![CDATA[
+			WHERE ID = #{id}
+		]]>
+	</select>
+
+	<!-- 条件查询所有记录 -->
+	<select id="selectList" parameterType="com.cattsoft.ny.base.entity.querybean.BaseGreenHouseInfoQB"
+		resultMap="baseGreenHouseInfoList">
+		<include refid="sqlSelectList" />
+	</select>
+
+	<!-- 分页条件查询所有记录 -->
+	<select id="selectPage" parameterType="PagingQueryBean"
+		resultMap="baseGreenHouseInfoList">
+		<include refid="sqlSelectPage" />
+		<include refid="pagingFooter" />
+	</select>
+	<!-- 查询记录总数 -->
+	<select id="selectCount" parameterType="PagingQueryBean"
+		resultType="int">
+		<include refid="countingHeader" />
+		<include refid="sqlSelectPage" />
+		<include refid="countingFooter" />
+	</select>
+
+	<resultMap id="baseGreenHouseInfoList" type="com.cattsoft.ny.base.entity.BaseGreenHouseInfo">
+		<result property="id" column="ID" />
+		<result property="crops" column="CROPS" />
+		<result property="name" column="NAME" />
+		<result property="seedSource" column="SEED_SOURCE" />
+		<result property="ctime" column="C_TIME" />
+		<result property="gps" column="GPS" />
+		<result property="acreage" column="ACREAGE" />
+		<result property="state" column="STATE" />
+		<result property="remark" column="REMARK" />
+		<result property="uuid" column="UUID" />
+		<result property="baseId" column="BASE_ID" />
+		<result property="geoInfo" column="GEO_INFO" />
+	</resultMap>
+
+	<sql id="sqlSelectList">
+		<include refid="sqlSelectAll" />
+		<where>
+			<if test="id != null">
+			<![CDATA[ AND ID = #{id} ]]>
+			</if>
+			<if test="crops != null">
+			<![CDATA[ AND CROPS = #{crops} ]]>
+			</if>
+			<if test="name != null">
+			<![CDATA[ AND NAME = #{name} ]]>
+			</if>
+			<if test="seedSource != null">
+			<![CDATA[ AND SEED_SOURCE = #{seedSource} ]]>
+			</if>
+			<if test="ctime != null">
+			<![CDATA[ AND C_TIME = #{ctime} ]]>
+			</if>
+			<if test="gps != null">
+			<![CDATA[ AND GPS = #{gps} ]]>
+			</if>
+			<if test="acreage != null">
+			<![CDATA[ AND ACREAGE = #{acreage} ]]>
+			</if>
+			<if test="state != null">
+			<![CDATA[ AND STATE = #{state} ]]>
+			</if>
+			<if test="remark != null">
+			<![CDATA[ AND REMARK = #{remark} ]]>
+			</if>
+			<if test="uuid != null">
+			<![CDATA[ AND UUID = #{uuid} ]]>
+			</if>
+			<if test="baseId != null">
+			<![CDATA[ AND BASE_ID = #{baseId} ]]>
+			</if>
+			<if test="geoInfo != null">
+			<![CDATA[ AND GEO_INFO = #{geoInfo} ]]>
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="sqlSelectPage">
+		<include refid="sqlSelectAll" />
+		<where>	     				
+	    <if test="queryBean.id != null">
+		<![CDATA[ AND ID = #{queryBean.id} ]]>
+		</if>
+	    <if test="queryBean.crops != null">
+		<![CDATA[ AND CROPS = #{queryBean.crops} ]]>
+		</if>
+	    <if test="queryBean.name != null">
+		<![CDATA[ AND NAME like CONCAT('%',#{queryBean.name},'%') ]]>
+		</if>
+	    <if test="queryBean.seedSource != null">
+		<![CDATA[ AND SEED_SOURCE = #{queryBean.seedSource} ]]>
+		</if>
+	    <if test="queryBean.ctime != null">
+		<![CDATA[ AND C_TIME = #{queryBean.ctime} ]]>
+		</if>
+	    <if test="queryBean.gps != null">
+		<![CDATA[ AND GPS = #{queryBean.gps} ]]>
+		</if>
+	    <if test="queryBean.acreage != null">
+		<![CDATA[ AND ACREAGE = #{queryBean.acreage} ]]>
+		</if>
+	    <if test="queryBean.state != null">
+		<![CDATA[ AND STATE = #{queryBean.state} ]]>
+		</if>
+	    <if test="queryBean.remark != null">
+		<![CDATA[ AND REMARK = #{queryBean.remark} ]]>
+		</if>
+	    <if test="queryBean.uuid != null">
+		<![CDATA[ AND UUID = #{queryBean.uuid} ]]>
+		</if>
+	    <if test="queryBean.baseId != null">
+		<![CDATA[ AND BASE_ID = #{queryBean.baseId} ]]>
+		</if>
+	    <if test="queryBean.geoInfo != null">
+		<![CDATA[ AND GEO_INFO = #{queryBean.geoInfo} ]]>
+		</if>
+		</where>
+	</sql>
+	<sql id="sqlSelectAll">
+			SELECT
+				<include refid="sqlColumn" />
+			FROM base_green_house_info 
+	</sql>
+	<sql id="sqlColumn">
+		ID,CROPS,NAME,SEED_SOURCE,C_TIME,GPS,ACREAGE,STATE,REMARK,UUID,BASE_ID,GEO_INFO
+	</sql>
+</mapper>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.baseplatform.func.sm.persistence.SysMsgMapper">
+    <!-- Oracle分页查询 -->
+	<sql id="pagingHeader">select * from(select row_.*,rownum rownum_ from(</sql>
+	<sql id="pagingFooter">) row_ where rownum &lt;= #{pagingInfo.endIdx}) where rownum_ &gt;= #{pagingInfo.startIdx}</sql>
+	<sql id="countingHeader">select count(*) from(</sql>
+	<sql id="countingFooter">)</sql>
+	
+	<!--系统消息集合数据 -->
+    <resultMap id="sysMsgList" type="SysMsg">
+		<id property="sysMsgId" column="SYS_MSG_ID" />
+		<result property="msgName" column="MSG_NAME" />
+		<result property="msgCountUrl" column="MSG_COUNT_URL" />
+		<result property="dialogUrl" column="DIALOG_URL" />
+		<result property="dialogTitle" column="DIALOG_TITLE" />
+		<result property="dialogWidth" column="DIALOG_WIDTH" />
+		<result property="dialogHeight" column="DIALOG_HEIGHT" />
+		<result property="sts" column="STS" />
+		<result property="stsTime" column="STS_TIME" />
+	</resultMap>
+	
+    <!-- 查询所有系统消息-->
+    <select id="selectAllSysMsg" resultMap="sysMsgList">
+       SELECT SYS_MSG_ID,
+	       MSG_NAME,
+	       MSG_COUNT_URL,
+	       DIALOG_URL,
+	       DIALOG_TITLE,
+	       DIALOG_WIDTH,
+	       DIALOG_HEIGHT,
+	       STS,
+	       STS_TIME
+	   FROM SYS_MSG
+	   WHERE STS='A'
+    </select>
+    
+    <!-- 根据Id查询系统消息-->
+    <select id="selectSysMsgById" parameterType="Long" resultMap="sysMsgList">
+       SELECT SYS_MSG_ID,
+	       MSG_NAME,
+	       MSG_COUNT_URL,
+	       DIALOG_URL,
+	       DIALOG_TITLE,
+	       DIALOG_WIDTH,
+	       DIALOG_HEIGHT,
+	       STS,
+	       STS_TIME
+	   FROM SYS_MSG
+	   WHERE SYS_MSG_ID=#{sysMsgId, jdbcType=NUMERIC}
+    </select>
+    
+    <!-- 添加系统消息 -->
+    <insert id="insertSysMsg" parameterType="SysMsg">
+		<selectKey keyProperty="sysMsgId" resultType="long" order="BEFORE">
+			SELECT SEQ_ALERM_LEVEL_ID.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO SYS_MSG
+		  (SYS_MSG_ID,
+		   MSG_NAME,
+		   MSG_COUNT_URL,
+		   DIALOG_URL,
+		   DIALOG_TITLE,
+		   DIALOG_WIDTH,
+		   DIALOG_HEIGHT,
+		   STS,
+		   STS_TIME)
+		VALUES
+		  (#{sysMsgId, jdbcType=NUMERIC}, 
+		   #{msgName, jdbcType=VARCHAR}, 
+		   #{msgCountUrl, jdbcType=VARCHAR}, 
+		   #{dialogUrl, jdbcType=VARCHAR}, 
+		   #{dialogTitle, jdbcType=VARCHAR},
+		   #{dialogWidth, jdbcType=NUMERIC},
+		   #{dialogHeight, jdbcType=NUMERIC},
+		   #{sts, jdbcType=VARCHAR},
+		   #{stsTime, jdbcType=TIMESTAMP})
+	</insert>
+	
+	<!--删除系统消息 -->
+	<delete id="deleteSysMsg" parameterType="long">
+	    DELETE FROM SYS_MSG WHERE SYS_MSG_ID=#{sysMsgId, jdbcType=NUMERIC}
+	</delete>
+	
+	<!-- 修改系统消息 -->
+    <update id="updateSysMsg" parameterType="SysMsg">
+		UPDATE SYS_MSG
+		<set>
+	           <if test="msgName != null">MSG_NAME=#{msgName, jdbcType=VARCHAR},</if>
+	           <if test="msgCountUrl != null">MSG_COUNT_URL=#{msgCountUrl, jdbcType=VARCHAR},</if>
+	           <if test="dialogUrl != null">DIALOG_URL=#{dialogUrl, jdbcType=VARCHAR},</if>
+	           <if test="dialogTitle != null">DIALOG_TITLE=#{dialogTitle, jdbcType=VARCHAR},</if>
+	           <if test="dialogWidth != null">DIALOG_WIDTH=#{dialogWidth, jdbcType=NUMERIC},</if>
+	           <if test="dialogHeight != null">DIALOG_HEIGHT=#{dialogHeight, jdbcType=NUMERIC},</if>
+	           <if test="sts != null">STS=#{sts, jdbcType=VARCHAR},</if>
+	           <if test="stsTime != null">STS_TIME=#{stsTime, jdbcType=TIMESTAMP},</if>
+			   SYS_MSG_ID=SYS_MSG_ID
+		</set>
+		WHERE SYS_MSG_ID = #{sysMsgId, jdbcType=NUMERIC}
+	</update>
+</mapper>

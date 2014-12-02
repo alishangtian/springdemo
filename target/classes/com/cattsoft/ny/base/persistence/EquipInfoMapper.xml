@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.ny.base.persistence.EquipInfoMapper">
+
+	<!-- Oracle分页查询 -->
+	<sql id="pagingFooter"> limit ${pagingInfo.startIdx-1},#{pagingInfo.pageRows}
+	</sql>
+	<sql id="countingHeader">SELECT COUNT(*) FROM(</sql>
+	<sql id="countingFooter">) t</sql>
+
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="com.cattsoft.ny.base.entity.EquipInfo"
+		useGeneratedKeys="true" keyProperty="id">
+	 
+		<![CDATA[
+			INSERT INTO equip_info
+		]]>
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+
+			<if test="deviceId != null">
+				DEVICE_ID,
+			</if>
+			<if test="state != null">
+				STATE,
+			</if>
+			<if test="remark != null">
+				REMARK,
+			</if>
+			<if test="type != null">
+				TYPE,
+			</if>
+			<if test="name != null">
+				NAME,
+			</if>
+			<if test="model != null">
+				MODEL,
+			</if>
+			<if test="factory != null">
+				FACTORY,
+			</if>
+			<if test="custId != null">
+				CUS_CUST_ID
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+
+			<if test="deviceId != null">
+				#{deviceId},
+			</if>
+			<if test="state != null">
+				#{state},
+			</if>
+			<if test="remark != null">
+				#{remark},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="model != null">
+				#{model},
+			</if>
+			<if test="factory != null">
+				#{factory},
+			</if>
+			<if test="custId != null">
+				#{custId}
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="long">
+		<![CDATA[
+			DELETE FROM equip_info
+				WHERE ID = #{id}
+		]]>
+	</delete>
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.cattsoft.ny.base.entity.EquipInfo">
+	    <![CDATA[
+			UPDATE equip_info 
+	    ]]>
+		<set>
+			<if test="deviceId != null">
+    	<![CDATA[ DEVICE_ID = #{deviceId}, ]]>
+			</if>
+			<if test="state != null">
+    	<![CDATA[ STATE = #{state}, ]]>
+			</if>
+			<if test="remark != null">
+    	<![CDATA[ REMARK = #{remark}, ]]>
+			</if>
+			<if test="type != null">
+    	<![CDATA[ TYPE = #{type}, ]]>
+			</if>
+			<if test="name != null">
+    	<![CDATA[ NAME = #{name}, ]]>
+			</if>
+			<if test="model != null">
+    	<![CDATA[ MODEL = #{model}, ]]>
+			</if>
+			<if test="factory != null">
+    	<![CDATA[ FACTORY = #{factory}, ]]>
+			</if>
+			<if test="custId != null">
+    	<![CDATA[ CUS_CUST_ID = #{custId} ]]>
+			</if>
+		</set>
+	    <![CDATA[
+	        WHERE ID = #{id}
+	    ]]>
+	</update>
+
+	<!-- 根据主键查询记录 -->
+	<select id="select" parameterType="long" resultMap="equipInfoList">
+		<include refid="sqlSelectAll" />
+		<![CDATA[
+			WHERE ID = #{id}
+		]]>
+	</select>
+
+	<!-- 条件查询所有记录 -->
+	<select id="selectList" parameterType="com.cattsoft.ny.base.entity.querybean.EquipInfoQB"
+		resultMap="equipInfoList">
+		<include refid="sqlSelectList" />
+	</select>
+
+	<!-- 条件查询未被其他温室或基地使用的设备记录 -->
+	<select id="selectUsefulList" parameterType="com.cattsoft.ny.base.entity.querybean.EquipInfoQB"
+		resultMap="equipInfoList">
+		<include refid="sqlSelectUsefulList" />
+	</select>
+
+	<select id="selectOtherList" parameterType="com.cattsoft.ny.base.entity.querybean.EquipInfoQB"
+		resultMap="equipInfoList">
+		<include refid="sqlSelectOtherList" />
+	</select>
+
+	<!-- 分页条件查询所有记录 -->
+	<select id="selectPage" parameterType="PagingQueryBean"
+		resultMap="equipInfoList">
+		<include refid="sqlSelectPage" />
+		<include refid="pagingFooter" />
+	</select>
+	<!-- 查询记录总数 -->
+	<select id="selectCount" parameterType="PagingQueryBean"
+		resultType="int">
+		<include refid="countingHeader" />
+		<include refid="sqlSelectPage" />
+		<include refid="countingFooter" />
+	</select>
+	<!-- 查询未被使用的某用户的控制器列表 -->
+	<select id="findFreeControlEquip" parameterType="com.cattsoft.ny.base.entity.querybean.EquipInfoQB"
+		resultMap="equipInfoList">
+		<include refid="sqlSelectAll" />
+		<where>
+			<if test="custId != null">
+			<![CDATA[ CUS_CUST_ID = #{custId} ]]>
+			</if>
+			<if test="type != null">
+			<![CDATA[ AND TYPE = #{type} ]]>
+			</if>
+			AND id NOT IN (SELECT equip_info_id FROM equip_net_topology)
+		</where>
+	</select>
+
+
+
+	<resultMap id="equipInfoList" type="com.cattsoft.ny.base.entity.EquipInfo">
+		<result property="id" column="ID" />
+		<result property="deviceId" column="DEVICE_ID" />
+		<result property="state" column="STATE" />
+		<result property="remark" column="REMARK" />
+		<result property="type" column="TYPE" />
+		<result property="name" column="NAME" />
+		<result property="model" column="MODEL" />
+		<result property="factory" column="FACTORY" />
+		<result property="custId" column="CUS_CUST_ID" />
+	</resultMap>
+
+	<sql id="sqlSelectUsefulList">
+		SELECT * FROM EQUIP_INFO A
+		<where>
+			<if test="id != null">
+			<![CDATA[A.ID = #{id} ]]>
+			</if>
+			<if test="deviceId != null">
+			<![CDATA[ AND A.DEVICE_ID = #{deviceId} ]]>
+			</if>
+			<if test="state != null">
+			<![CDATA[ AND A.STATE = #{state} ]]>
+			</if>
+			<if test="remark != null">
+			<![CDATA[ AND A.REMARK = #{remark} ]]>
+			</if>
+			<if test="type != null">
+			<![CDATA[ AND A.TYPE = #{type} ]]>
+			</if>
+			<if test="name != null">
+			<![CDATA[ AND A.NAME like CONCAT('%', #{name},'%') ]]>
+			</if>
+			<if test="model != null">
+			<![CDATA[ AND A.MODEL = #{model} ]]>
+			</if>
+			<if test="factory != null">
+			<![CDATA[ AND A.FACTORY = #{factory} ]]>
+			</if>
+			<if test="custId != null">
+			<![CDATA[ AND A.CUS_CUST_ID = #{custId} ]]>
+			</if>
+			AND A.ID NOT IN
+			<include refid="sonSqlForsqlSelectUsefulList" />
+		</where>
+	</sql>
+	<sql id="sonSqlForsqlSelectUsefulList">
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			select b.equip_info_id from equip_sensors_ghouse b
+			<where>
+				b.type = #{type}
+				<if test="baseId != null">
+			   <![CDATA[ AND b.base_id != #{baseId} ]]>
+				</if>
+				<if test="houseId != null">
+			   <![CDATA[ AND b.house_id != #{houseId} ]]>
+				</if>
+			</where>
+		</trim>
+	</sql>
+
+	<sql id="sqlSelectList">
+		<include refid="sqlSelectAll" />
+		<where>
+			<if test="id != null">
+			<![CDATA[ AND ID = #{id} ]]>
+			</if>
+			<if test="deviceId != null">
+			<![CDATA[ AND DEVICE_ID = #{deviceId} ]]>
+			</if>
+			<if test="state != null">
+			<![CDATA[ AND STATE = #{state} ]]>
+			</if>
+			<if test="remark != null">
+			<![CDATA[ AND REMARK = #{remark} ]]>
+			</if>
+			<if test="type != null">
+			<![CDATA[ AND TYPE = #{type} ]]>
+			</if>
+			<if test="name != null">
+			<![CDATA[ AND NAME like CONCAT('%', #{name},'%') ]]>
+			</if>
+			<if test="model != null">
+			<![CDATA[ AND MODEL = #{model} ]]>
+			</if>
+			<if test="factory != null">
+			<![CDATA[ AND FACTORY = #{factory} ]]>
+			</if>
+			<if test="custId != null">
+			<![CDATA[ AND CUS_CUST_ID = #{custId} ]]>
+			</if>
+		</where>
+	</sql>
+
+	<sql id="sqlSelectOtherList">
+		<include refid="sqlSelectAll" />
+		<where>
+			id not in (select EQUIP_INFO_ID from equip_net_topology)
+			<if test="id != null">
+			<![CDATA[ AND ID = #{id} ]]>
+			</if>
+			<if test="deviceId != null">
+			<![CDATA[ AND DEVICE_ID = #{deviceId} ]]>
+			</if>
+			<if test="state != null">
+			<![CDATA[ AND STATE = #{state} ]]>
+			</if>
+			<if test="remark != null">
+			<![CDATA[ AND REMARK = #{remark} ]]>
+			</if>
+			<if test="type != null">
+			<![CDATA[ AND TYPE = #{type} ]]>
+			</if>
+			<if test="name != null">
+			<![CDATA[ AND NAME = #{name} ]]>
+			</if>
+			<if test="model != null">
+			<![CDATA[ AND MODEL = #{model} ]]>
+			</if>
+			<if test="factory != null">
+			<![CDATA[ AND FACTORY = #{factory} ]]>
+			</if>
+			<if test="custId != null">
+			<![CDATA[ AND CUS_CUST_ID = #{custId} ]]>
+			</if>
+			<if test="custId != null">
+			<![CDATA[ AND CUS_CUST_ID = #{custId} ]]>
+			</if>
+		</where>
+	</sql>
+
+	<sql id="sqlSelectPage">
+		<include refid="sqlSelectAll" />
+		<where>
+			<if test="queryBean.id != null">
+		<![CDATA[ AND ID = #{queryBean.id} ]]>
+			</if>
+			<if test="queryBean.deviceId != null">
+		<![CDATA[ AND DEVICE_ID = #{queryBean.deviceId} ]]>
+			</if>
+			<if test="queryBean.state != null">
+		<![CDATA[ AND STATE = #{queryBean.state} ]]>
+			</if>
+			<if test="queryBean.remark != null">
+		<![CDATA[ AND REMARK = #{queryBean.remark} ]]>
+			</if>
+			<if test="queryBean.type != null">
+		<![CDATA[ AND TYPE = #{queryBean.type} ]]>
+			</if>
+			<if test="queryBean.name != null">
+		<![CDATA[ AND NAME = #{queryBean.name} ]]>
+			</if>
+			<if test="queryBean.model != null">
+		<![CDATA[ AND MODEL = #{queryBean.model} ]]>
+			</if>
+			<if test="queryBean.factory != null">
+		<![CDATA[ AND FACTORY = #{queryBean.factory} ]]>
+			</if>
+			<if test="queryBean.custId != null">
+			<![CDATA[ AND CUS_CUST_ID = #{queryBean.custId} ]]>
+			</if>
+		</where>
+	</sql>
+	<sql id="sqlSelectAll">
+		SELECT
+		<include refid="sqlColumn" />
+		FROM equip_info
+	</sql>
+
+	<sql id="sqlColumn">
+		ID,DEVICE_ID,STATE,REMARK,TYPE,NAME,MODEL,FACTORY,CUS_CUST_ID
+	</sql>
+
+	<!-- 分页条件查询所有记录 -->
+	<select id="selectPageForward" parameterType="PagingQueryBean"
+		resultMap="equipInfoList">
+		<include refid="sqlForSelectAll" />
+		<include refid="pagingFooter" />
+	</select>
+	<!-- 查询记录总数 -->
+	<select id="selectCountForward" parameterType="PagingQueryBean"
+		resultType="int">
+		<include refid="countingHeader" />
+		<include refid="sqlForSelectAll" />
+		<include refid="countingFooter" />
+	</select>
+	<!-- 条件查询所有记录 -->
+	<select id="selectListForward" parameterType="com.cattsoft.ny.base.entity.querybean.EquipInfoQB"
+		resultMap="equipInfoList">
+		<include refid="sqlForSelectAll" />
+	</select>
+	<sql id="sqlForSelectAll">
+		SELECT
+		A.ID,A.DEVICE_ID,A.STATE,A.REMARK,A.TYPE,A.NAME,A.MODEL,A.FACTORY
+		FROM
+		equip_info A,EQUIP_SENSORS_GHOUSE B
+		<where>
+			A.ID = B.EQUIP_INFO_ID
+			and A.state = 1
+			<if test="queryBean.id != null">
+		<![CDATA[ AND A.ID = #{queryBean.id} ]]>
+			</if>
+			<if test="queryBean.deviceId != null">
+		<![CDATA[ AND A.DEVICE_ID = #{queryBean.deviceId} ]]>
+			</if>
+			<if test="queryBean.state != null">
+		<![CDATA[ AND A.STATE = #{queryBean.state} ]]>
+			</if>
+			<if test="queryBean.remark != null">
+		<![CDATA[ AND A.REMARK = #{queryBean.remark} ]]>
+			</if>
+			<if test="queryBean.type != null">
+		<![CDATA[ AND A.TYPE = #{queryBean.type} ]]>
+			</if>
+			<if test="queryBean.name != null">
+		<![CDATA[ AND A.NAME = #{queryBean.name} ]]>
+			</if>
+			<if test="queryBean.model != null">
+		<![CDATA[ AND A.MODEL = #{queryBean.model} ]]>
+			</if>
+			<if test="queryBean.factory != null">
+		<![CDATA[ AND A.FACTORY = #{queryBean.factory} ]]>
+			</if>
+			<if test="queryBean.custId != null">
+		<![CDATA[ AND B.CUST_ID = #{queryBean.custId} ]]>
+			</if>
+		</where>
+	</sql>
+	<select id="cgqCountInfo" parameterType="com.cattsoft.ny.base.entity.querybean.EquipInfoQB" resultType="int">
+	   SELECT count(A.ID) FROM EQUIP_SENSORS_GHOUSE A ,EQUIP_INFO B 
+		WHERE A.EQUIP_INFO_ID = B.ID
+			<if test="type != null">
+			<![CDATA[ AND B.TYPE = #{type} ]]>
+			</if>
+			<if test="houseId != null">
+			<![CDATA[ AND A.HOUSE_ID = #{houseId} ]]>
+			</if>
+	</select>
+</mapper>

@@ -1,0 +1,25 @@
+.ui-query-topmenu {
+	height: 24px;
+	line-height: 24px;
+	text-indent:15px;
+	font-size:12px;
+	font-weight:bold;
+	border-top-color:#61afeb;
+	border-right-color:#61afeb;
+	border-bottom-color:#61afeb;
+	border-left-color:#61afeb;
+	border-top-width:1px;
+	border-right-width:1px;
+	border-bottom-width:1px;
+	border-left-width:1px;
+	border-top-style:solid;
+	border-right-style:solid;
+	border-bottom-style:solid;
+	border-left-style:solid;
+	border-top-left-radius:5px;
+	border-top-right-radius:5px;
+	background-image:url("../images/new/q-title-bg.jpg");
+	background-attachment:scroll;
+	background-repeat:repeat-x;
+}
+

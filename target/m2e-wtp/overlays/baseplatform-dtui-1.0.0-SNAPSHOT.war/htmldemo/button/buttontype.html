@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>jQuery UI Button - Default functionality</title>
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css">
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/dtui.button.js"></script>
+	<link rel="stylesheet" href="../demos.css">
+	<script type="text/javascript">
+	    $(function(){
+	        function callbackClick(){
+	            alert("点击了"+$(this).dtbutton('option', 'label')+"按钮！");
+	        }
+	          
+	        function callbackClickNoLabel(){
+	            alert("点击了"+$(this).dtbutton('option', 'label')+"按钮！");
+	        }
+	
+	        $("#okButton").dtbutton({label:'确定',text:true,type:'ok',focused:true,
+                width:'70',height:'30',click:callbackClick});
+			$("#okButtonNoLabel").dtbutton({label:'不显示文字确定',text:false,type:'ok',focused:true,
+                width:'40',height:'30',click:callbackClickNoLabel});
+
+			$("#cancelButton").dtbutton({label:'取消',text:true,type:'cancel',focused:true,
+	                                width:'70',height:'30',click:callbackClick});
+	        $("#cancelButtonNoLabel").dtbutton({label:'不显示文字取消',text:false,type:'cancel',focused:true,
+	                                width:'40',height:'30',click:callbackClickNoLabel});
+	        
+	        $("#closeButton").dtbutton({label:'关闭',text:true,type:'close',focused:true,
+                 width:'70',height:'30',click:callbackClick});
+			$("#closeButtonNoLabel").dtbutton({label:'不显示文字关闭',text:false,type:'close',focused:true,
+                 width:'40',height:'30',click:callbackClickNoLabel});
+	    });
+      
+	</script>
+</head>
+<body>
+   <button id="okButton"></button>
+   &nbsp;&nbsp;
+   <button id="okButtonNoLabel"></button> 
+   <br>
+   <button id="cancelButton"></button>
+   &nbsp;&nbsp;
+   <button id="cancelButtonNoLabel"></button>
+   <br>
+   <button id="closeButton" style='vertical-align: top'></button>
+   &nbsp;&nbsp;
+   <button id="closeButtonNoLabel"></button>
+   
+   <div class="demo-description">
+   		<h3>本实例功能</h3>
+   		<ul>
+   			<li>本例分别展示了带有图标、文字和只带有图标的按钮</li>
+   		</ul>
+   </div>
+   
+</body>
+
+</html>

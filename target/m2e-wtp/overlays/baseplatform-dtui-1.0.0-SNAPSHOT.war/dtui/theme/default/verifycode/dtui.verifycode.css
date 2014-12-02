@@ -1,0 +1,44 @@
+/*
+*{
+word-wrap: break-word;
+}
+body{
+    font-family:Tahoma,Helvetica,'SimSun',sans-serif;
+	font-size:12px;
+	line-height:1.5;
+	color:#444;
+}
+*/
+.ui-val-input{
+   width:100px;
+   height:17px;
+   padding:2px 4px;
+   line-height:17px;
+   margin-right: 4px;
+   border: 1px solid;
+   border-color: #848484 #E0E0E0 #E0E0E0 #848484;
+   vertical-align: middle;
+}
+.ui-val-button{
+color:#369;
+text-decoration:none;
+}
+.ui-val-result{
+vertical-align: middle;
+width:16px;
+height:16px;
+display:none;
+}
+.ui-image-container{
+position: absolute;
+z-index: 301;
+display:none;
+padding:10px;
+border:1px solid;
+min-width: 60px;
+border-color: #DDD;
+background: #FEFEFE;
+box-shadow: 1px 2px 2px rgba(0,0,0,0.3);
+width:150px;
+height:58px;
+}

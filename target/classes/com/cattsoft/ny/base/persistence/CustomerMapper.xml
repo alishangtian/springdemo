@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.ny.base.persistence.CustomerMapper">
+
+	<!-- MySql分页查询 -->
+	<sql id="pagingFooter"> limit ${pagingInfo.startIdx-1},#{pagingInfo.pageRows}</sql>
+	<sql id="countingHeader">SELECT COUNT(*) FROM(</sql>
+	<sql id="countingFooter">) t</sql>
+
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="com.cattsoft.ny.base.entity.Customer">
+		<![CDATA[
+			INSERT INTO customer
+		]]>
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			
+	    <if test="name != null" >
+			NAME,
+	    </if>
+	    <if test="uuid != null" >
+			UUID,
+	    </if>
+	    <if test="contacts != null" >
+			CONTACTS,
+	    </if>
+	    <if test="phone != null" >
+			PHONE,
+	    </if>
+	    <if test="mobile != null" >
+			MOBILE,
+	    </if>
+	    <if test="email != null" >
+			EMAIL,
+	    </if>
+	    <if test="address != null" >
+			ADDRESS,
+	    </if>
+	    <if test="ctime != null" >
+			C_TIME,
+	    </if>
+	    <if test="state != null" >
+			STATE,
+	    </if>
+	    <if test="remark != null" >
+			REMARK,
+	    </if>
+	     <if test="homePageAddress != null" >
+			home_Page_Address,
+	    </if>
+	    
+	  </trim>
+	  <trim prefix="values (" suffix=")" suffixOverrides="," >
+	   
+	    <if test="name != null" >
+			#{name},
+	    </if>
+	    <if test="uuid != null" >
+			#{uuid},
+	    </if>
+	    <if test="contacts != null" >
+			#{contacts},
+	    </if>
+	    <if test="phone != null" >
+			#{phone},
+	    </if>
+	    <if test="mobile != null" >
+			#{mobile},
+	    </if>
+	    <if test="email != null" >
+			#{email},
+	    </if>
+	    <if test="address != null" >
+			#{address},
+	    </if>
+	    <if test="ctime != null" >
+			#{ctime},
+	    </if>
+	    <if test="state != null" >
+			#{state},
+	    </if>
+	    <if test="remark != null" >
+			#{remark},
+	    </if>
+	    <if test="homePageAddress != null" >
+			#{homePageAddress},
+	    </if>
+	    
+	  </trim>
+	</insert>
+
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="long">
+		<![CDATA[
+			DELETE FROM customer
+				WHERE CUST_ID = #{custId}
+		]]>
+	</delete>
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.cattsoft.ny.base.entity.Customer">
+	    <![CDATA[
+			UPDATE customer 
+	    ]]>
+		<set>
+		<if test="name != null">
+    	<![CDATA[ NAME = #{name}, ]]>
+		</if>
+		<if test="uuid != null">
+    	<![CDATA[ UUID = #{uuid}, ]]>
+		</if>
+		<if test="contacts != null">
+    	<![CDATA[ CONTACTS = #{contacts}, ]]>
+		</if>
+		<if test="phone != null">
+    	<![CDATA[ PHONE = #{phone}, ]]>
+		</if>
+		<if test="mobile != null">
+    	<![CDATA[ MOBILE = #{mobile}, ]]>
+		</if>
+		<if test="email != null">
+    	<![CDATA[ EMAIL = #{email}, ]]>
+		</if>
+		<if test="address != null">
+    	<![CDATA[ ADDRESS = #{address}, ]]>
+		</if>
+		<if test="ctime != null">
+    	<![CDATA[ C_TIME = #{ctime}, ]]>
+		</if>
+		<if test="state != null">
+    	<![CDATA[ STATE = #{state}, ]]>
+		</if>
+		<if test="remark != null">
+    	<![CDATA[ REMARK = #{remark}, ]]>
+		</if>
+		<if test="homePageAddress != null">
+    	<![CDATA[ home_Page_Address = #{homePageAddress}, ]]>
+		</if>
+		
+		</set>
+	    <![CDATA[
+	        WHERE CUST_ID = #{custId}
+	    ]]>
+	</update>
+
+	<!-- 根据主键查询记录 -->
+	<select id="select" parameterType="long" resultMap="customerList">
+		<include refid="sqlSelectAll" />
+		<![CDATA[
+			WHERE CUST_ID = #{custId}
+		]]>
+	</select>
+
+	<!-- 条件查询所有记录 -->
+	<select id="selectList" parameterType="com.cattsoft.ny.base.entity.querybean.CustomerQB"
+		resultMap="customerList">
+		<include refid="sqlSelectList" />
+	</select>
+
+	<!-- 分页条件查询所有记录 -->
+	<select id="selectPage" parameterType="PagingQueryBean"
+		resultMap="customerList">
+		 
+		<include refid="sqlSelectPage" />
+		<include refid="pagingFooter" />
+	</select>
+	<!-- 查询记录总数 -->
+	<select id="selectCount" parameterType="PagingQueryBean"
+		resultType="int">
+		<include refid="countingHeader" />
+		<include refid="sqlSelectPage" />
+		<include refid="countingFooter" />
+	</select>
+
+	<resultMap id="customerList" type="com.cattsoft.ny.base.entity.Customer">
+		<result property="custId" column="CUST_ID" />
+		<result property="name" column="NAME" />
+		<result property="uuid" column="UUID" />
+		<result property="contacts" column="CONTACTS" />
+		<result property="phone" column="PHONE" />
+		<result property="mobile" column="MOBILE" />
+		<result property="email" column="EMAIL" />
+		<result property="address" column="ADDRESS" />
+		<result property="ctime" column="C_TIME" />
+		<result property="state" column="STATE" />
+		<result property="remark" column="REMARK" />
+		<result property="homePageAddress" column="home_Page_Address" />
+	</resultMap>
+
+	<sql id="sqlSelectList">
+		<include refid="sqlSelectAll" />
+		<where>
+			<if test="custId != null">
+			<![CDATA[ AND CUST_ID = #{custId} ]]>
+			</if>
+			<if test="name != null">
+			<![CDATA[ AND NAME = #{name} ]]>
+			</if>
+			<if test="uuid != null">
+			<![CDATA[ AND UUID = #{uuid} ]]>
+			</if>
+			<if test="contacts != null">
+			<![CDATA[ AND CONTACTS = #{contacts} ]]>
+			</if>
+			<if test="phone != null">
+			<![CDATA[ AND PHONE = #{phone} ]]>
+			</if>
+			<if test="mobile != null">
+			<![CDATA[ AND MOBILE = #{mobile} ]]>
+			</if>
+			<if test="email != null">
+			<![CDATA[ AND EMAIL = #{email} ]]>
+			</if>
+			<if test="address != null">
+			<![CDATA[ AND ADDRESS = #{address} ]]>
+			</if>
+			<if test="ctime != null">
+			<![CDATA[ AND C_TIME = #{ctime} ]]>
+			</if>
+			<if test="state != null">
+			<![CDATA[ AND STATE = #{state} ]]>
+			</if>
+			<if test="remark != null">
+			<![CDATA[ AND REMARK = #{remark} ]]>
+			</if>
+			<if test="homePageAddress != null">
+			<![CDATA[ AND home_Page_Address = #{homePageAddress} ]]>
+			</if>
+			
+		</where>
+	</sql>
+	
+	<sql id="sqlSelectPage">
+		<include refid="sqlSelectAll" />
+		<where>	     				
+	    <if test="queryBean.custId != null">
+		<![CDATA[ AND CUST_ID = #{queryBean.custId} ]]>
+		</if>
+	    <if test="queryBean.name != null">
+		<![CDATA[ AND NAME like CONCAT('%',#{queryBean.name},'%')  ]]>
+		</if>
+	    <if test="queryBean.uuid != null">
+		<![CDATA[ AND like CONCAT('%',#{queryBean.uuid},'%')  ]]>
+		</if>
+	    <if test="queryBean.contacts != null">
+		<![CDATA[ AND CONTACTS like CONCAT('%', #{queryBean.contacts},'%') ]]>
+		</if>
+	    <if test="queryBean.phone != null">
+		<![CDATA[ AND PHONE   like CONCAT('%', #{queryBean.phone} ,'%')]]>
+		</if>
+	    <if test="queryBean.mobile != null">
+		<![CDATA[ AND MOBILE = #{queryBean.mobile} ]]>
+		</if>
+	    <if test="queryBean.email != null">
+		<![CDATA[ AND EMAIL = #{queryBean.email} ]]>
+		</if>
+	    <if test="queryBean.address != null">
+		<![CDATA[ AND ADDRESS = #{queryBean.address} ]]>
+		</if>
+	    <if test="queryBean.ctime != null">
+		<![CDATA[ AND C_TIME = #{queryBean.ctime} ]]>
+		</if>
+	    <if test="queryBean.state != null">
+		<![CDATA[ AND STATE = #{queryBean.state} ]]>
+		</if>
+	    <if test="queryBean.remark != null">
+		<![CDATA[ AND REMARK = #{queryBean.remark} ]]>
+		</if>
+		<if test="queryBean.homePageAddress != null">
+		<![CDATA[ AND home_Page_Address = #{queryBean.homePageAddress} ]]>
+		</if>
+		</where>
+	</sql>
+	<sql id="sqlSelectAll">
+			SELECT
+				<include refid="sqlColumn" />
+			FROM customer 
+	</sql>
+	<sql id="sqlColumn">
+		CUST_ID,NAME,UUID,CONTACTS,PHONE,MOBILE,EMAIL,ADDRESS,C_TIME,STATE,REMARK,home_Page_Address
+	</sql>
+</mapper>

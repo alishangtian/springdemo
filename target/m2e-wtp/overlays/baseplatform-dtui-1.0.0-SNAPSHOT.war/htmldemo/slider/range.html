@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>jQuery UI Slider - Range slider</title>
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css">
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/dtui.slider.js"></script>
+	<link rel="stylesheet" href="../demos.css">
+	<script>
+	$(function() {
+		$( "#slider-range" ).dtslider({
+			range: "true",
+			min: 0,
+			max: 500,
+			ovalues: [ 75, 300 ],
+			slide: function( event, ui ) {
+				$( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+			}
+		});
+		$( "#amount" ).val( "$" + $( "#slider-range" ).dtslider( "values", 0 ) +
+			" - $" + $( "#slider-range" ).dtslider( "values", 1 ) );
+	});
+	</script>
+</head>
+<body>
+
+<p>
+	<label for="amount">Price range:</label>
+	<input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;" />
+</p>
+
+<div id="slider-range"></div>
+
+<div class="demo-description">
+<p>Set the <code>range</code> option to true to capture a range of values with two drag handles.  The space between the handles is filled with a different background color to indicate those values are selected.</p>
+</div>
+</body>
+</html>

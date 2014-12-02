@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.baseplatform.func.sm.persistence.SysLogMapper">
+	<!-- Oracle分页查询 -->
+	<sql id="pagingHeader">select * from(select row_.*,rownum rownum_ from(</sql>
+	<sql id="pagingFooter">) row_ where rownum &lt;= #{pagingInfo.endIdx}) where rownum_ &gt;= #{pagingInfo.startIdx}</sql>
+	<sql id="countingHeader">select count(*) from(</sql>
+	<sql id="countingFooter">)</sql>
+	<!-- 分页查询:查询系统日志信息-->
+	<select id="selectPageSysLog" parameterType="PagingQueryBean" resultType="SysLog">
+		<include refid="pagingHeader" />
+		<include refid="sqlSelectSysLog" />
+		<include refid="pagingFooter" />
+	</select>
+	<!-- 分页查询：查询记录总数 -->
+	<select id="selectCountSysLog" parameterType="PagingQueryBean" resultType="int">
+		<include refid="countingHeader" />
+		<include refid="sqlSelectSysLog" />
+		<include refid="countingFooter" />
+	</select>
+	<!-- 查询系统日志明细的sql -->
+	<sql id="sqlSelectSysLog">
+		SELECT SYS_LOG_ID   sysLogId,
+		       LOG_CATEGORY logCategory,
+		       LOG_LEVEL    logLevel,
+		       LOG_OPERATOR logOperator,
+		       LOG_CONTENT  logContent,
+		       LOG_TIME     logTime
+		  FROM SYS_LOG
+		 WHERE 1 = 1
+		<if test="queryBean.logLevel != null"> AND LOG_LEVEL = #{queryBean.logLevel}</if>
+		<if test="queryBean.logCategory != null"> AND LOG_CATEGORY = #{queryBean.logCategory}</if>
+		<if test="queryBean.logOperator != null"> AND LOG_OPERATOR like '%'|| #{queryBean.logOperator}||'%'</if>
+		<if test="queryBean.startTime != null"> AND LOG_TIME <![CDATA[>=]]> #{queryBean.startTime}</if>
+		<if test="queryBean.endTime != null"> AND LOG_TIME <![CDATA[<=]]> #{queryBean.endTime}</if>
+		ORDER BY logTime DESC
+	</sql>
+</mapper>

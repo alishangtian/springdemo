@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<TITLE> Treemenu Demo</TITLE>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css"
+		type="text/css">
+
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/dtui.treemenu.js"></script>
+	<link rel="stylesheet" href="../demos.css">
+	<script type="text/javascript">
+		$(function(){
+			var menuItems = [{'funcName':'系统管理', children:[
+			                		                       {'funcName':'用户管理'},
+			                		                       {'funcName':'权限管理','children':[
+			                		                                  {'funcName':'角色管理'},
+			                		                                  {'funcName':'菜单管理'}
+			                		                       ]}
+			                		                 ]},
+       		                 {'funcName':'监控管理', children:[
+       		                       {'funcName':'指标管理'},
+       		                       {'funcName':'监控管理'}
+       		                 ]}];
+       		var setting= {
+       			width: '220px',
+       			showIcon: false,
+       			nameField: 'funcName',
+       			menuItems: menuItems,
+       			click: function(event, ui) {
+       				if (!$(this).dttreemenu('hasChild', $(ui.item))){
+	       				//alert($(ui.itemlink).text());
+	       				alert($(ui.item).data('menudata').funcName);
+       				}
+       			}
+       		};
+       		$('#treemenu1').dttreemenu(setting);
+			
+		});
+	</script>
+ </HEAD>
+
+<BODY>
+	<ul id='treemenu1' style='width:160px;margin-left:30px; margin-top:30px'>
+		
+	</ul>
+	
+	<div class="demo-description">
+	<h3>本实例功能</h3>
+	<ul>
+		<li>setting.namefield为treemenu的标签名字,setting.menuItems为生成新控件的数据源.</li>
+		<li>treemenu控件是由集tree控件和menu控件的特性为一身的.</li>
+	</ul>
+	</div>
+	
+	
+</BODY>
+</HTML>
+
+
+

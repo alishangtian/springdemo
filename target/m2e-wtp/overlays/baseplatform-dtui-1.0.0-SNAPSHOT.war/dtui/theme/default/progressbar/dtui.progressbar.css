@@ -1,0 +1,7 @@
+.ui-progressbar-label {
+	float: left;
+	margin-left: 50%;
+	font-weight: bold;
+	text-shadow: 1px 1px 0 #fff;
+	height: 100%;
+}

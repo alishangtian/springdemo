@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>进度条基本用法</title>
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css" />
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/dtui.progressbar.js"></script>
+	<link rel="stylesheet" href="../demos.css">
+	<script>
+	$(function() {
+		var pb = $( "#progressbar" );
+
+		pb.dtprogressbar({
+			width: '600px',
+			height:'15px',
+			value: false,
+			change: function(event, ui) {
+				//$(this).find('.ui-progressbar-label').text(progressbar.dtprogressbar( "value" )+'%%');
+			},
+			complete: function() {
+				//progressLabel.text( "Complete!" );
+			}
+		});
+
+		function progress() {
+			var val = pb.dtprogressbar( "value" ) || 0;
+
+			pb.dtprogressbar( "value", val + 1 );
+
+			if ( val < 99 ) {
+				setTimeout( progress, 100 );
+			}
+		}
+		
+		$('#startbtn').click(function(){
+			pb.dtprogressbar( "value", false );
+			setTimeout(progress, 500);
+		})
+		
+	});
+	</script>
+</head>
+<body>
+
+<div id="progressbar"></div>
+<button id='startbtn'>开始</button>
+
+<div class="demo-description">
+<p>本示例通过递归调用延时设置进度条的值，实现进度条的动画效果,实际使用中可以通过定时发送ajax请求，获取进度值，达到同样的效果</p>
+</div>
+</body>
+</html>

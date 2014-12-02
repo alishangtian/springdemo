@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>按钮在Title上面的</title>
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css" />
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/layout/jquery.layout-latest.js"></script>
+	<script src="../../dtui/js/dtui.layout.js"></script>
+	<link rel="stylesheet" href="../demos.css"/>
+	<script type="text/javascript">
+	
+		function createInnerLayout(){
+			$(".outerCenter").dtlayout({
+				resizable:true,
+				west: {
+					pinBtn: true,
+					toggleBtn: true,
+					title: 'West标题'
+				},
+				east: {
+					pinBtn: false,
+					toggleBtn: true,
+					title: 'East标题',
+					size: 180,
+					minSize: 120,
+					maxSize: 240
+				}
+			});
+		}
+		//页面加载完成创建布局
+		$(function(){
+			$('body').dtlayout({
+				resizable:false,
+				center:{
+					paneSelector:'.outerCenter',
+				},
+				west: {
+					pinBtn: true,
+					toggleBtn: true,
+					title: 'West标题'
+				},
+				east: {
+					pinBtn: false,
+					toggleBtn: true,
+					title: 'East标题',
+					size: 180,
+					minSize: 120,
+					maxSize: 240
+				}
+			});
+		});
+	</script>
+</head>
+<body>
+<div class="outerCenter">
+    <div class="ui-layout-center"></div>
+	<div class="ui-layout-north" style="height:100px;">
+		North
+		<br />
+		North
+	</div>
+	<div class="ui-layout-south">
+		South
+	</div>
+	<div class="ui-layout-east">
+		East
+	</div>
+	<div class="ui-layout-west">
+		West
+	</div>
+</div>
+<div class="ui-layout-north" style="height:100px;">
+	North
+	<br />
+	North
+</div>
+<div class="ui-layout-south">
+	South
+</div>
+<div class="ui-layout-east">
+	East
+</div>
+<div class="ui-layout-west">
+	<ul id="createInner">
+			<li><a href="#" onClick="createInnerLayout(); return false;">CREATE Inner Layout</a></li>
+	</ul>
+</div>
+</body>
+
+</html>

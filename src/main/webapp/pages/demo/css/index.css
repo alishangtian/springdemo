@@ -1,0 +1,19 @@
+.func-panel{
+	position: relative;
+	width: 100%;
+	height: auto;
+	margin-bottom: 15px;
+	border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+.func-panel-header{
+	height: 20px;
+	margin: 0;
+	padding: 0 0 0 2px;
+	text-align: left;
+	line-height: 20px;
+	border: 0;
+}
+.func-panel-content{
+	margin-top: 2px;
+}

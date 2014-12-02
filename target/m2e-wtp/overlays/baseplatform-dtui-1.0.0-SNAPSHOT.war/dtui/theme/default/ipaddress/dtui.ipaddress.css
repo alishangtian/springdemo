@@ -1,0 +1,12 @@
+.ipdiv {
+	border: 1 solid balck;
+}
+/* 新加的 */
+.ipinput {
+	width: 30px;
+	border-left: 0;
+	border-right: 0;
+	border-top: 0;
+	text-align: center;
+	margin-right:4px;
+}

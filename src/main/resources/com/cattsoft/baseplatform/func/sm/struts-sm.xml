@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC  
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="sm" namespace="/sm" extends="default">
+		<action name="Logout"
+			class="com.cattsoft.baseplatform.func.sm.web.LogoutAction">
+			<interceptor-ref name="catt.servletAndParamsStack" />
+		</action>
+		<!-- 对象选择器 -->
+		<action name="SelectObject"
+			class="com.cattsoft.baseplatform.func.sm.web.SelectObjectAction">
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<result name="selectOneUser">/WEB-INF/pages/sm/selectObject/selectOneUser.jsp
+			</result>
+			<result name="selectManyUser">/WEB-INF/pages/sm/selectObject/selectManyUser.jsp
+			</result>
+			<result name="selectOneDept">/WEB-INF/pages/sm/selectObject/selectOneDept.jsp
+			</result>
+			<result name="selectManyDept">/WEB-INF/pages/sm/selectObject/selectManyDept.jsp
+			</result>
+		</action>
+		<!-- 缓存管理 -->
+		<action name="cacheManager"
+			class="com.cattsoft.baseplatform.func.sm.web.CacheManagerAction">
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<result name="jumpCacheManager">/WEB-INF/pages/sm/cachemanager/cacheManager.jsp
+			</result>
+			<!-- 实体表缓存：获取表配置信息 -->
+			<result type="json" name="getTableCache">
+				<param name="root">tableConfigs</param>
+			</result>
+			<!-- 单一实体表刷新 -->
+			<result type="json" name="reloadTableCache">
+				<param name="root">flag</param>
+			</result>
+			<!-- 批量实体表刷新 -->
+			<result type="json" name="reloadAllTableCache">
+				<param name="root">flag</param>
+			</result>
+			<!-- 值域缓存刷新 -->
+			<result type="json" name="reloadDomainCache">
+				<param name="root">flag</param>
+			</result>
+			<!-- 业务参数刷新 -->
+			<result type="json" name="reloadBusiParamCache">
+				<param name="root">flag</param>
+			</result>
+			<!-- 系统参数刷新 -->
+			<result type="json" name="reloadSysParamCache">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<!-- 值域管理 -->
+		<action name="domainManager"
+			class="com.cattsoft.baseplatform.func.sm.web.DomainManagerAction">
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<!--主界面 -->
+			<result name="jumpDomainManager">/WEB-INF/pages/sm/parammanager/domainManager.jsp
+			</result>
+			<result type="json" name="getDomain">
+				<param name="root">domainsResult</param>
+			</result>
+			<result type="json" name="getDomainValue">
+				<param name="root">domainValues</param>
+			</result>
+			<result type="json" name="getDomainDetailValues">
+				<param name="root">domainDetailValues</param>
+			</result>
+			<result type="json" name="addDomain">
+				<param name="root">action</param>
+				<param name="includeProperties">flag,msg</param>
+			</result>
+			<result type="json" name="getDomainDetail">
+				<param name="root">domainObj</param>
+			</result>
+			<result type="json" name="editDomain">
+				<param name="root">flag</param>
+			</result>
+			<result type="json" name="deleteDomain">
+				<param name="root">action</param>
+				<param name="includeProperties">flag,msg</param>
+			</result>
+			<result type="json" name="editDomainValueSts">
+				<param name="root">flag</param>
+			</result>
+			<result type="json" name="addDomainValue">
+				<param name="root">action</param>
+				<param name="includeProperties">flag,msg</param>
+			</result>
+			<result type="json" name="getDomainValueDetail">
+				<param name="root">domainValueObj</param>
+			</result>
+			<result type="json" name="editDomainValue">
+				<param name="root">action</param>
+				<param name="includeProperties">flag,msg</param>
+			</result>
+			<result type="json" name="deleteDomainValue">
+				<param name="root">action</param>
+				<param name="includeProperties">flag,msg</param>
+			</result>
+		</action>
+		<!-- 系统参数管理 -->
+		<action name="sysParamManager"
+			class="com.cattsoft.baseplatform.func.sm.web.SysParamManagerAction">
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<result name="jumpSysParamManager">/WEB-INF/pages/sm/parammanager/sysParamManager.jsp
+			</result>
+			<result type="json" name="getSysParam">
+				<param name="root">sysParamsResult</param>
+			</result>
+			<result type="json" name="editSysParamSts">
+				<param name="root">flag</param>
+			</result>
+			<result type="json" name="getSysParamDetail">
+				<param name="root">sysParamObj</param>
+			</result>
+			<result type="json" name="editSysParam">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<!-- 业务参数管理 -->
+		<action name="busiParamManager"
+			class="com.cattsoft.baseplatform.func.sm.web.BusiParamManagerAction">
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<result name="jumpBusiParamManager">/WEB-INF/pages/sm/parammanager/busiParamManager.jsp
+			</result>
+			<result type="json" name="getBusiParam">
+				<param name="root">busiParamsResult</param>
+			</result>
+			<result type="json" name="editBusiParamSts">
+				<param name="root">flag</param>
+			</result>
+			<result type="json" name="getBusiParamDetail">
+				<param name="root">busiParamObj</param>
+			</result>
+			<result type="json" name="editBusiParam">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<!-- 行政区划管理 -->
+		<action name="adminDivisionManager"
+			class="com.cattsoft.baseplatform.func.sm.web.AdminDivisionManagerAction">
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<result name="jumpAdminDivisionManager">/WEB-INF/pages/sm/divisionmanager/admindivisionmanager.jsp
+			</result>
+			<result type="json" name="getAdminDivision">
+				<param name="root">adminDivisions</param>
+			</result>
+			<result type="json" name="editAdminDivision">
+				<param name="root">action</param>
+				<param name="includeProperties">flag,msg</param>
+			</result>
+			<result type="json" name="deleteAdminDivision">
+				<param name="root">flag</param>
+			</result>
+			<result type="json" name="addAdminDivision">
+				<param name="root">action</param>
+				<param name="includeProperties">flag,msg,adminDivisionObj.*</param>
+			</result>
+		</action>
+		<!-- 自定义区域管理 -->
+		<action name="customizeAreaManager"
+			class="com.cattsoft.baseplatform.func.sm.web.CustomizeAreaManagerAction">
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<result name="jumpCustomizeAreaManager">/WEB-INF/pages/sm/divisionmanager/customizeareamanager.jsp
+			</result>
+			<result type="json" name="getCustomizeArea">
+				<param name="root">customizeAreas</param>
+			</result>
+			<result type="json" name="editCustomizeArea">
+				<param name="root">action</param>
+				<param name="includeProperties">flag,msg</param>
+			</result>
+			<result type="json" name="deleteCustomizeArea">
+				<param name="root">flag</param>
+			</result>
+			<result type="json" name="addCustomizeArea">
+				<param name="root">action</param>
+				<param name="includeProperties">flag,msg,customizeAreaObj.*</param>
+			</result>
+		</action>
+		<action name="mainMenuAction"
+			class="com.cattsoft.baseplatform.func.sm.web.MainMenuAction">
+			<!-- <result>/pages/main/main.jsp</result> -->
+			<result>/pages/ideamain/main.jsp</result>
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<result type="json" name="getTopMenu">
+				<param name="root">menuList</param>
+			</result>
+			<result type="json" name="getSubMenu">
+				<param name="root">menuList</param>
+			</result>
+			<result type="json" name="getFavourMenu">
+				<param name="root">menuList</param>
+			</result>
+			<result type="json" name="ajaxsuccess">
+				<param name="root">action</param>
+				<param name="includeProperties">result, msg</param>
+			</result>
+		</action>
+		<action name="SysUser"
+			class="com.cattsoft.baseplatform.func.sm.web.SysUserAction">
+			<result name="resetPassword">/WEB-INF/pages/sm/sysuser/ResetPassword.jsp
+			</result>
+			<result name="removeSysUser">/WEB-INF/pages/sm/sysuser/RemoveSysUser.jsp
+			</result>
+			<result name="sysUserInfo">/WEB-INF/pages/sm/sysuser/SysUserInfo.jsp
+			</result>
+			<result name="sysUserInfoResetPassword">/WEB-INF/pages/sm/sysuser/SysUserInfoResetPassword.jsp
+			</result>
+			<result name="modifyPassword">/WEB-INF/pages/sm/sysuser/ModifyPassword.jsp
+			</result>
+			<result name="changeExptime">/WEB-INF/pages/sm/sysuser/changeExptime.jsp
+			</result>
+			<result name="historyResource">/WEB-INF/pages/sm/sysuser/historyResource.jsp
+			</result>
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<result type="json" name="resetPasswordResult">
+				<param name="root">retMsg</param>
+			</result>
+			<result type="json" name="removeSysUserResult">
+				<param name="root">retMsg</param>
+			</result>
+			<result type="json" name="modifyPasswordResult">
+				<param name="root">retMsg</param>
+			</result>
+			<result type="json" name="getSysUserPaging">
+				<param name="root">sysUserQueryResult</param>
+			</result>
+			<result type="json" name="getSysUserPagingHistory">
+				<param name="root">sysUserQueryResultHistory</param>
+			</result>
+			<result type="json" name="getSysUserByIdHistory">
+				<param name="root">sysUserHistory</param>
+			</result>
+			<result type="json" name="ajaxsuccess">
+				<param name="root">action</param>
+				<param name="includeProperties">result, msg</param>
+			</result>
+		</action>
+		<action name="sysUserManagerAction"
+			class="com.cattsoft.baseplatform.func.sm.web.SysUserManagerAction">
+			<result>/WEB-INF/pages/sm/sysusermanager/sysusermanager.jsp</result>
+			<result name="sysUserInfo">/WEB-INF/pages/sm/sysusermanager/sysuserinfo.jsp
+			</result>
+			<result name="loadRoleAuthPage">/WEB-INF/pages/sm/sysusermanager/sysuserroleinfo.jsp
+			</result>
+			<result name="loadFuncInfoPage">/WEB-INF/pages/sm/sysusermanager/sysuserfuncinfo.jsp
+			</result>
+			<result name="getUserFuncInfosPage">/WEB-INF/pages/sm/sysusermanager/sysuserauthview.jsp
+			</result>
+			<result name="changeUserExpTime">/WEB-INF/pages/sm/sysusermanager/changeuserexptime.jsp
+			</result>
+			<result name="addnewuser">/WEB-INF/pages/sm/sysusermanager/addnewuser.jsp
+			</result>
+			<result type="json" name="getSysUserPaging">
+				<param name="root">sysUserQueryResult</param>
+			</result>
+			<result type="json" name="loadRoleAuth">
+				<param name="root">roleAuth</param>
+			</result>
+			<result type="json" name="loadFuncAuth">
+				<param name="root">funcAuthList</param>
+			</result>
+			<result type="json" name="getUserFuncInfos">
+				<param name="root">userFuncInfos</param>
+			</result>
+			<result type="json" name="doCreateSysUser">
+				<param name="root">action</param>
+				<param name="includeProperties">result, msg</param>
+			</result>
+			<result type="json" name="valiNewLoginName">
+				<param name="root">action</param>
+				<param name="includeProperties">result, msg</param>
+			</result>
+			<result type="json" name="doSaveUserRoleAuth">
+				<param name="root">action</param>
+				<param name="includeProperties">result</param>
+			</result>
+			<result type="json" name="doSaveUserFuncAuth">
+				<param name="root">action</param>
+				<param name="includeProperties">result</param>
+			</result>
+			<result type="json" name="doModifyUserExpTime">
+				<param name="root">action</param>
+				<param name="includeProperties">result</param>
+			</result>
+		</action>
+		<action name="sysDeptManagerAction"
+			class="com.cattsoft.baseplatform.func.sm.web.SysDeptManagerAction">
+			<result>/WEB-INF/pages/sm/sysdeptmanager/sysdeptmanager.jsp</result>
+			<result name="loadStaffs">/WEB-INF/pages/sm/sysdeptmanager/sysdeptstaffview.jsp
+			</result>
+			<result name="getSysDeptDetail">/WEB-INF/pages/sm/sysdeptmanager/sysdeptinfo.jsp
+			</result>
+			<result name="loadSysUsers">/WEB-INF/pages/sm/sysdeptmanager/sysdeptuserinfo.jsp
+			</result>
+			<result name="loadSysDeptDetail">/WEB-INF/pages/sm/sysdeptmanager/deptdetail.jsp
+			</result>
+			<result name="historyResource">/WEB-INF/pages/sm/sysdeptmanager/historyResource.jsp
+			</result>
+			<result type="json" name="getSysDeptPaging">
+				<param name="root">sysDeptResult</param>
+			</result>
+			<result type="json" name="getSysDeptPagingHistory">
+				<param name="root">sysDeptResultHistory</param>
+			</result>
+			<result type="json" name="loadDeptUsers">
+				<param name="root">sysUsersHistory</param>
+			</result>
+			<result type="json" name="removeSysUsers">
+				<param name="root">action</param>
+				<param name="includeProperties">result</param>
+			</result>
+			<result type="json" name="createSysDept">
+				<param name="root">action</param>
+				<param name="includeProperties">result, msg</param>
+			</result>
+			<result type="json" name="modifySysDept">
+				<param name="root">action</param>
+				<param name="includeProperties">result</param>
+			</result>
+			<result type="json" name="removeSysDept">
+				<param name="root">action</param>
+				<param name="includeProperties">result, msg</param>
+			</result>
+			<result type="json" name="getSysDeptData">
+				<param name="root">sysDeptList</param>
+			</result>
+			<result type="json" name="getAllSysDeptData">
+				<param name="root">sysDeptList</param>
+			</result>
+		</action>
+		<action name="staffManagerAction"
+			class="com.cattsoft.baseplatform.func.sm.web.StaffManagerAction">
+			<result>/WEB-INF/pages/sm/staffmanager/staffmanager.jsp</result>
+			<result name="getStaffDetail">/WEB-INF/pages/sm/staffmanager/staffinfo.jsp
+			</result>
+			<result name="loadSysUsers">/WEB-INF/pages/sm/staffmanager/sysuserinfo.jsp
+			</result>
+			<result name="loadStaffDetail">/WEB-INF/pages/sm/staffmanager/staffdetail.jsp
+			</result>
+			<result name="historyResource">/WEB-INF/pages/sm/staffmanager/historyResource.jsp
+			</result>
+			<result name="jumpPersonInfoManager">/WEB-INF/pages/sm/staffmanager/personInfoManager.jsp
+			</result>
+			<result type="json" name="getStaffPaging">
+				<param name="root">staffResult</param>
+			</result>
+			<result type="json" name="getStaffPagingHistory">
+				<param name="root">staffResultHistory</param>
+			</result>
+			<result type="json" name="loadStaffUsers">
+				<param name="root">sysUsersHistory</param>
+			</result>
+			<result type="json" name="ajaxsuccess">
+				<param name="root">action</param>
+				<param name="includeProperties">result, msg</param>
+			</result>
+			<result type="json" name="editPersonInfo">
+				<param name="root">result</param>
+			</result>
+		</action>
+		<action name="roleManagerAction"
+			class="com.cattsoft.baseplatform.func.sm.web.RoleManagerAction">
+			<result>/WEB-INF/pages/sm/rolemanager/rolemanager.jsp</result>
+			<result name="loadSysRolePage">/WEB-INF/pages/sm/rolemanager/roleinfo.jsp
+			</result>
+			<result name="loadFuncInfoPage">/WEB-INF/pages/sm/rolemanager/rolefuncinfo.jsp
+			</result>
+			<result name="loadSysUserQueryPage">/WEB-INF/pages/sm/rolemanager/roleuserinfo.jsp
+			</result>
+			<result name="loadSysRoleDetail">/WEB-INF/pages/sm/rolemanager/roleinfodetail.jsp
+			</result>
+			<result type="json" name="getSysRolePaging">
+				<param name="root">sysRoleQueryResult</param>
+			</result>
+			<result type="json" name="loadFuncAuth">
+				<param name="root">funcAuthList</param>
+			</result>
+			<result type="json" name="viewFuncAuth">
+				<param name="root">funcAuthList</param>
+			</result>
+			<result type="json" name="ajaxsuccess">
+				<param name="root">action</param>
+				<param name="includeProperties">result, msg</param>
+			</result>
+			<result type="json" name="getSysUserPaging">
+				<param name="root">roleAllocUserList</param>
+			</result>
+		</action>
+		<action name="BulletinAction"
+			class="com.cattsoft.baseplatform.func.sm.web.BulletinAction">
+			<result name="default">/WEB-INF/pages/sm/bulletinmanager/bulletinList.jsp
+			</result>
+			<result name="defaultList">/WEB-INF/pages/sm/bulletinmanager/bulletinList.jsp
+			</result>
+			<result name="bulletinList">/WEB-INF/pages/sm/bulletinmanager/bulletinList.jsp
+			</result>
+			<result name="view">/WEB-INF/pages/sm/bulletinmanager/bulletinView.jsp
+			</result>
+			<result name="prepareUpdate">/WEB-INF/pages/sm/bulletinmanager/bulletinUpdate.jsp
+			</result>
+			<result name="prepareEdit">/WEB-INF/pages/sm/bulletinmanager/bulletinEdit.jsp
+			</result>
+			<result name="prepareCreate">/WEB-INF/pages/sm/bulletinmanager/bulletinCreate.jsp
+			</result>
+			<result name="preparePublish">/WEB-INF/pages/sm/bulletinmanager/bulletinPublish.jsp
+			</result>
+			<result name="prepareDept">/WEB-INF/pages/sm/bulletinmanager/bulletinPublishDept.jsp
+			</result>
+			<result name="prepareRole">/WEB-INF/pages/sm/bulletinmanager/bulletinPublishRole.jsp
+			</result>
+			<result name="prepareUser">/WEB-INF/pages/sm/bulletinmanager/bulletinPublishUser.jsp
+			</result>
+			<result name="ownerList">/WEB-INF/pages/sm/bulletinview/bulletinViewList.jsp
+			</result>
+			<result name="ownerAllList">/WEB-INF/pages/sm/bulletinview/bulletinViewAllList.jsp
+			</result>
+			<result name="ownerView">/WEB-INF/pages/sm/bulletinview/bulletinView.jsp
+			</result>
+			<result name="loginView">/WEB-INF/pages/sm/bulletinview/loginBulletinView.jsp
+			</result>
+			<result name="prepareView">/WEB-INF/pages/sm/bulletinview/loginbulletinList.jsp
+			</result>
+
+			<result type="json">
+				<param name="root">prb</param>
+			</result>
+			<result type="json" name="ajaxsuccess">
+				<param name="root">action</param>
+				<param name="includeProperties">flag, msg</param>
+			</result>
+		</action>
+		<!-- 系统日志 -->
+		<action name="sysLogAction"
+			class="com.cattsoft.baseplatform.func.sm.web.SysLogAction">
+			<result>/WEB-INF/pages/sm/logquery/SysLogQueryInit.jsp</result>
+			<result type="json" name="doQuery">
+				<param name="root">prb</param>
+			</result>
+		</action>
+		<!-- 登录日志 -->
+		<action name="loginLogAction"
+			class="com.cattsoft.baseplatform.func.sm.web.LoginLogAction">
+			<result>/WEB-INF/pages/sm/logquery/LoginLogQueryInit.jsp</result>
+			<result name="loginInfo">/pages/welcome/loginLog.jsp</result>
+			<result type="json" name="doQuery">
+				<param name="root">prb</param>
+			</result>
+		</action>
+		<!-- system manager module end -->
+		<action name="welcomeAction"
+			class="com.cattsoft.baseplatform.func.sm.web.WelcomeAction">
+			<result type="redirect">/busi/equipInfoAction!welcomePage.action</result>
+			<result type="json" name="doGetLayOut">
+				<param name="root">layOut</param>
+			</result>
+			<result type="json" name="ajaxsuccess">
+				<param name="root">action</param>
+				<param name="includeProperties">result, msg</param>
+			</result>
+			<result type="json" name="doGetPageLayouts">
+				<param name="root">pageLayoutList</param>
+			</result>
+			<result type="json" name="doGetPageComponents">
+				<param name="root">pageComponentList</param>
+			</result>
+		</action>
+		<!-- 单位 -->
+		<action name="unit" class="com.cattsoft.baseplatform.func.sm.web.UnitAction">
+			<result type="json" name="getAllUnit">
+				<param name="root">unitList</param>
+			</result>
+			<result type="json" name="getUnitsByType">
+				<param name="root">unitList</param>
+			</result>
+		</action>
+		<!-- 系统消息 -->
+		<action name="sysMsg"
+			class="com.cattsoft.baseplatform.func.sm.web.SysMsgAction">
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<result type="json" name="getAllSysMsg">
+				<param name="root">action</param>
+				<param name="includeProperties">resultFlag,sysMsgList.*</param>
+			</result>
+		</action>
+	</package>
+</struts>

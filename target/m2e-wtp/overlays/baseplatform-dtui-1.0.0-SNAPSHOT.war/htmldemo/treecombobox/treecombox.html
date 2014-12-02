@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>jQuery MultiSelect Widget Demo</title>
+
+
+
+<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css" />
+
+<script src="../../dtui/js/jquery/jquery.js"></script>
+<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+<script src="../../dtui/js/ztree/jquery.ztree.all.js"></script>
+<script src="../../dtui/js/dtui.util.js"></script>
+<script src="../../dtui/js/dtui.tree.js"></script>
+<script src="../../dtui/js/dtui.abscombobox.js"></script>
+<script type="text/javascript" src="../../dtui/js/dtui.treecombobox.js"></script>
+<link rel="stylesheet" href="../demos.css" />
+
+<script type="text/javascript">
+$(function(){
+
+	var setting = {	
+		callback:{
+			onClick:function(event, treeId, treeNode, clickFlag){}
+		}	
+	};
+
+
+
+	setting.nodes = [];
+	
+	
+	$(document).ready(function(){
+		/*  异步测试 demo */
+		$("#treeDemo").dttreecombobox({setting:setting,url:'../../GetTreeAction',textField:"name",valueField:"name"});
+	});
+	
+	
+
+});
+
+</script> 
+</head>
+<body >
+<div  id="treeDemo"></div>
+
+<div class="demo-description">
+	<h3>本实例功能</h3>
+	<ul>
+		<li>异步树形下拉框 是通过外部代码异步加载树的数据而生成的树形下拉框,功能与同步树形下拉框完全一样.</li>
+	</ul>
+</div>
+</body>
+</html>

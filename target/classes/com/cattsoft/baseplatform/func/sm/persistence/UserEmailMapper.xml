@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.baseplatform.func.sm.persistence.UserEmailMapper">
+	<!-- Oracle分页查询 -->
+	<sql id="pagingFooter"> limit ${pagingInfo.startIdx-1},#{pagingInfo.pageRows}</sql>
+	<sql id="countingHeader">select count(*) from(</sql>
+	<sql id="countingFooter">) t</sql>
+
+	<insert id="insert" parameterType="UserEmail">
+		<selectKey keyProperty="userEmailId" resultType="long" order="BEFORE">
+			SELECT SEQ_USER_EMAIL_ID.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO USER_EMAIL(USER_EMAIL_ID, EMAIL_ADDRESS, EMAIL_CONTENT, EMAIL_STATUS, CREATE_TIME, PROCESS_TIME, USER_ID)
+		VALUES(#{userEmailId}, #{emailAddress}, #{emailContent},#{emailStatus}, #{createTime}, #{processTime},#{userId})
+	</insert>
+	
+</mapper>

@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.ny.base.persistence.PrdcSeasonMapper">
+
+		<!-- MySql分页查询 -->
+	<sql id="pagingFooter"> limit ${pagingInfo.startIdx-1},#{pagingInfo.pageRows}</sql>
+	<sql id="countingHeader">SELECT COUNT(*) FROM(</sql>
+	<sql id="countingFooter">) t</sql>
+
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="com.cattsoft.ny.base.entity.PrdcSeason" useGeneratedKeys="true" keyProperty="id">
+		<![CDATA[
+			INSERT INTO prdc_season
+		]]>
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+	    <if test="houseId != null" >
+			HOUSE_ID,
+	    </if>
+	    <if test="thresholdInfoId != null" >
+			THRESHOLD_INFO_ID,
+	    </if>
+	    <if test="beginTime != null" >
+			BEGIN_TIME,
+	    </if>
+	    <if test="endTime != null" >
+			END_TIME,
+	    </if>
+	    <if test="crops != null" >
+			CROPS,
+	    </if>
+	    <if test="state != null" >
+			STATE,
+	    </if>
+	    <if test="createTime != null" >
+			CREATE_TIME,
+	    </if>
+	    <if test="name != null" >
+			NAME,
+	    </if>
+	    <if test="seedSource != null" >
+			SEED_SOURCE,
+	    </if>
+	  </trim>
+	  <trim prefix="values (" suffix=")" suffixOverrides="," >
+	    <if test="houseId != null" >
+			#{houseId},
+	    </if>
+	    <if test="thresholdInfoId != null" >
+			#{thresholdInfoId},
+	    </if>
+	    <if test="beginTime != null" >
+			#{beginTime},
+	    </if>
+	    <if test="endTime != null" >
+			#{endTime},
+	    </if>
+	    <if test="crops != null" >
+			#{crops},
+	    </if>
+	    <if test="state != null" >
+			#{state},
+	    </if>
+	    <if test="createTime != null" >
+			#{createTime},
+	    </if>
+	    <if test="name != null" >
+			#{name},
+	    </if>
+	    <if test="seedSource != null" >
+			#{seedSource},
+	    </if>
+	  </trim>
+	</insert>
+
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="long">
+		<![CDATA[
+			DELETE FROM prdc_season
+				WHERE ID = #{id}
+		]]>
+	</delete>
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.cattsoft.ny.base.entity.PrdcSeason">
+	    <![CDATA[
+			UPDATE prdc_season 
+	    ]]>
+		<set>
+		<if test="houseId != null">
+    	<![CDATA[ HOUSE_ID = #{houseId}, ]]>
+		</if>
+		<if test="thresholdInfoId != null">
+    	<![CDATA[ THRESHOLD_INFO_ID = #{thresholdInfoId}, ]]>
+		</if>
+		<if test="beginTime != null">
+    	<![CDATA[ BEGIN_TIME = #{beginTime}, ]]>
+		</if>
+		<if test="endTime != null">
+    	<![CDATA[ END_TIME = #{endTime}, ]]>
+		</if>
+		<if test="crops != null">
+    	<![CDATA[ CROPS = #{crops}, ]]>
+		</if>
+		<if test="state != null">
+    	<![CDATA[ STATE = #{state}, ]]>
+		</if>
+		<if test="createTime != null">
+    	<![CDATA[ CREATE_TIME = #{createTime}, ]]>
+		</if>
+		<if test="name != null">
+    	<![CDATA[ NAME = #{name}, ]]>
+		</if>
+		<if test="seedSource != null">
+    	<![CDATA[ SEED_SOURCE = #{seedSource}, ]]>
+		</if>
+		</set>
+	    <![CDATA[
+	        WHERE ID = #{id}
+	    ]]>
+	</update>
+
+	<!-- 根据主键查询记录 -->
+	<select id="select" parameterType="long" resultMap="prdcSeasonList">
+		<include refid="sqlSelectAll" />
+		<![CDATA[
+			WHERE ps.ID = #{id}
+		]]>
+	</select>
+
+	<!-- 条件查询所有记录 -->
+	<select id="selectList" parameterType="com.cattsoft.ny.base.entity.querybean.PrdcSeasonQB"
+		resultMap="prdcSeasonList">
+		<include refid="sqlSelectList" />
+	</select>
+
+	<!-- 分页条件查询所有记录 -->
+	<select id="selectPage" parameterType="PagingQueryBean"
+		resultMap="prdcSeasonList">
+		<include refid="sqlSelectPage" />
+		<include refid="pagingFooter" />
+	</select>
+	<!-- 查询记录总数 -->
+	<select id="selectCount" parameterType="PagingQueryBean"
+		resultType="int">
+		<include refid="countingHeader" />
+		<include refid="sqlSelectPage" />
+		<include refid="countingFooter" />
+	</select>
+
+	<resultMap id="prdcSeasonList" type="com.cattsoft.ny.base.entity.PrdcSeason">
+		<result property="id" column="ID" />
+		<result property="houseId" column="HOUSE_ID" />
+		<result property="thresholdInfoId" column="THRESHOLD_INFO_ID" />
+		<result property="beginTime" column="BEGIN_TIME" />
+		<result property="endTime" column="END_TIME" />
+		<result property="crops" column="CROPS" />
+		<result property="state" column="STATE" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="name" column="NAME" />
+		<result property="seedSource" column="SEED_SOURCE" />
+		<result property="thresholdInfoName" column="typeName" />
+	</resultMap>
+
+	<sql id="sqlSelectList">
+		<include refid="sqlSelectAll" />
+		<where>
+			
+			<if test="id != null">
+			<![CDATA[ AND ps.ID = #{id} ]]>
+			</if>
+			<if test="houseId != null">
+			<![CDATA[ AND ps.HOUSE_ID = #{houseId} ]]>
+			</if>
+			<if test="thresholdInfoId != null">
+			<![CDATA[ AND ps.THRESHOLD_INFO_ID = #{thresholdInfoId} ]]>
+			</if>
+			<if test="beginTime != null">
+			<![CDATA[ AND ps.BEGIN_TIME < #{beginTime} ]]>
+			</if>
+			<if test="endTime != null">
+			<![CDATA[ AND ps.END_TIME > #{endTime} ]]>
+			</if>
+			<if test="crops != null">
+			<![CDATA[ AND ps.CROPS = #{crops} ]]>
+			</if>
+			<if test="state != null">
+			<![CDATA[ AND ps.STATE = #{state} ]]>
+			</if>
+			<if test="createTime != null">
+			<![CDATA[ AND ps.CREATE_TIME = #{createTime} ]]>
+			</if>
+			<if test="name != null">
+			<![CDATA[ AND ps.NAME like '%'||#{name}||'%' ]]>
+			</if>
+			<if test="seedSource != null">
+			<![CDATA[ AND ps.SEED_SOURCE = #{seedSource} ]]>
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="sqlSelectPage">
+		<include refid="sqlSelectAll" />
+		<where>	  
+					
+	    <if test="queryBean.id != null">
+		<![CDATA[ AND ps.ID = #{queryBean.id} ]]>
+		</if>
+	    <if test="queryBean.houseId != null">
+		<![CDATA[ AND ps.HOUSE_ID = #{queryBean.houseId} ]]>
+		</if>
+	    <if test="queryBean.thresholdInfoId != null">
+		<![CDATA[ AND ps.THRESHOLD_INFO_ID = #{queryBean.thresholdInfoId} ]]>
+		</if>
+	    <if test="queryBean.beginTime != null">
+		<![CDATA[ AND ps.BEGIN_TIME > #{queryBean.beginTime} ]]>
+		</if>
+		<if test="queryBean.beginTime0 != null">
+		<![CDATA[ AND ps.BEGIN_TIME < #{queryBean.beginTime0} ]]>
+		</if>
+	    <if test="queryBean.endTime != null">
+		<![CDATA[ AND ps.END_TIME > #{queryBean.endTime} ]]>
+		</if>
+		<if test="queryBean.endTime0 != null">
+		<![CDATA[ AND ps.END_TIME < #{queryBean.endTime0} ]]>
+		</if>
+	    <if test="queryBean.crops != null">
+		<![CDATA[ AND ps.CROPS = #{queryBean.crops} ]]>
+		</if>
+	    <if test="queryBean.state != null">
+		<![CDATA[ AND ps.STATE = #{queryBean.state} ]]>
+		</if>
+	    <if test="queryBean.createTime != null">
+		<![CDATA[ AND ps.CREATE_TIME = #{queryBean.createTime} ]]>
+		</if>
+	    <if test="queryBean.name != null">
+		<![CDATA[ AND ps.NAME like CONCAT('%',#{queryBean.name},'%') ]]>
+		</if>
+	    <if test="queryBean.seedSource != null">
+		<![CDATA[ AND ps.SEED_SOURCE = #{queryBean.seedSource} ]]>
+		</if>
+		</where>
+		ORDER BY BEGIN_TIME desc
+	</sql>
+	<sql id="sqlSelectAll">
+			SELECT ps.*,pti.name 'typeName' FROM prdc_season ps left join prdc_threshold_info pti on ps.THRESHOLD_INFO_ID=pti.id 
+	</sql>
+	<sql id="sqlColumn">
+		ID,HOUSE_ID,THRESHOLD_INFO_ID,BEGIN_TIME,END_TIME,CROPS,STATE,CREATE_TIME,NAME,SEED_SOURCE
+	</sql>
+</mapper>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.baseplatform.func.sm.persistence.PageComponentMapper">
+	<!-- 获取所有记录的语句 -->
+	<sql id="sqlSelectAll">
+		SELECT
+			PAGE_COMPONENT_ID,
+			TITLE,
+			DESCRIPTION,
+			THUMBNAIL_LOCATION,
+			URL
+		FROM PAGE_COMPONENT
+	</sql>
+	
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="PageComponent">
+		INSERT INTO PAGE_COMPONENT(PAGE_COMPONENT_ID, TITLE, DESCRIPTION, THUMBNAIL_LOCATION, URL)
+		VALUES(#{pageComponentId,jdbcType=NUMERIC}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{thumbnailLocation,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM PAGE_COMPONENT
+		WHERE PAGE_COMPONENT_ID = #{pageComponentId}
+	</delete>
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="PageComponent">
+		UPDATE PAGE_COMPONENT
+		<set>
+			<if test="title != null">TITLE = #{title,jdbcType=VARCHAR},</if>
+			<if test="description != null">DESCRIPTION = #{description,jdbcType=VARCHAR},</if>
+			<if test="thumbnailLocation != null">THUMBNAIL_LOCATION = #{thumbnailLocation,jdbcType=VARCHAR},</if>
+			<if test="url != null">URL = #{url,jdbcType=VARCHAR}</if>
+		</set>
+		WHERE PAGE_COMPONENT_ID = #{pageComponentId}
+	</update>
+
+	<!-- 根据主键查询记录 -->
+	<select id="select" parameterType="int" resultType="PageComponent">
+		SELECT
+			PAGE_COMPONENT_ID pageComponentId,
+			TITLE,
+			DESCRIPTION,
+			THUMBNAIL_LOCATION thumbnailLocation,
+			URL
+		FROM PAGE_COMPONENT
+		WHERE PAGE_COMPONENT_ID = #{pageComponentId}
+	</select>
+	
+	<!-- 获取所有记录 -->
+	<select id="selectAll" resultMap="pageComponentList">
+		<include refid="sqlSelectAll" />
+	</select>
+	<resultMap id="pageComponentList" type="PageComponent">
+		<id property="pageComponentId" column="PAGE_COMPONENT_ID" />
+		<result property="title" column="TITLE" />
+		<result property="description" column="DESCRIPTION" />
+		<result property="thumbnailLocation" column="THUMBNAIL_LOCATION" />
+		<result property="url" column="URL" />
+	</resultMap>
+</mapper>

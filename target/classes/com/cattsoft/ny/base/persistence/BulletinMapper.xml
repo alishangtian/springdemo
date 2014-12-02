@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.ny.base.persistence.BulletinMapper">
+
+	<!-- Oracle分页查询 -->
+	<sql id="pagingHeader">SELECT * FROM(SELECT ROW_.*,ROWNUM ROWNUM_ FROM(</sql>
+	<sql id="pagingFooter">) ROW_ WHERE ROWNUM &lt;= #{pagingInfo.endIdx}) WHERE ROWNUM_ &gt;= #{pagingInfo.startIdx}</sql>
+	<sql id="countingHeader">SELECT COUNT(*) FROM(</sql>
+	<sql id="countingFooter">)</sql>
+
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="com.cattsoft.ny.base.entity.Bulletin">
+		<selectKey keyProperty="bulletinId" resultType="String" order="BEFORE">
+			SELECT SYS_GUID() FROM DUAL
+		</selectKey>
+		<![CDATA[
+			INSERT INTO bulletin
+		]]>
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			BULLETIN_ID,
+	    <if test="userId != null" >
+			USER_ID,
+	    </if>
+	    <if test="bulletinTitle != null" >
+			BULLETIN_TITLE,
+	    </if>
+	    <if test="bulletinContent != null" >
+			BULLETIN_CONTENT,
+	    </if>
+	    <if test="publishTime != null" >
+			PUBLISH_TIME,
+	    </if>
+	    <if test="revokeTime != null" >
+			REVOKE_TIME,
+	    </if>
+	    <if test="priority != null" >
+			PRIORITY,
+	    </if>
+	    <if test="keyword != null" >
+			KEYWORD,
+	    </if>
+	    <if test="sts != null" >
+			STS,
+	    </if>
+	    <if test="stsTime != null" >
+			STS_TIME,
+	    </if>
+	    <if test="createTime != null" >
+			CREATE_TIME,
+	    </if>
+	  </trim>
+	  <trim prefix="values (" suffix=")" suffixOverrides="," >
+	  	#{bulletinId},
+	    <if test="userId != null" >
+			#{userId},
+	    </if>
+	    <if test="bulletinTitle != null" >
+			#{bulletinTitle},
+	    </if>
+	    <if test="bulletinContent != null" >
+			#{bulletinContent},
+	    </if>
+	    <if test="publishTime != null" >
+			#{publishTime},
+	    </if>
+	    <if test="revokeTime != null" >
+			#{revokeTime},
+	    </if>
+	    <if test="priority != null" >
+			#{priority},
+	    </if>
+	    <if test="keyword != null" >
+			#{keyword},
+	    </if>
+	    <if test="sts != null" >
+			#{sts},
+	    </if>
+	    <if test="stsTime != null" >
+			#{stsTime},
+	    </if>
+	    <if test="createTime != null" >
+			#{createTime},
+	    </if>
+	  </trim>
+	</insert>
+
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="long">
+		<![CDATA[
+			DELETE FROM bulletin
+				WHERE BULLETIN_ID = #{bulletinId}
+		]]>
+	</delete>
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.cattsoft.ny.base.entity.Bulletin">
+	    <![CDATA[
+			UPDATE bulletin 
+	    ]]>
+		<set>
+		<if test="userId != null">
+    	<![CDATA[ USER_ID = #{userId}, ]]>
+		</if>
+		<if test="bulletinTitle != null">
+    	<![CDATA[ BULLETIN_TITLE = #{bulletinTitle}, ]]>
+		</if>
+		<if test="bulletinContent != null">
+    	<![CDATA[ BULLETIN_CONTENT = #{bulletinContent}, ]]>
+		</if>
+		<if test="publishTime != null">
+    	<![CDATA[ PUBLISH_TIME = #{publishTime}, ]]>
+		</if>
+		<if test="revokeTime != null">
+    	<![CDATA[ REVOKE_TIME = #{revokeTime}, ]]>
+		</if>
+		<if test="priority != null">
+    	<![CDATA[ PRIORITY = #{priority}, ]]>
+		</if>
+		<if test="keyword != null">
+    	<![CDATA[ KEYWORD = #{keyword}, ]]>
+		</if>
+		<if test="sts != null">
+    	<![CDATA[ STS = #{sts}, ]]>
+		</if>
+		<if test="stsTime != null">
+    	<![CDATA[ STS_TIME = #{stsTime}, ]]>
+		</if>
+		<if test="createTime != null">
+    	<![CDATA[ CREATE_TIME = #{createTime}, ]]>
+		</if>
+		</set>
+	    <![CDATA[
+	        WHERE BULLETIN_ID = #{bulletinId}
+	    ]]>
+	</update>
+
+	<!-- 根据主键查询记录 -->
+	<select id="select" parameterType="long" resultMap="bulletinList">
+		<include refid="sqlSelectAll" />
+		<![CDATA[
+			WHERE BULLETIN_ID = #{bulletinId}
+		]]>
+	</select>
+
+	<!-- 条件查询所有记录 -->
+	<select id="selectList" parameterType="com.cattsoft.ny.base.entity.querybean.BulletinQB"
+		resultMap="bulletinList">
+		<include refid="sqlSelectList" />
+	</select>
+
+	<!-- 分页条件查询所有记录 -->
+	<select id="selectPage" parameterType="PagingQueryBean"
+		resultMap="bulletinList">
+		<include refid="pagingHeader" />
+		<include refid="sqlSelectPage" />
+		<include refid="pagingFooter" />
+	</select>
+	<!-- 查询记录总数 -->
+	<select id="selectCount" parameterType="PagingQueryBean"
+		resultType="int">
+		<include refid="countingHeader" />
+		<include refid="sqlSelectPage" />
+		<include refid="countingFooter" />
+	</select>
+
+	<resultMap id="bulletinList" type="com.cattsoft.ny.base.entity.Bulletin">
+		<result property="bulletinId" column="BULLETIN_ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="bulletinTitle" column="BULLETIN_TITLE" />
+		<result property="bulletinContent" column="BULLETIN_CONTENT" />
+		<result property="publishTime" column="PUBLISH_TIME" />
+		<result property="revokeTime" column="REVOKE_TIME" />
+		<result property="priority" column="PRIORITY" />
+		<result property="keyword" column="KEYWORD" />
+		<result property="sts" column="STS" />
+		<result property="stsTime" column="STS_TIME" />
+		<result property="createTime" column="CREATE_TIME" />
+	</resultMap>
+
+	<sql id="sqlSelectList">
+		<include refid="sqlSelectAll" />
+		<where>
+			<if test="bulletinId != null">
+			<![CDATA[ AND BULLETIN_ID = #{bulletinId} ]]>
+			</if>
+			<if test="userId != null">
+			<![CDATA[ AND USER_ID = #{userId} ]]>
+			</if>
+			<if test="bulletinTitle != null">
+			<![CDATA[ AND BULLETIN_TITLE = #{bulletinTitle} ]]>
+			</if>
+			<if test="bulletinContent != null">
+			<![CDATA[ AND BULLETIN_CONTENT = #{bulletinContent} ]]>
+			</if>
+			<if test="publishTime != null">
+			<![CDATA[ AND PUBLISH_TIME = #{publishTime} ]]>
+			</if>
+			<if test="revokeTime != null">
+			<![CDATA[ AND REVOKE_TIME = #{revokeTime} ]]>
+			</if>
+			<if test="priority != null">
+			<![CDATA[ AND PRIORITY = #{priority} ]]>
+			</if>
+			<if test="keyword != null">
+			<![CDATA[ AND KEYWORD = #{keyword} ]]>
+			</if>
+			<if test="sts != null">
+			<![CDATA[ AND STS = #{sts} ]]>
+			</if>
+			<if test="stsTime != null">
+			<![CDATA[ AND STS_TIME = #{stsTime} ]]>
+			</if>
+			<if test="createTime != null">
+			<![CDATA[ AND CREATE_TIME = #{createTime} ]]>
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="sqlSelectPage">
+		<include refid="sqlSelectAll" />
+		<where>	     				
+	    <if test="queryBean.bulletinId != null">
+		<![CDATA[ AND BULLETIN_ID = #{queryBean.bulletinId} ]]>
+		</if>
+	    <if test="queryBean.userId != null">
+		<![CDATA[ AND USER_ID = #{queryBean.userId} ]]>
+		</if>
+	    <if test="queryBean.bulletinTitle != null">
+		<![CDATA[ AND BULLETIN_TITLE = #{queryBean.bulletinTitle} ]]>
+		</if>
+	    <if test="queryBean.bulletinContent != null">
+		<![CDATA[ AND BULLETIN_CONTENT = #{queryBean.bulletinContent} ]]>
+		</if>
+	    <if test="queryBean.publishTime != null">
+		<![CDATA[ AND PUBLISH_TIME = #{queryBean.publishTime} ]]>
+		</if>
+	    <if test="queryBean.revokeTime != null">
+		<![CDATA[ AND REVOKE_TIME = #{queryBean.revokeTime} ]]>
+		</if>
+	    <if test="queryBean.priority != null">
+		<![CDATA[ AND PRIORITY = #{queryBean.priority} ]]>
+		</if>
+	    <if test="queryBean.keyword != null">
+		<![CDATA[ AND KEYWORD = #{queryBean.keyword} ]]>
+		</if>
+	    <if test="queryBean.sts != null">
+		<![CDATA[ AND STS = #{queryBean.sts} ]]>
+		</if>
+	    <if test="queryBean.stsTime != null">
+		<![CDATA[ AND STS_TIME = #{queryBean.stsTime} ]]>
+		</if>
+	    <if test="queryBean.createTime != null">
+		<![CDATA[ AND CREATE_TIME = #{queryBean.createTime} ]]>
+		</if>
+		</where>
+	</sql>
+	<sql id="sqlSelectAll">
+			SELECT
+				<include refid="sqlColumn" />
+			FROM bulletin 
+	</sql>
+	<sql id="sqlColumn">
+		BULLETIN_ID,USER_ID,BULLETIN_TITLE,BULLETIN_CONTENT,PUBLISH_TIME,REVOKE_TIME,PRIORITY,KEYWORD,STS,STS_TIME,CREATE_TIME
+	</sql>
+</mapper>

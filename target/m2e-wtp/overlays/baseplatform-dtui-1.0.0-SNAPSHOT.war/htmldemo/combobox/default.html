@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css" />
+<script src="../../dtui/js/jquery/jquery.js"></script>
+<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+<script src="../../dtui/js/dtui.util.js" type="text/javascript"></script>
+<script type="text/javascript" src="../../dtui/js/dtui.combobox.js"></script>
+<link rel="stylesheet" href="../demos.css"/>
+<script type="text/javascript">
+	$(function() {
+
+		$("#select1").dtcombobox({
+			label:"省:",
+			required:true,
+			id : 'shengfen',
+			name : 'shengfen',
+			//relaId : 'city',
+			hasNull : true,
+			//selectIndex : '-1',
+			selectValue : 'guangzhou',
+			width : '80%',
+			keyField : 'key',
+			valueField : 'value',
+			onChange : function() {
+				alert($(this).dtcombobox('selectValue'));
+			},
+			datasource : [ {
+				key : "beijing",
+				value : "北京"
+			}, {
+				key : "shanghai",
+				value : "上海"
+			}, {
+				key : "guangzhou",
+				value : "广州"
+			}, {
+				key : "chongqing",
+				value : "重庆"
+			}, {
+				key : "heibei",
+				value : "河北"
+			}, {
+				key : "liaoning",
+				value : "辽宁"
+			}, {
+				key : "jilin",
+				value : "吉林"
+			}, {
+				key : "heilongjiang",
+				value : "黑龙江"
+			}, {
+				key : "neimenggu",
+				value : "内蒙古"
+			}, {
+				key : "shanxi",
+				value : "山西"
+			}, {
+				key : "shanxisheng",
+				value : "陕西"
+			} ]
+		});
+		
+		$console.log($.data($("#select1")[0]));
+		$console.log($('#select1').callUIMethod('option', 'name'));
+
+		$('#btnGetText').click(function(){
+			alert($("#select1").dtcombobox('selectText'));
+		});
+		$('#btnGetValue').click(function(){
+			alert($("#select1").dtcombobox('selectValue'));
+		});
+		$('#btnGetIndex').click(function(){
+			alert($("#select1").dtcombobox('selectIndex'));
+		});
+		$('#btnSetValue').click(function(){
+			$("#select1").dtcombobox('selectValue','shanghai');
+		});
+		$('#btnSetIndex').click(function(){
+			$("#select1").dtcombobox('selectIndex', 3);
+		});
+		$('#btnSetWidth').click(function(){
+			var width = $( "#select1" ).dtcombobox('option', 'width');
+			width = width == 80 ? 120:80;
+			$("#select1").dtcombobox('option','width', width);
+		});
+		$('#btnSetDisabled').click(function(){
+			var disabled = $( "#select1" ).dtcombobox('option', 'disabled');
+			if (disabled)
+				$( "#select1" ).dtcombobox('enable');
+			else
+				$( "#select1" ).dtcombobox('disable');
+		});
+		$('#btnSetRequired').click(function(){
+			var required = $( "#select1" ).dtcombobox('option', 'required');
+			$( "#select1" ).dtcombobox('option','required',!required);
+		});
+		$('#select2').dtcombobox({
+			required:true,
+			id : 'shengfen',
+			name : 'shengfen',
+			//relaId : 'city',
+			hasNull : false,
+			//selectValue : 'guangzhou',
+			selectIndex: 1,
+			width : '150px',
+			keyField : 'key',
+			valueField : 'value',
+			onChange : function() {
+				alert($(this).dtcombobox('selectValue'));
+			},
+			datasource : {
+				"beijing":"北京",
+				"shanghai":"上海",
+				"guangzhou":"广州",
+				"chongqing":"重庆",
+				"heibei": "河北",
+				"liaoning": "辽宁",
+				"jilin": "吉林",
+				"heilongjiang": "黑龙江黑龙江黑龙江黑龙江黑龙江黑龙江黑龙江黑龙江",
+				"neimenggu": "内蒙古",
+				"shanxi": "山西",
+				"shanxisheng": "陕西"
+			}
+		});
+		
+		$('#select3').dtcombobox({
+			required:true,
+			id : 'shengfen3',
+			name : 'shengfen3',
+			//relaId : 'city',
+			hasNull : false,
+			//selectValue : 'guangzhou',
+			selectIndex: 1,
+			width : '150px',
+			keyField : 'key',
+			valueField : 'value',
+			onChange : function() {
+				alert($(this).dtcombobox('selectValue'));
+			},
+			datasource : {
+				"01":"北京",
+				"02":"上海",
+				"10":"广州",
+				"11":"重庆"
+			}
+		});
+	});
+</script>
+</head>
+<body>
+<br></br>
+<br></br>
+<br></br>
+<form>
+<table width='100%'>
+	<tr>
+		<td width="50%">
+			<div id="select1"></div>
+		</td>
+		<td width="50%">
+			<div id="select2"></div>
+		</td>
+	</tr>
+</table>
+<!-- 		<div id="select1"></div> -->
+	<br></br>
+	<button id="btnGetText">获取选择文本</button>
+	<button id="btnGetValue">获取选择值</button>
+	<button id="btnGetIndex">获取索引</button>
+	<button id="btnSetValue">设置值(上海)</button>
+	<button id="btnSetIndex">设置索引(长春)</button>
+	<button id="btnSetWidth">设置宽度</button>
+	<button id="btnSetDisabled">设置状态</button>
+	<button id="btnSetRequired">设置必填</button>
+	<button type="reset">重置</button>
+</form>
+
+	<div class="demo-description">
+		<h3>本示例功能</h3>
+		<ul>
+			<li>使用json对象数组初始化下拉框</li>
+			<li>调用下拉框方法获取、设置当前选择的值和文本</li>
+		</ul>
+	</div>
+<div id="select3"></div>
+</body>
+</html>

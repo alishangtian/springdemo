@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+
+
+<script type="text/javascript" src="js/dtui.validation.js"></script>
+
+<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css" />
+<script src="../../dtui/js/jquery/jquery.js"></script>
+<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+<script src="../../dtui/js/dtui.util.js" type="text/javascript"></script>
+
+<script type="text/javascript" src="../../dtui/js/dtui.validation.js"></script>
+
+
+<script type="text/javascript">
+	$(function(){
+		$("#submitId").click(function(){
+			return dt$.validate("#form1",{
+   			 /* rules:[{firstname: "required"},{email: [{required: true},{email: true}]}],
+   			 messages:[{firstname: "请输入姓名"},{email:[{required: "请输入Email地址"},{email: "请输入正确的email地址"}]}] */
+    			rules:[
+    					{intId:  [{required:true},{digits:true}]},
+    					{floatId:[{required:true},{floating:true}]},
+    					{mailId:[{required: true},{email: true}]},
+    					{mobileId:[{required: true},{mobile:true}]},
+    					{telId:[{required:true},{tel:true}]},
+    					{urlId:[{required:true},{url:true}]},
+    					{passwordId:"required"},
+    					{confirm_passwordId:[{required:true},{equalTo:"passwordId"}]},
+    					{zipcodeId:[{required:true},{zipcode:true}]},
+    					{customId:[{required:true},{custom:/^t[a|b]n$/}]}
+    					],
+  			 messages:[
+  						{intId:  [{required:"请输入整数"},{digits:"请输入正确格式的整数"}]},
+    					{floatId:[{required:"请输入浮点数"},{floating:"请输入正确格式的浮点数"}]},
+    					{mailId:[{required: "请输入Email地址"},{email: "请输入正确格式的Email地址"}]},
+    					{mobileId:[{required:"请输入手机号"},{mobile:"请输入正确格式的手机号"}]},
+    					{telId:[{required:"请输入座机号"},{tel:"请输入正确格式的座机号"}]},
+    					{urlId:[{required:"请输入url地址"},{url:"请输入正确格式的url地址"}]},
+    					{passwordId:"请输入密码"},
+    					{confirm_passwordId:[{required:"请输入确认密码"},{equalTo:"两次密码输入不一致"}]},
+    					{zipcodeId:[{required:"请输入邮编地址"},{zipcode:"请输入正确格式的邮编地址"}]},
+    					{customId:[{required:"请输入值"},{custom:"不符合正则表达式"}]}
+  						]
+			});
+	  			/* $("#form1").dtvalidate({
+				    			// rules:[{firstname: "required"},{email: [{required: true},{email: true}]}],
+				    			// messages:[{firstname: "请输入姓名"},{email:[{required: "请输入Email地址"},{email: "请输入正确的email地址"}]}] 
+				     			rules:[
+				     					{intId:  [{required:true},{digits:true}]},
+				     					{floatId:[{required:true},{floating:true}]},
+				     					{mailId:[{required: true},{email: true}]},
+				     					{mobileId:[{required: true},{mobile:true}]},
+				     					{telId:[{required:true},{tel:true}]},
+				     					{urlId:[{required:true},{url:true}]},
+				     					{passwordId:"required"},
+				     					{confirm_passwordId:[{required:true},{equalTo:"passwordId"}]},
+				     					{zipcodeId:[{required:true},{zipcode:true}]},
+				     					{customId:[{required:true},{custom:/^t[a|b]n$/}]}
+				     					],
+				   			 messages:[
+				   						{intId:  [{required:"请输入整数"},{digits:"请输入正确格式的整数"}]},
+				     					{floatId:[{required:"请输入浮点数"},{floating:"请输入正确格式的浮点数"}]},
+				     					{mailId:[{required: "请输入Email地址"},{email: "请输入正确格式的Email地址"}]},
+				     					{mobileId:[{required:"请输入手机号"},{mobile:"请输入正确格式的手机号"}]},
+				     					{telId:[{required:"请输入座机号"},{tel:"请输入正确格式的座机号"}]},
+				     					{urlId:[{required:"请输入url地址"},{url:"请输入正确格式的url地址"}]},
+				     					{passwordId:"请输入密码"},
+				     					{confirm_passwordId:[{required:"请输入确认密码"},{equalTo:"两次密码输入不一致"}]},
+				     					{zipcodeId:[{required:"请输入邮编地址"},{zipcode:"请输入正确格式的邮编地址"}]},
+				     					{customId:[{required:"请输入值"},{custom:"不符合正则表达式"}]}
+				   						]
+							}); */
+						/* $("#form1").dtvalidate('validate');
+						var flag=$("#form1").dtvalidate('option', 'flag');
+						alert(flag);
+						return flag; */
+						
+		});
+	});
+
+</script>
+</head>
+<body>
+<form  action id="form1" >
+	<label id="intIdlabelId">整数</label>
+	<input type="text" id="intId" name="intId" value="">
+	<span id="intIdrequiredId" style="color: red;">*</span>
+	
+	<br><br>
+	<label id="floatIdlabelId">浮点数</label>
+	<input type="text" id="floatId" name="floatId" value="">
+	<span id="floatIdrequiredId" style="color: red;">*</span>
+	
+	<br><br>
+	<label id="mailIdlabelId">邮箱</label>
+	<input type="text" id="mailId" name="mailId" value="">
+	<span id="mailIdrequiredId" style="color: red;">*</span>
+	
+	<br><br>
+	<label id="mobileIdlabelId">手机号</label>
+	<input type="text" id="mobileId" name="mobileId" value="">
+	<span id="mobileIdrequiredId" style="color: red;">*</span>
+	
+	<br><br>
+	<label id="telIdlabelId">座机号</label>
+	<input type="text" id="telId" name="telId" value="">
+	<span id="telIdrequiredId" style="color: red;">*</span>
+	
+	<br><br>
+	<label id="urlIdlabelId">URL</label>
+	<input type="text" id="urlId" name="urlId" value="">
+	<span id="urlIdrequiredId" style="color: red;">*</span>
+	
+	<br><br>
+
+	<label id="passwordIdlabelId">密码</label>
+	<input type="password" id="passwordId" name="passwordId" value="">
+	<span id="passwordIdrequiredId" style="color: red;">*</span>
+	
+	<br><br>
+	<label id="confirm_passwordIdlabelId">密码</label>
+	<input type="password" id="confirm_passwordId" name="confirm_passwordId" value="">
+	<span id="confirm_passwordIdrequiredId" style="color: red;">*</span>
+	
+	<br><br>
+	<label id="zipcodeIdlabelId">邮编</label>
+	<input type="text" id="zipcodeId" name="zipcodeId" value="">
+	<span id="zipcodeIdrequiredId" style="color: red;">*</span>
+
+	<br><br>
+	<label id="customIdlabelId">用户自定义校验</label>
+	<input type="text" id="customId" name="customId" value="">
+	<span id="customIdrequiredId" style="color: red;">*</span>
+    提示 ：输入tan|tbn
+	<br><br>
+	<input type="submit" id="submitId" value="校验">
+
+
+</form>
+</body>
+</html>

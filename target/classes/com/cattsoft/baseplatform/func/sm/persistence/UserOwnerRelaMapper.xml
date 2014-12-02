@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.cattsoft.baseplatform.func.sm.persistence.UserOwnerRelaMapper">
+	<insert id="insert" parameterType="UserOwnerRela" useGeneratedKeys="true" keyProperty="userOwnerRelaId">
+		INSERT INTO USER_OWNER_RELA(USER_ID, OWNER_TYPE, OWNER_ID, STS, STS_TIME, CREATE_TIME)
+		VALUES(#{userId}, #{ownerType}, #{ownerId}, #{sts}, #{stsTime}, #{createTime})
+	</insert>
+	<!-- 依据用户标识作废关系数据 -->
+	<update id="destroyUser" parameterType="long">
+		UPDATE USER_OWNER_RELA
+		   SET STS = 'P', STS_TIME = NOW()
+		 WHERE STS = 'A'
+		   AND USER_ID = #{userId}
+	</update>
+	<!-- 获取用户的唯一的所有者信息 -->
+	<select id="getUserOwnerType" parameterType="long" resultType="UserOwnerRela">
+		SELECT USER_OWNER_RELA_ID userOwnerRelaId,
+		       USER_ID            userId,
+		       OWNER_TYPE         ownerType,
+		       OWNER_ID           ownerId,
+		       STS                sts,
+		       STS_TIME           stsTime,
+		       CREATE_TIME        createTime
+		  FROM USER_OWNER_RELA
+		 WHERE USER_ID = #{userId} LIMIT 1
+	</select>
+</mapper>

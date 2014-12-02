@@ -1,0 +1,48 @@
+/*
+*{
+padding:0px;
+margin:0px;
+}
+*/
+.head-container{
+  position:relative;
+  left:0px;
+  top:0px;
+  width:150px;
+  height:20px;
+  border-style:solid;	
+  border-width:1px;	
+  border-color:black;
+  
+}
+.head-text{
+float:left;
+border:0px;
+height:20px;
+width:130px;
+valign:middle;
+line-height:20px;
+}
+.head-button{
+position:absolute;
+top:0px;
+left:130px;  
+/* float:right; */
+height:20px;
+width:20px;
+border:0px;
+background-color:transparent;
+/* background-color:red; */
+}
+.menu-container{
+width:150px;
+height:200px;
+border-style:solid;
+border-width:0px 1px 1px 1px;
+display:none;
+position:absolute;
+border-color:black;
+overflow:auto;
+background-color:white;
+z-index: 2;
+}

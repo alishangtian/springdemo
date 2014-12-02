@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+
+<title>Equalheight(DIV+CSS布局中自适应高度的解决方法)</title>
+<style type="text/css">
+body {
+	 padding: 0;
+	margin: 0;
+	 font-size: 12px;
+	 font-family: Arial, Helvetica, sans-serif;
+	line-height: 140%;
+	text-align: center;
+	background: #E7DFD3;
+}
+
+#wrap {
+	 width: 750px;
+	margin: 0auto;
+	overflow: hidden;
+}
+
+#header {
+	 background:  #E8E8E8;
+}
+
+#sideleft {
+	 width: 580px;
+	float: left;
+	background:  #FFF;
+	text-align: left;
+}
+
+#sideright {
+	 width: 170px;
+	float: left;
+	 background:  #F0F0F0;
+	text-align: left;
+	
+}
+#wrap:after {
+	 content:  '[DONOTLEAVEITISNOTREAL]';
+	display: block;
+	height: 0;
+	clear: both;
+	 visibility: hidden;
+}
+
+#wrap {
+	 display: inline-block;
+}
+
+#wrap {
+	 display: block;
+}
+
+#sideleft,#sideright {
+	 padding-bottom: 32767px !important;
+	margin-bottom: -32767px !important;
+}
+
+@media alland (min-width:0px) {
+	#sideleft,#sideright {
+		 padding-bottom: 0 !important;
+		margin-bottom: 0 !important;
+		
+	}
+	
+#sideleft:before,#sideright:before {
+		 content:  '[DONOTLEAVEITISNOTREAL]';
+		display: block;
+		 background: inherit;
+		 padding-top: 32767px !important;
+		 margin-bottom: -32767px !important;
+		height: 0;
+	}
+}
+
+#footer {
+	 background:  #E8E8E8;
+	width: 100%;
+	float: left;
+}
+
+
+h1,h2,address,p {
+	margin: 0;
+	padding: .8em;
+	
+}
+
+
+h1,h2 {
+	font-size: 20px;
+}
+
+</style>
+
+</head>
+
+<body>
+	
+	<div id="wrap">
+		
+		<div id="header">
+			
+			<h1>Head</h1>
+			
+		</div>
+		 
+		<div id="sideleft">
+			
+			<h2>sideleft</h2>
+			 
+			<p>北京羿腾久久网络科技有限公司是互联网行业逐步成长起来的一颗新星，以给用户提供更加真实的网络3D虚拟环境为主要发展方向，致力于web3D技术的研究和应用开发。</p>
+			 
+			<p>羿腾公司的雏形是河南大学大学生校园工作室，于2009年始在河南大学计算机科学与信息工程系成立，作为一群有共同爱好的青年，聚到一起，在老师的指导下，开始了图像处理方面的技术实践，在校期间，先后完成了卫星大图片压缩显示和3D数字地球的模拟建设实践；应用软件方面，有一系列拥有自主知识产权的自动、半自动消费办公系统投入市场使用；网络建设方面，先后完成了河南大学实训平台、开封市绿森林家具公司、北京市坤盛腾达建筑工程有限公司、北京格林摩尔数字农业国际生态园区的宣传性网站建设等30多个中大型宣传性网站项目。</p>
+			 
+			<p>作为年轻一代的创业者，站在时代的新高度，羿腾公司致力于web3D技术的研究应用，目标是做中国最具影响力的web3D应用技术提供商，努力把最好的用户体验展现给用户，搭起企业与客户之间更真实的沟通环境。</p>
+			 
+			<p>在当下竞争激烈的互联网行业，为适应当前发展，羿腾公司在兼顾核心技术研发的同时，专门投入资金和人力资源将目前市场混乱的网站建设和网站SEO优化、网络推广策略等一系列相关技术融为一体的创新性举措，为企业或者个人在各种应用方面的需求宣传提供了强有力的技术支持。</p>
+			 
+			<p>“不求最好的，只做更好的！”是我们羿腾公司不懈的追求目标，我们在前进的道路上会把最好的服务提供给您，在3D科技带给您全新体验的同时，我们会更加的努力，希望3D互联技术展现在您面前的是一个平坦的世界，让虚拟世界变的更直观，让您获取信息更
+
+
+
+
+
+
+				方便。</p>
+			 
+			<p>公司主营业务：web3D-虚拟现实，企业宣传性网站建设，SEO优化，网络推广，计算机应用软件开发。</p>
+			 
+			<p>采用印刷式的固定设计方案或许要容易些，因为如果尺寸不变，则考虑的东西就相对较少。可是如果采用弹性的设计方法，就可以充分利用电脑的显示器和浏览器。</p>
+			
+			<p>也许你想你的网站以某种特定的方式显示，但是你的用户想看到的可能不一样。任何强加于用户的东西都不利于易用性，从而对网站的成功造成损害。</p>
+			 
+		</div>
+		 
+		<div id="sideright">
+			
+			<h2>sideright</h2>
+			 
+			<p>要从固定的、基于像素的设计方法转到弹性的、相对的设计方法并不容易。但是如果恰当利用，就可以成为增强亲和力和易用性的一个自然选择，同时又无须做出设计上的牺牲。</p>
+			 
+			<p>像素是计算机屏幕上的不可缩放的点，而一个
+				h3就是一个字大小的方块。由于字体大小的变化，h3代表用户喜欢的文字大小的相对单位。</p>
+			
+			<p>采用印刷式的固定设计方案或许要容易些，因为如果尺寸不变，则考虑的东西就相对较少。可是如果采用弹性的设计方法，就可以充分利用电脑的显示器和浏览器。</p>
+			
+			<p>也许你想你的网站以某种特定的方式显示，但是你的用户想看到的可能不一样。任何强加于用户的东西都不利于易用性，从而对网站的成功造成损害。</p>
+			
+		</div>
+		 
+		<div id="footer">
+			
+			<address>Footer</address>
+			
+		</div>
+		
+	</div>
+	
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>MenuBar演示</title>
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css" />
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/dtui.menubar.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$("#bar1").dtmenubar({
+				url: 'data2.json',
+				select: function(event, ui) {
+					console.log(this);
+				}
+			});
+		});
+		
+	</script>
+</head>
+<body>
+<ul id="bar1" class="menubar">
+	
+</ul>
+
+<div class="demo-description">
+	<h3>本实例功能</h3>
+	<ul>
+		<li>加载JSON格式数据生成多级菜单栏.</li>
+	</ul>
+</div>
+</body>
+</html>

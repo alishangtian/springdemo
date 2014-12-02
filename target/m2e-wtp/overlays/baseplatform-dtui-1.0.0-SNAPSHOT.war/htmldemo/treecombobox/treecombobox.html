@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Treecombobox</title>
+
+
+<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css" />
+<!-- <link rel="stylesheet" href="demo.css" type="text/css"/> -->
+<script src="../../dtui/js/jquery/jquery.js"></script>
+<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+<script src="../../dtui/js/ztree/jquery.ztree.all.js"></script>
+<script src="../../dtui/js/dtui.util.js"></script>
+<script src="../../dtui/js/dtui.tree.js"></script>
+<script type="text/javascript" src="../../dtui/js/dtui.abscombobox.js"></script>
+<script type="text/javascript" src="../../dtui/js/dtui.treecombobox.js"></script>
+<link rel="stylesheet" href="../demos.css" />
+
+<script type="text/javascript">
+$(function(){
+
+	var setting = {	
+		callback:{
+			onClick:function(event, treeId, treeNode, clickFlag){}
+		}	
+	};
+
+	var zNodes =[
+		{ code:'1',name:"名称1",
+			children: [
+				{ code: '1.1',name:"名称1.1",
+					children: [
+						{ code:"1.1.1",name:"名称1.1.1"},
+						{ code:"1.1.2",name:"名称1.1.2"},
+						{ code:"1.1.3",name:"名称1.1.3"},
+						{ code:"1.1.4",name:"名称1.1.4"}
+					]},
+				{ code:"1.2",name:"名称1.2",
+					children: [
+						{ code:"1.2.1", name:"名称1.2.1"},
+						{ code:"1.2.2", name:"名称1.2.2"},
+						{ code:"1.2.3", name:"名称1.2.3"},
+						{ code:"1.2.4", name:"名称1.2.4"}
+					]},
+				{ code:"1.3",name:"名称1.3", isParent:true}
+			]},
+			{ code:'2',name:"名称2",
+				children: [
+					{ code: '2.1',name:"名称2.1",
+						children: [
+							{ code:"2.1.1",name:"名称2.1.1"},
+							{ code:"2.1.2",name:"名称2.1.2"},
+							{ code:"2.1.3",name:"名称2.1.3"},
+							{ code:"2.1.4",name:"名称2.1.4"}
+						]},
+					{ code:"2.2",name:"名称2.2",
+						children: [
+							{ code:"2.2.1", name:"名称2.2.1"},
+							{ code:"2.2.2", name:"名称2.2.2"},
+							{ code:"2.2.3", name:"名称2.2.3"},
+							{ code:"2.2.4", name:"名称2.2.4"}
+						]},
+				{ code:"2.3",name:"名称2.3",
+					children: [
+						{ code:"2.3.1", name:"名称2.3.1"},
+						{ code:"2.3.2", name:"名称2.3.2"},
+						{ code:"2.3.3", name:"名称2.3.3"},
+						{ code:"2.3.4", name:"名称2.3.4"}
+					]}
+			]},
+		{ code:"3", name:"名称3", isParent:true}
+
+	];
+
+	setting.nodes = zNodes;
+	
+	/* 同步测试demo */
+	$(document).ready(function(){
+		$("#treeDemo").dttreecombobox({setting:setting,initValue:"2.2",initText:'名称2.2',textField:"name",valueField:"code"});
+		
+		$('#mytree').dttree(setting);
+		$("#treeDemo2").dttreecombobox({initValue:"2.3",initText:'名称2.3',textField:"name",valueField:"code",treeId : 'mytree'});
+	});
+	
+	
+
+});
+
+</script> 
+</head>
+<body >
+<div  id="treeDemo"></div>
+<br/>
+<ul id = 'mytree'></ul>
+<div  id="treeDemo2"></div>
+
+
+<div class="demo-description">
+	<h3>本实例功能</h3>
+	<ul>
+		<li>树形下拉框是由一颗本地的树和下拉组件组合而成的控件,通过点击树形组件来把值显示到下拉框的文本框中</li>
+	</ul>
+</div>
+</body>
+</html>

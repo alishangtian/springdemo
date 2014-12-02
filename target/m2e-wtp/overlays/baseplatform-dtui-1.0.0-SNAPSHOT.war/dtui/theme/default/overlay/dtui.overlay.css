@@ -1,0 +1,45 @@
+@CHARSET "UTF-8";
+
+.loadmask {
+	z-index: 700;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: #eeeeee url(../jqueryui/images/ui-bg_diagonals-thick_90_eeeeee_40x40.png) 50% 50% repeat;	
+	-moz-opacity: .4;
+	opacity: .80;
+	filter: alpha( opacity = 40);
+	width: 100%;
+	height: 100%;
+	zoom: 1;
+	display: none;
+}
+
+.loadmask-msg {
+	z-index: 20001;
+	position: absolute;
+	top: 0;
+	left: 0;
+	border: 1px solid #619cc5;
+	background: #d9ebf5;
+	padding: 2px;
+}
+
+.loadmask-msg .normal {
+	padding: 5px 10px 5px 10px;
+	background-color: #fbfbfb;
+	line-height: 16px;
+	border: 1px solid #a3bad9;
+	color: #222;
+	display: block;
+}
+
+.loadmask-msg .mask_lading {
+	padding: 5px 10px 5px 25px;
+	background: #fbfbfb url('images/loading.gif') no-repeat
+		5px 5px;
+	line-height: 16px;
+	border: 1px solid #a3bad9;
+	color: #222;
+	cursor: wait;
+}

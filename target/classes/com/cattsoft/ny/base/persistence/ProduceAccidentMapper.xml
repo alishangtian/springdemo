@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.ny.base.persistence.ProduceAccidentMapper">
+	<!-- 插入记录 -->
+	<insert id="create" parameterType="com.cattsoft.ny.base.entity.ProduceAccident"
+		useGeneratedKeys="true" keyProperty="id">
+		<![CDATA[
+			INSERT INTO PRDC_ACCIDENTS
+		]]>
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="houseId != null">
+				HOUSE_ID,
+			</if>
+			<if test="detail != null">
+				DETAIL,
+			</if>
+			<if test="occurDate != null">
+				ACCIDENTS_DATE,
+			</if>
+			<if test="creator != null">
+				CREATOR,
+			</if>
+			<if test="state != null">
+				STATE,
+			</if>
+			<if test="createDate != null">
+				CREATE_DATE
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="houseId != null">
+				#{houseId},
+			</if>
+			<if test="detail != null">
+				#{detail},
+			</if>
+			<if test="occurDate != null">
+				#{occurDate},
+			</if>
+			<if test="creator != null">
+				#{creator},
+			</if>
+			<if test="state != null">
+				#{state},
+			</if>
+			<if test="createDate != null">
+				#{createDate}
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="long">
+		<![CDATA[
+			DELETE FROM PRDC_ACCIDENTS
+				WHERE ID = #{id}
+		]]>
+	</delete>
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.cattsoft.ny.base.entity.ProduceAccident">
+	    <![CDATA[
+			UPDATE PRDC_ACCIDENTS 
+	    ]]>
+		<set>
+			<if test="houseId != null">
+    	<![CDATA[ HOUSE_ID = #{houseId}, ]]>
+			</if>
+			<if test="detail != null">
+    	<![CDATA[ DETAIL = #{detail}, ]]>
+			</if>
+			<if test="occurDate != null">
+    	<![CDATA[ ACCIDENTS_DATE = #{occurDate}, ]]>
+			</if>
+			<if test="creator != null">
+    	<![CDATA[ CREATOR = #{creator}, ]]>
+			</if>
+			<if test="state != null">
+    	<![CDATA[ STATE = #{state}, ]]>
+			</if>
+			<if test="createDate != null">
+    	<![CDATA[ CREATE_DATE = #{createDate}]]>
+			</if>
+		</set>
+	    <![CDATA[
+	        WHERE ID = #{id}
+	    ]]>
+	</update>
+
+	<!-- 根据主键查询记录 -->
+	<select id="findOne" parameterType="long" resultMap="produceAccident">
+		<include refid="sqlSelectAll" />
+		<![CDATA[
+			WHERE ID = #{id}
+		]]>
+	</select>
+	<!-- 查询列表数据 -->
+	<select id="find" parameterType="com.cattsoft.ny.base.entity.ProduceAccident"
+		resultMap="produceAccident">
+		<include refid="sqlSelectAll" />
+		<include refid="findWhere" />
+	</select>
+	<!-- 查询分页数据数据 -->
+	<select id="findPage" parameterType="PagingQueryBean" resultMap="produceAccident">
+		<include refid="sqlSelectAll" />
+		<include refid="pageWhere" />
+		<include refid="pageLimit" />
+	</select>
+	<!-- 查询分页count -->
+	<select id="count" parameterType="PagingQueryBean" resultType="int">
+		<include refid="countHeader" />
+		<include refid="pageWhere" />
+	</select>
+
+	<sql id="findWhere">
+		<where>
+			<if test="id != null">
+		<![CDATA[ ID = #{id} ]]>
+			</if>
+			<if test="houseId != null">
+		<![CDATA[ AND HOUSE_ID = #{houseId} ]]>
+			</if>
+			<if test="detail != null">
+		<![CDATA[ AND DETAIL like CONCAT('%',#{detail},'%') ]]>
+			</if>
+			<if test="occurDate != null">
+		<![CDATA[ AND ACCIDENTS_DATE = #{occurDate} ]]>
+			</if>
+			<if test="creator != null">
+		<![CDATA[ AND CREATOR = #{creator} ]]>
+			</if>
+			<if test="state != null">
+		<![CDATA[ AND STATE = #{state} ]]>
+			</if>
+			<if test="createDate != null">
+		<![CDATA[ AND CREATE_DATE = #{createDate} ]]>
+			</if>
+		</where>
+	</sql>
+
+	<sql id="pageWhere">
+		<where>
+			<if test="queryBean.id != null">
+		<![CDATA[ ID = #{queryBean.id} ]]>
+			</if>
+			<if test="queryBean.houseId != null">
+		<![CDATA[ AND HOUSE_ID = #{queryBean.houseId} ]]>
+			</if>
+			<if test="queryBean.detail != null">
+		<![CDATA[ AND DETAIL like CONCAT('%',#{queryBean.detail},'%') ]]>
+			</if>
+			<if test="queryBean.startTime != null">
+		<![CDATA[ AND ACCIDENTS_DATE > #{queryBean.startTime} ]]>
+			</if>
+			<if test="queryBean.endTime != null">
+		<![CDATA[ AND ACCIDENTS_DATE < #{queryBean.endTime} ]]>
+			</if>
+			<if test="queryBean.creator != null">
+		<![CDATA[ AND CREATOR = #{queryBean.creator} ]]>
+			</if>
+			<if test="queryBean.state != null">
+		<![CDATA[ AND STATE = #{queryBean.state} ]]>
+			</if>
+			<if test="queryBean.createDate != null">
+		<![CDATA[ AND CREATE_DATE = #{queryBean.createDate} ]]>
+			</if>
+		</where>
+	</sql>
+
+	<resultMap id="produceAccident" type="com.cattsoft.ny.base.entity.ProduceAccident">
+		<result property="id" column="ID" />
+		<result property="houseId" column="HOUSE_ID" />
+		<result property="detail" column="DETAIL" />
+		<result property="occurDate" column="ACCIDENTS_DATE" />
+		<result property="creator" column="CREATOR" />
+		<result property="state" column="STATE" />
+		<result property="createDate" column="CREATE_DATE" />
+	</resultMap>
+
+	<sql id="sqlSelectAll">
+		SELECT
+		<include refid="sqlColumn" />
+		FROM PRDC_ACCIDENTS
+	</sql>
+	<sql id="sqlColumn">
+		ID,HOUSE_ID,DETAIL,ACCIDENTS_DATE,CREATOR,STATE,CREATE_DATE
+	</sql>
+	<sql id="countHeader">
+		<![CDATA[
+			SELECT COUNT(*) FROM PRDC_ACCIDENTS
+		]]>
+	</sql>
+	<sql id="pageLimit"> limit ${pagingInfo.startIdx-1},#{pagingInfo.pageRows}
+	</sql>
+</mapper>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<HTML>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>dtui Demos</title>
+
+	<link rel="stylesheet" href="../dtui/theme/dtui.css" type="text/css"/>
+	<script src="../dtui/js/jquery/jquery.js"></script>
+	<script src="../dtui/js/jquery/jquery.ba-resize.js"></script>
+	<script src="../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../dtui/js/layout/jquery.layout-latest.js"></script>
+	<script src="../dtui/js/ztree/jquery.ztree.all.js"></script>
+	<script src="../dtui/js/dtui.button.js"></script>
+	<script src="../dtui/js/dtui.tree.js"></script>
+	<script src="../dtui/js/dtui.tabs.js"></script>
+	<!-- 为了支持对话框在顶层窗口弹出，需要引用button和dialog文件 -->
+	<script src="../dtui/js/dtui.dialog.js"></script>
+	
+	<link rel="stylesheet" href="./demos.css"/>
+
+<style>
+html,body {
+	margin: 0; /* Remove body margin/padding */
+	padding: 0;
+	overflow: hidden; /* Remove scroll bars on browser window */
+	font-size: 75%;
+}
+/*Splitter style */
+#LeftPane { /* optional, initial splitbar position */
+	overflow: auto;
+}
+/*
+ * Right-side element of the splitter.
+*/
+#RightPane {
+	padding: 2px;
+	overflow: auto;
+}
+
+</style>
+
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+		$('body').layout(
+				{
+					resizerClass : 'ui-state-default',
+					west__onresize : function(pane, $Pane) {
+						jQuery("#west-grid").jqGrid(
+								'setGridWidth',
+								$Pane.innerWidth() - 2);
+					}
+				});
+		
+		var setting = {
+				view: {
+					dblClickExpand: false,
+					showLine: true,
+					selectedMulti: false
+				},
+				data: {
+					simpleData: {
+						enable:true,
+						idKey: "id",
+						pIdKey: "pId",
+						rootPId: ""
+					}
+				},
+				callback: {
+					beforeClick: function(treeId, treeNode) {
+						if (treeNode.isParent) {
+							$("#navTree").dttree('expandNode', treeNode);
+							return false;
+						} else {
+							//demoIframe.attr("src",treeNode.file + ".html");
+							jQuery('#maintabs').dttabs('add', treeNode.file, treeNode.name, true);
+							return true;
+						}
+					}
+				}
+			};
+
+			var zNodes =[
+				{id:1, pId:0, name:"表单类控件", open:true},
+				{id:101, pId:1, name:"按钮控件", open:true},
+				{id:10101, pId:101, name:"基本功能", file:"button/default.html"},
+				{id:10102, pId:101, name:"图标按钮", file:"button/icons.html"},
+				{id:10103, pId:101, name:"组合按钮", file:"button/splitbutton.html"},
+				{id:10104, pId:101, name:"按钮工具栏", file:"button/toolbar.html"},
+				{id:10105, pId:101, name:"开关按钮", file:"switchbutton/demo.html"},
+				
+				{id:102,pId:1,name:"输入框控件",open:false},
+				{id:10201, pId:102, name:"输入框类型", file:"input/input_text.html"},
+				{id:10202, pId:102, name:"输入框option方法", file:"input/input_option.html"},
+				
+				{id:103,pId:1,name:"日期控件",open:false},
+				{id:10301,pId:103,name:"日期控件",file:"datepicker/datepicker.html"},
+				{id:10302,pId:103,name:"日期格式",file:"datepicker/format-date.html"},
+				{id:10303,pId:103,name:"日期按钮",file:"datepicker/icon-trigger.html"},
+				//{id:10304,pId:103,name:"日期国际化",file:"datepicker/Localize-calender.html"},
+				{id:10305,pId:103,name:"日期交换 字段",file:"datepicker/Populate-alternate-field.html"},
+				{id:10306,pId:103,name:"设置默认值",file:"datepicker/setDefaultDate.html"},
+				{id:10307,pId:103,name:"年月选择控件",file:"datepicker/yearMonthTest.html"},
+				
+				
+				{id:104,pId:1,name:"表单验证码",open:false},
+				{id:10401,pId:104,name:"纯数字形式",file:"verifycode/verifycode_digit.html "},
+				{id:10402,pId:104,name:"纯字母形式",file:"verifycode/verifycode_letter.html "},
+				{id:10403,pId:104,name:"混合形式",file:"verifycode/verifycode_mix.html "},
+				{id:10404,pId:104,name:"组合输入框",file:"verifycode/addinput_verifycode.html"},
+				
+				
+				{id:105,pId:1,name:"下拉框控件",open:false},
+				{id:10501,pId:105,name:"下拉框基本功能",file:"combox/combox.html"},
+				{id:10502,pId:105,name:"下拉框远程数据",file:"combox/combox_url.html"},
+				
+				{id:106,pId:1,name:"附件上传",open:false},
+				{id:10601,pId:106,name:"同步上传",file:"fileupload/fileuploader.html"},
+				
+				{id:107,pId:1,name:"表单验证控件",open:false},
+				{id:10701,pId:107,name:"表单ID 弹出框验证",file:"validation/validation_old_formId_alert.html"},
+				{id:10702,pId:107,name:"表单ID 非弹出框验证",file:"validation/validation_old_formId_write.html"},
+				{id:10703,pId:107,name:"表单数组 弹出框验证",file:"validation/validattion_old_array_alert.html"},
+				{id:10704,pId:107,name:"表单数组 非弹出框验证",file:"validation/validattion_old_array_write.html"},
+				{id:10705,pId:107,name:"表单JSON 弹出框验证",file:"validation/validation_new_alert.html"},
+				{id:10706,pId:107,name:"表单JSON 非弹出框验证",file:"validation/validation_new_write.html"},
+				
+				{id:108,pId:1,name:"单选按钮",open:false},
+				{id:10801,pId:108,name:"单选钮基本功能",file:"radio/default.html"},
+				{id:10802,pId:108,name:"单选钮组",file:"radio/radiogroup.html"},
+				
+				{id:109,pId:1,name:"spin控件",open:false},
+				{id:10901,pId:109,name:"默认微调器",file:"spinner/default.html"},
+				{id:10902,pId:109,name:"小数微调器",file:"spinner/decimal.html"},
+				{id:10903,pId:109,name:"货币微调器",file:"spinner/currency.html"},
+				{id:10904,pId:109,name:"溢出微调器",file:"spinner/overflow.html"},
+				{id:10905,pId:109,name:"时间微调器",file:"spinner/time.html"},
+				
+				{id:1010,pId:1,name:"复选框",open:false},
+				{id:101001,pId:1010,name:"复选框基本功能",file:"checkbox/default.html"},
+				{id:101002,pId:1010,name:"复选框组",file:"checkbox/checkgroup.html"},
+				
+				{id:1011,pId:1,name:"文本框",open:false},
+				{id:101101,pId:1011,name:"文本框基本功能",file:"textarea/textarea.html"},
+				
+				{id:2, pId:0, name:"导航控件", open:false},
+				{id:201, pId:2, name:"折叠控件", open:false},
+				{id:20101, pId:201, name:"基本功能", file:"accordion/default.html"},
+				{id:20102, pId:201, name:"自定义图标", file:"accordion/custom-icons.html"},
+				{id:20103, pId:201, name:"全部收起", file:"accordion/collapsible.html"},
+				{id:20104, pId:201, name:"充满容器", file:"accordion/fillspace.html"},
+				{id:20105, pId:201, name:"高度随内容变化", file:"accordion/no-auto-height.html"},
+				{id:202, pId:2, name:"页签控件", open:false},
+				{id:20201, pId:202, name:"基本功能", file:"tabs/default.html"},
+				{id:20202, pId:202, name:"添加删除处理", file:"tabs/manipulation.html"},
+				{id:203, pId:2, name:"横向菜单", open:false},
+				{id:20301, pId:203, name:"通过静态标签生成", file:"hmenu/simple.html"},
+				{id:20302, pId:203, name:"通过JSON生成(带有parent属性)", file:"hmenu/simple-json1.html"},
+				{id:20303, pId:203, name:"通过JSON生成(带有children属性)", file:"hmenu/simple-json2.html"},
+				{id:204, pId:2, name:"菜单条", open:false},
+				{id:20401, pId:204, name:"通过静态标签生成", file:"menubar/simple.html"},
+				{id:205, pId:2, name:"导航条", open:false},
+				{id:20501, pId:205, name:"基本功能", file:"navbar/simple.html"},
+				{id:206, pId:2, name:"树型菜单", open:false},
+				{id:20601, pId:206, name:"基本功能", file:"treemenu/default.html"},
+				
+				
+				{id:3, pId:0, name:"表格控件", open:false},
+				{id:301,pId:3,name:"表格组件",open:false},
+				{id:30101,pId:301,name:"基本功能",file:"grid/grid.html"},
+				
+				{id:4, pId:0, name:"高级下拉框", open:false},
+				{id:401,pId:4,name:"联动下拉框",open:false},
+				{id:40101,pId:401,name:"下拉框基本功能",file:"combobox/default.html"},
+				{id:40102,pId:401,name:"联动功能",file:"combobox/combobox.html"},
+				{id:402,pId:4,name:"搜索下拉框",open:false},
+				{id:40201,pId:402,name:"基本功能",file:"autocomplete/autocomplete.html"},
+				{id:403,pId:4,name:"树形下拉框",open:false},
+				{id:40301,pId:403,name:"同步树形下拉框",file:"treecombobox/treecombobox.html"},
+				{id:40302,pId:403,name:"异步树形下拉框",file:"treecombobox/treecombox.html"},
+				{id:404,pId:4,name:"多选下拉框",open:false},
+				{id:40401,pId:404,name:"基本功能",file:"checkcombobox/checkcombobox.html"},
+				{id:405,pId:4,name:"表格下拉框",open:false},
+				{id:40501,pId:405,name:"基本功能-1",file:"gridcombobox/simple.html"},
+				{id:40502,pId:405,name:"基本功能-2",file:"gridcombobox/demo.html"},
+				
+				{id:5, pId:0, name:"树控件", open:false},
+				{id:501,pId:5,name:"基本功能",open:false},
+				{id:50101,pId:501,name:"使用对象数组创建树",file:"tree/core/simpleData.html"},
+				{id:50102,pId:501,name:"使用嵌套对象创建树",file:"tree/core/standardData.html"},
+				{id:502,pId:5,name:"编辑功能",open:false},
+				{id:50201,pId:502,name:"节点增删改查",file:"tree/exedit/edit_fun.html"},
+				{id:50202,pId:502,name:"节点增删改查改进",file:"tree/exedit/edit_super.html"},
+				
+				{id:6, pId:0, name:"窗口控件", open:false},
+				{id:601,pId:6,name:"对话框控件",open:false},
+				{id:60101,pId:601,name:"对话框模态和非模态",file:"dialog/default.html"},
+				{id:60102,pId:601,name:"对话框事件处理",file:"dialog/dataManipulate.html"},
+				{id:60103,pId:601,name:"在顶层窗口中显示",file:"dialog/topWindowShow.html"},
+				{id:602,pId:6,name:"提示框控件",open:false},
+				{id:60201,pId:602,name:"各种提示框",file:"messagebox/default.html"},
+				{id:603,pId:6,name:"进度条控件",open:false},
+				{id:60301,pId:603,name:"基本用法",file:"progressbar/default.html"},
+				{id:60302,pId:603,name:"设置进度值、状态和颜色",file:"progressbar/setValueAndColor.html"},
+				{id:604,pId:6,name:"遮罩控件",open:false},
+				{id:60401,pId:604,name:"基本用法",file:"overlay/mask.html"},
+				{id:60402,pId:604,name:"手动创建遮罩层",file:"overlay/default.html"},
+
+				{id:7, pId:0, name:"其他控件", open:false},
+				{id:701,pId:7,name:"IP地址控件",open:false},
+				{id:70101,pId:701,name:"基本功能",file:"ipaddress/ipaddress.html"},
+				
+				{id:702,pId:7,name:"布局控件",open:false},
+				{id:70201,pId:702,name:"配置选项",file:"layout/simple0.html"},
+				{id:70202,pId:702,name:"动态创建内部布局",file:"layout/innerCreate.html"},
+				{id:70203,pId:702,name:"嵌套布局",file:"layout/Nested.html"},
+				{id:70204,pId:702,name:"布局操作功能简介",file:"layout/operation.html"},
+				{id:70205,pId:702,name:"带有按钮方式的布局",file:"layout/complex.html"},
+				
+				{id:703,pId:7,name:"富文本控件",open:false},
+				{id:70301,pId:703,name:"基本功能",file:"ckeditor/simple.html"},
+				{id:70302,pId:703,name:"配置项和方法的使用",file:"ckeditor/simple1.html"},
+				{id:70303,pId:703,name:"更新元素",file:"ckeditor/simple2.html"},
+				
+				{id:704,pId:7,name:"星级评级控件",open:false},
+				{id:70401,pId:704,name:"基本功能",file:"rating/Example1.html"},
+				
+				{id:705,pId:7,name:"滑动条控件",open:false},
+				{id:70501,pId:705,name:"控制颜色功能",file:"slider/colorpicker.html"},
+				{id:70502,pId:705,name:"基本功能",file:"slider/default.html"},
+				{id:70503,pId:705,name:"下拉框控制滑动条",file:"slider/hotelrooms.html"},
+				{id:70504,pId:705,name:"音乐播放器形式滑动条",file:"slider/multiple-vertical.html"},
+				{id:70505,pId:705,name:"范围控制竖滑动条",file:"slider/range-vertical.html"},
+				{id:70506,pId:705,name:"范围控制横滑动条",file:"slider/range.html"},
+				{id:70507,pId:705,name:"设置最大移动量",file:"slider/rangemax.html"},
+				{id:70508,pId:705,name:"设置最小移动量",file:"slider/rangemin.html"},
+				{id:70509,pId:705,name:"滑动条 操纵页面 ",file:"slider/side-scroll.html"},
+				{id:70510,pId:705,name:"竖立的滑动条",file:"slider/slider-vertical.html"},
+				{id:70511,pId:705,name:"设置一定滑动变量的滑动条",file:"slider/steps.html"},
+				
+				{id:706,pId:7,name:"开关按钮控件",open:false},
+				{id:70601,pId:706,name:"基本功能",file:"switchbutton/demo.html"}
+				
+			];
+		setting.nodes = zNodes;
+		$("#navTree").dttree(setting);
+		var maintab = jQuery('#maintabs', '#RightPane').dttabs({heightStyle:"fill", useIframe: true});
+	});
+
+</script>
+</head>
+<body>
+	<div id="LeftPane" class="ui-layout-west ui-widget ui-widget-content">
+		<ul id = 'navTree'></ul>
+	</div>
+	<!-- #LeftPane -->
+	<div id="RightPane"
+		class="ui-layout-center ui-helper-reset ui-widget-content">
+		<!-- Tabs pane -->
+		<div id="switcher"></div>
+		<div id="maintabs">
+			<ul>
+				<li><a href="#tabs-0">界面控件2.0</a></li>
+			</ul>
+			<div id="tabs-0" style="font-size: 12px;">
+				基础平台界面控件2.0
+				<br></br>
+				涵盖了30多个界面常用控件，主要有：表单类控件、窗口类控件、导航类控件、表格控件、树型控件等
+			</div>
+		</div>
+	</div>
+	<!-- #RightPane -->
+</body>
+</HTML>

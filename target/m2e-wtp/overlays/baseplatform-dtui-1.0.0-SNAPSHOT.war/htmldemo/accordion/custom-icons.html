@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>jQuery UI Accordion - Customize icons</title>
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css">
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/dtui.accordion.js"></script>
+	<link rel="stylesheet" href="../demos.css">
+	<script>
+	$(function() {
+		var icons = {
+			header: "ui-icon-circle-arrow-e",
+			activeHeader: "ui-icon-circle-arrow-s"
+		};
+		$( "#accordion" ).dtaccordion({
+			icons: icons
+		});
+		$( "#toggle" ).button().click(function() {
+			if ( $( "#accordion" ).dtaccordion( "option", "icons" ) ) {
+				$( "#accordion" ).dtaccordion( "option", "icons", null );
+			} else {
+				$( "#accordion" ).dtaccordion( "option", "icons", icons );
+			}
+		});
+	});
+	</script>
+</head>
+<body>
+
+<div id="accordion">
+	<h3>Section 1</h3>
+	<div>
+		<p>Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.</p>
+	</div>
+	<h3>Section 2</h3>
+	<div>
+		<p>Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In suscipit faucibus urna. </p>
+	</div>
+	<h3>Section 3</h3>
+	<div>
+		<p>Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis. Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui. </p>
+		<ul>
+			<li>List item one</li>
+			<li>List item two</li>
+			<li>List item three</li>
+		</ul>
+	</div>
+	<h3>Section 4</h3>
+	<div>
+		<p>Cras dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia mauris vel est. </p><p>Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>
+	</div>
+</div>
+
+<button id="toggle">Toggle icons</button>
+
+<div class="demo-description">
+	<h3>本实例功能</h3>
+	<ul>
+		<li>支持用户设置icons属性来自定义折叠控件的头图标,它接受头图标的默认和活跃状态的不同图标。使用任何来自于UI CSS框架或用户自定义的类都可创建头图标</li>
+	</ul>
+</div>
+</body>
+</html>

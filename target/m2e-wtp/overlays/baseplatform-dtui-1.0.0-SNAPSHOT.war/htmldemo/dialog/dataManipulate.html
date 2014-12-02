@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>jQuery UI Button - Default functionality</title>
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css">
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/dtui.button.js"></script>
+	<script src="../../dtui/js/dtui.dialog.js"></script>
+	<link rel="stylesheet" href="../demos.css">
+	<script type="text/javascript">
+		$(function() {
+			var dlg = null,
+				testData = {'select1':'s2','check1':true};
+			
+			$( "#btnShow" ).dtbutton().click(function( event ) {
+				$.dtdialog.show({width: 600, url:"fragment2.html"});
+			});
+			
+			$( "#btnShowModal" ).dtbutton().click(function( event ) {
+				if (dlg){
+					dlg.dtdialog('setData', testData, true);
+					dlg.dtdialog('open');
+				}
+				else {
+					dlg = $.dtdialog.showModal({
+						width: 600, 
+						url:"fragment2.html",
+						buttons:{
+							'确定': function(){
+								var data = $(this).dtdialog('getData');
+								alert($.param(data));
+								$(this).dtdialog('close');
+								dlg = null;
+							},
+							'取消': function(){
+								$(this).dtdialog('hide');
+							}
+						},
+						load: function(){
+							alert(1);
+							$(this).dtdialog('setData',testData, true);
+						}
+					});
+				}
+
+			});
+		});
+	</script>
+</head>
+<body>
+
+<button id = "btnShow">显示窗口</button>
+<button id = "btnShowModal">显示模态窗口</button>
+
+<div class="demo-description">
+<h3>本实例功能</h3>
+<ul>
+<li>通过按钮事件生成弹出框同时 加载一系列的弹出框的事件(如加载事件 弹出框的确定取消按钮的事件)</li>
+</ul>
+</div>
+
+</body>
+
+</html>

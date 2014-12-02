@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>jQuery UI Button - Default functionality</title>
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+<!-- 	<script src="asynload.js"></script> -->
+	<script type="text/javascript" src="syncload.js"></script>
+	<link rel="stylesheet" href="../demos.css">
+	<script type="text/javascript">
+		//(function(){
+			
+		//})();
+		//测试没有成功
+		function showLog(str){
+			$('#log').append("<li>"+str+"</li>");
+		}
+		$(function() {
+			showLog('jquery_ready');
+		});
+	</script>
+</head>
+<body>
+
+<ul id="log" ></ul>
+
+</body>
+<script type="text/javascript">
+	showLog('after_body');
+</script>
+</html>

@@ -1,0 +1,76 @@
+.ui-monthpicker{
+	
+}
+
+.ui-monthpicker .yearmonthcontainer{
+	background-color: #fff;
+}
+
+.ui-monthpicker .monthpanel{
+	margin:0;
+	padding:0;
+	float: left;
+	background-color: #fff;
+	width: 108px;
+	border-right: 1px solid #000;
+}
+
+.ui-monthpicker .item {
+	border: 1px solid #fff;
+	margin: 0px;
+	padding: 2px;
+	width: 48px;
+	height: 25px;
+	line-height: 25px;
+	float: left;
+	list-style: none;
+	text-align: center;
+	cursor: pointer;
+}
+.ui-monthpicker .yearcontainer{
+	margin:0;
+	padding:0;
+	float: left;
+	background-color: #fff;
+/* 	border-left: 1px solid #000; */
+	width: 108px;
+}
+.ui-monthpicker .yearcontainer .pagingpanel{
+	margin:0;
+	padding:10px 0 0 0;
+	background-color: #fff;
+	height: 25px;
+	/* line-height: 35px; */
+	text-align: center;
+}
+
+.ui-monthpicker .yearcontainer .yearpanel{
+	margin:0;
+	padding:0;
+	background-color: #fff;
+}
+
+.ui-monthpicker .ui-datepicker-prev {
+left: 2px;
+}
+.ui-monthpicker .ui-datepicker-next {
+right: 2px;
+}
+.ui-monthpicker .ui-datepicker-prev, .ui-monthpicker .ui-datepicker-next {
+/* position: relative; */
+top: 2px;
+width: 2.8em;
+height: 1.8em;
+text-align: center;
+display: inline-block;
+}
+.ui-monthpicker .buttonpanel {
+	clear: both;
+	text-align: center;
+	background-image: none;
+	margin: .7em 0 0 0;
+	padding: 0 .2em;
+	border-left: 0;
+	border-right: 0;
+	border-bottom: 0;	
+}

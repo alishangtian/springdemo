@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>jQuery UI Spinner - Default functionality</title>
+
+<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css" />
+<script src="../../dtui/js/jquery/jquery.js"></script>
+<script src="js/jquery.mousewheel.js"></script>
+<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+<script src="../../dtui/js/spinner/jquery.ui.spinner.js"></script>
+<script type="text/javascript" src="../../dtui/js/dtui.spinner.js"></script>
+<link rel="stylesheet" href="../demos.css"/>
+<!-- <script type="text/javascript" src="../../dtui/js/jquery.ui.spinner.js"></script> -->
+
+
+<script>
+	$(function() {
+		var spinner = $( "#spinner" ).dtspinner({value:50});
+
+		$( "#disable" ).click(function() {
+			if ( spinner.dtspinner( "option", "disabled" ) ) {
+				spinner.dtspinner( "enable" );
+			} else {
+				spinner.dtspinner( "disable" );
+			}
+		});
+		
+		
+		$( "#destroy" ).click(function() {
+			
+		   if (spinner.attr( "class" )==""){//修改原demo源码 原来为 if (spinner.data( "dtui-spinner" ))
+				spinner.dtspinner();
+			} else {
+				spinner.dtspinner("destroy");
+			}
+		});
+	
+		$( "#getvalue" ).click(function() {
+			alert( spinner.dtspinner( "value" ) );
+		});
+		$( "#setvalue" ).click(function() {
+			spinner.dtspinner( "value", 5 );
+		});
+
+		$( "button" ).button();
+		
+	});
+	</script>
+</head>
+<body>
+
+	<p>
+		<label for="spinner">Select a value:</label> <input id="spinner"
+			name="value">
+	</p>
+
+	<p>
+		<button id="disable">Toggle disable/enable</button>
+		<button id="destroy">Toggle widget</button>
+	</p>
+
+	<p>
+		<button id="getvalue">Get value</button>
+		<button id="setvalue">Set value to 5</button>
+	</p>
+
+	<div class="demo-description">
+		<h3>本实例功能</h3>
+		<ul>
+			<li>通过按钮来操作 spinner的可用与不可用 销毁和创建 获得值以及设定值</li>
+		</ul>
+	</div>
+</body>
+</html>

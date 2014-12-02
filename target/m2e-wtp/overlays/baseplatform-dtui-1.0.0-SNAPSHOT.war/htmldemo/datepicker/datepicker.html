@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>datepicker v1.1演示</title>
+<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css"/>
+<style>
+body {
+	font-family: "Trebuchet MS", "Helvetica", "Arial",  "Verdana", "sans-serif";
+	font-size: 62.5%;
+}
+.describe,a,span{
+	font-size:12px;
+	text-align:right;
+}
+.redfont{
+	color:#F00;}
+</style>
+<script src="../../dtui/js/jquery/jquery.js"></script>
+<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+<script src="../../dtui/js/dtui.util.js" type="text/javascript"></script>
+<script src="../../dtui/js/dtui.datepicker.js" type="text/javascript"></script>
+<script src="../../dtui/js/jqueryui/jquery.ui.datepicker-zh-CN.js"></script>
+<script type="text/javascript">
+$(function(){
+	//默认功能
+    $("#demoText1").dtdatepicker({width:'50%'});
+	//显示其他月
+	$("#demoText2").dtdatepicker({
+		showOtherMonths: true,//显示其他月
+		selectOtherMonths: true//是否可选
+	});
+	/*::注意：：
+	 * 	showTimePanel和showButtonPanel只能配置一项true
+	 */
+	//显示今天/关闭
+	$("#demoText3").dtdatepicker({
+		showButtonPanel: true
+	});	
+	//显示时间的选择
+	$("#demoText4").dtdatepicker({
+		showTimePanel: true, showButtonPanel:true
+	});
+	//DIV展示日历 选择某一天触发事件
+	$("#demoText5").dtdatepicker({
+		setSelectDay:function(dd,mm,yy){
+			alert("您选择了："+yy+"年"+(mm+1)+"月"+dd+"日");	
+		}	
+	});
+	//下拉年月
+	$("#demoText6").dtdatepicker({
+		changeMonth: true,
+		changeYear: true
+	});
+	//显示多个月
+	$("#demoText7").dtdatepicker({
+		numberOfMonths: 3,
+		showButtonPanel: true
+	});	
+	//限制可选
+	$("#demoText8").dtdatepicker({
+		minDate: -20,
+		maxDate: "+1M +10D" 
+	});
+	//时间范围
+	$("#demoText9").dtdatepicker({
+      defaultDate: "+1w",
+      changeMonth: true,
+      numberOfMonths: 3,
+      onClose: function(selectedDate) {
+      	$("#demoText10").dtdatepicker("option", "minDate", selectedDate );
+      }
+    });
+    $("#demoText10").dtdatepicker({
+      defaultDate: "+1w",
+      changeMonth: true,
+      numberOfMonths: 3,
+      onClose: function( selectedDate ) {
+        $("#demoText9").dtdatepicker("option", "maxDate", selectedDate );
+      }
+    });
+	//星期序列
+	$("#demoText11").dtdatepicker({
+		showWeek: true,
+		firstDay: 1
+	});
+	
+	
+
+
+});
+</script>
+</head>
+
+<body>
+<h1>功能演示</h1>
+
+
+<table border="1">
+  <tr>
+    <td class="describe">DIV展示日历:</td>
+    <td><div id="demoText5"></div></td>
+    <td>
+    <div class="demo-description">
+    <ul>
+    	<li>日期控件展示</li>
+    </ul>
+    </div>
+    </td>
+  </tr>
+  <tr>
+    <td class="describe">默认功能:</td>
+    <td><input type="text" id="demoText1" readonly="readonly" /></td>
+    <td>
+    <div>
+    <ul>
+    	<li>datepicker被绑定到一个form的input中。当输入框获得焦点时(点击,或使用tab键)可以打开　一个日历。选择一个日期后,点击页面上的其他地方,或按下Esc键关闭。如果选择一个日期后,输入的值就是你选择的日期。</li>
+    </ul>
+    </div>
+    </td>
+  </tr>
+  <tr>
+    <td class="describe">显示其他月:</td>
+    <td><input type="text" id="demoText2" readonly="readonly" /></td>
+    <td>
+    <div>
+    <ul>
+    	<li>showOtherMonths: true,//显示其他月  selectOtherMonths: true//是否可选   设置以上两个属性可以看见其他月 并可以选择</li>
+    </ul>
+    </div>
+    </td>
+   </tr>
+  <tr>
+    <td class="describe">显示今天/关闭:</td>
+    <td><input type="text" id="demoText3" readonly="readonly" /></td>
+    <td>
+    <div>
+    <ul>
+    	<li>showButtonPanel: true 设置这个属性   显示一个按钮用于选择今天的日期和完成按钮,关闭日历与布尔showButtonPanel选项。每个按钮是默认启用当栏显示,但可以关掉额外的选项。按钮的文本是可定制的。</li>
+    </ul>
+    </div>
+    </td>
+  </tr>
+  <tr class="redfont">
+    <td class="describe">显示时间选择:</td>
+    <td><input type="text" id="demoText4" readonly="readonly" /></td>
+    <td>
+    <div>
+    <ul>
+    	<li> 在 dtdatepicker 中 设置 setSelectDay:function(dd,mm,yy){alert("您选择了："+yy+"年"+(mm+1)+"月"+dd+"日");}函数 点击confirm按钮 完成带有时间的录入</li>
+    </ul>
+    </div>
+   </td>
+  </tr>
+  <tr>
+    <td class="describe">下拉年月:</td>
+    <td><input type="text" id="demoText6" readonly="readonly" /></td>
+    <td>
+    <div>
+    <ul>
+    	<li> 设置 参数  changeMonth: true, changeYear: true 显示下拉列表方式的月和年来代替静态月/年头便于导航选择跨度较大时间。添加布尔changeMonth和changeYear选项即可</li>
+    </ul>
+    </div>
+   </td>
+  </tr>
+  <tr>
+    <td class="describe">显示多个月:</td>
+    <td><input type="text" id="demoText7" readonly="readonly" /></td>
+    <td>
+    <div>
+    <ul>
+    	<li>设置numberOfMonths属性为数字为2或更大的整数可以显示多个月在单个datepicker中。</li>
+    </ul>
+    </div>
+    </td>
+  </tr>
+  <tr>
+    <td class="describe">限制可选:</td>
+    <td><input type="text" id="demoText8" readonly="readonly" /></td>
+    <td>
+    <div>
+    <ul>
+    	<li>minDate: -20,maxDate: "+1M +10D" 通过设置这两个属性 可以限制一些 时间不可点击</li>
+    </ul>
+    </div>
+     </td>
+  </tr>
+  <tr>
+    <td class="describe">时间范围:</td>
+    <td>
+    	<input type="text" id="demoText9" readonly="readonly" />To<br />
+    	<input type="text" id="demoText10" readonly="readonly" />
+     </td>
+     <td>
+     <div>
+    <ul>
+    	<li> 选择日期范围搜索</li>
+    </ul>
+    </div>
+    </td>
+  </tr>
+  <tr>
+    <td class="describe">星期序列:</td>
+    <td><input type="text" id="demoText11" readonly="readonly" /></td>
+    <td>
+    <div>
+    <ul>
+    	<li>showWeek: true  设置 这个属性 可以让你看到时间是以按照周的方式来显示的。默认的计算遵循ISO 8601定义:这个星期从星期一开始的,这一年的第一周周四包含第一年的。这意味着一些天从一年可能被放置到周的归属感”一年。</li>
+    </ul>
+    </div>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
+

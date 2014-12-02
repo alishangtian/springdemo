@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.ny.base.persistence.SeaboMxn880StatusResultLMapper">
+
+	<!-- Oracle分页查询 -->
+	<sql id="pagingFooter"> limit ${pagingInfo.startIdx-1},#{pagingInfo.pageRows}</sql>
+	<sql id="countingHeader">SELECT COUNT(*) FROM(</sql>
+	<sql id="countingFooter">) t</sql>
+
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="com.cattsoft.ny.base.entity.SeaboMxn880StatusResultL">
+		<selectKey keyProperty="nodeid" resultType="String" order="BEFORE">
+			SELECT SYS_GUID() FROM DUAL
+		</selectKey>
+		<![CDATA[
+			INSERT INTO seabo_mxn880_status_result_l
+		]]>
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			nodeid,
+	    <if test="boardId != null" >
+			board_id,
+	    </if>
+	    <if test="parent != null" >
+			parent,
+	    </if>
+	    <if test="port != null" >
+			port,
+	    </if>
+	    <if test="chargeVol != null" >
+			chargeVol,
+	    </if>
+	    <if test="battVol != null" >
+			battVol,
+	    </if>
+	    <if test="time != null" >
+			time,
+	    </if>
+	    <if test="uid != null" >
+			uid,
+	    </if>
+	  </trim>
+	  <trim prefix="values (" suffix=")" suffixOverrides="," >
+	  	#{nodeid},
+	    <if test="boardId != null" >
+			#{boardId},
+	    </if>
+	    <if test="parent != null" >
+			#{parent},
+	    </if>
+	    <if test="port != null" >
+			#{port},
+	    </if>
+	    <if test="chargeVol != null" >
+			#{chargeVol},
+	    </if>
+	    <if test="battVol != null" >
+			#{battVol},
+	    </if>
+	    <if test="time != null" >
+			#{time},
+	    </if>
+	    <if test="uid != null" >
+			#{uid},
+	    </if>
+	  </trim>
+	</insert>
+
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="long">
+		<![CDATA[
+			DELETE FROM seabo_mxn880_status_result_l
+				WHERE nodeid = #{nodeid}
+		]]>
+	</delete>
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.cattsoft.ny.base.entity.SeaboMxn880StatusResultL">
+	    <![CDATA[
+			UPDATE seabo_mxn880_status_result_l 
+	    ]]>
+		<set>
+		<if test="boardId != null">
+    	<![CDATA[ board_id = #{boardId}, ]]>
+		</if>
+		<if test="parent != null">
+    	<![CDATA[ parent = #{parent}, ]]>
+		</if>
+		<if test="port != null">
+    	<![CDATA[ port = #{port}, ]]>
+		</if>
+		<if test="chargeVol != null">
+    	<![CDATA[ chargeVol = #{chargeVol}, ]]>
+		</if>
+		<if test="battVol != null">
+    	<![CDATA[ battVol = #{battVol}, ]]>
+		</if>
+		<if test="time != null">
+    	<![CDATA[ time = #{time}, ]]>
+		</if>
+		<if test="uid != null">
+    	<![CDATA[ uid = #{uid}, ]]>
+		</if>
+		</set>
+	    <![CDATA[
+	        WHERE nodeid = #{nodeid}
+	    ]]>
+	</update>
+
+	<!-- 根据主键查询记录 -->
+	<select id="select" parameterType="long" resultMap="seaboMxn880StatusResultLList">
+		<include refid="sqlSelectAll" />
+		<![CDATA[
+			WHERE nodeid = #{nodeid}
+		]]>
+	</select>
+
+	<!-- 条件查询所有记录 -->
+	<select id="selectList" parameterType="com.cattsoft.ny.base.entity.querybean.SeaboMxn880StatusResultLQB"
+		resultMap="seaboMxn880StatusResultLList">
+		<include refid="sqlSelectList" />
+	</select>
+
+	<!-- 分页条件查询所有记录 -->
+	<select id="selectPage" parameterType="PagingQueryBean"
+		resultMap="seaboMxn880StatusResultLList">
+		<include refid="sqlSelectPage" />
+		<include refid="pagingFooter" />
+	</select>
+	<!-- 查询记录总数 -->
+	<select id="selectCount" parameterType="PagingQueryBean"
+		resultType="int">
+		<include refid="countingHeader" />
+		<include refid="sqlSelectPage" />
+		<include refid="countingFooter" />
+	</select>
+
+	<resultMap id="seaboMxn880StatusResultLList" type="com.cattsoft.ny.base.entity.SeaboMxn880StatusResultL">
+		<result property="nodeid" column="nodeid" />
+		<result property="boardId" column="board_id" />
+		<result property="parent" column="parent" />
+		<result property="port" column="port" />
+		<result property="chargeVol" column="chargeVol" />
+		<result property="battVol" column="battVol" />
+		<result property="time" column="time" />
+		<result property="uid" column="uid" />
+	</resultMap>
+
+	<sql id="sqlSelectList">
+		<include refid="sqlSelectAll" />
+		<where>
+			<if test="nodeid != null">
+			<![CDATA[ AND nodeid = #{nodeid} ]]>
+			</if>
+			<if test="boardId != null">
+			<![CDATA[ AND board_id = #{boardId} ]]>
+			</if>
+			<if test="parent != null">
+			<![CDATA[ AND parent = #{parent} ]]>
+			</if>
+			<if test="port != null">
+			<![CDATA[ AND port = #{port} ]]>
+			</if>
+			<if test="chargeVol != null">
+			<![CDATA[ AND chargeVol = #{chargeVol} ]]>
+			</if>
+			<if test="battVol != null">
+			<![CDATA[ AND battVol = #{battVol} ]]>
+			</if>
+			<if test="time != null">
+			<![CDATA[ AND time = #{time} ]]>
+			</if>
+			<if test="uid != null">
+			<![CDATA[ AND uid = #{uid} ]]>
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="sqlSelectPage">
+		<include refid="sqlSelectAll" />
+		<where>	     				
+	    <if test="queryBean.nodeid != null">
+		<![CDATA[ AND nodeid = #{queryBean.nodeid} ]]>
+		</if>
+	    <if test="queryBean.boardId != null">
+		<![CDATA[ AND board_id = #{queryBean.boardId} ]]>
+		</if>
+	    <if test="queryBean.parent != null">
+		<![CDATA[ AND parent = #{queryBean.parent} ]]>
+		</if>
+	    <if test="queryBean.port != null">
+		<![CDATA[ AND port = #{queryBean.port} ]]>
+		</if>
+	    <if test="queryBean.chargeVol != null">
+		<![CDATA[ AND chargeVol = #{queryBean.chargeVol} ]]>
+		</if>
+	    <if test="queryBean.battVol != null">
+		<![CDATA[ AND battVol = #{queryBean.battVol} ]]>
+		</if>
+	    <if test="queryBean.time != null">
+		<![CDATA[ AND time = #{queryBean.time} ]]>
+		</if>
+	    <if test="queryBean.uid != null">
+		<![CDATA[ AND uid = #{queryBean.uid} ]]>
+		</if>
+		</where>
+	</sql>
+	<sql id="sqlSelectAll">
+			SELECT
+				<include refid="sqlColumn" />
+			FROM seabo_mxn880_status_result_l 
+	</sql>
+	<sql id="sqlColumn">
+		nodeid,board_id,parent,port,chargeVol,battVol,time,uid
+	</sql>
+</mapper>

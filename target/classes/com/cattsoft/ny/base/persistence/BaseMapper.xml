@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.ny.base.persistence.BaseMapper">
+
+	<!-- Oracle分页查询 -->
+	<sql id="pagingFooter"> limit ${pagingInfo.startIdx-1},#{pagingInfo.pageRows}</sql>
+	<sql id="countingHeader">SELECT COUNT(*) FROM(</sql>
+	<sql id="countingFooter">) t</sql>
+
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="com.cattsoft.ny.base.entity.Base" useGeneratedKeys="true" keyProperty="id">
+		<![CDATA[
+			INSERT INTO base_info
+		]]>
+			
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			ID,STATE,
+	    <if test="custId != null" >
+			CUST_ID,
+	    </if>
+	    <if test="regionId != null" >
+			REGION_ID,
+	    </if>
+	    <if test="name != null" >
+			NAME,
+	    </if>
+	    <if test="ctime != null" >
+			C_TIME,
+	    </if>
+	    
+	    <if test="remark != null" >
+			REMARK,
+	    </if>
+	    <if test="uuid != null" >
+			UUID,
+	    </if>
+	    <if test="geoInfo != null" >
+			GEO_INFO,
+	    </if>
+	    <if test="introduction != null" >
+			INTRODUCTION,
+	    </if>
+	    <if test="pic != null" >
+			PIC,
+	    </if>
+	    <if test="area != null" >
+			AREA,
+	    </if>
+	    <if test="products != null" >
+			PRODUCTS,
+	    </if>
+	    <if test="address != null" >
+			ADDRESS,
+	    </if>
+	  </trim>
+	  <trim prefix="values (" suffix=")" suffixOverrides="," >
+	  	#{id},0,
+	    <if test="custId != null" >
+			#{custId},
+	    </if>
+	    <if test="regionId != null" >
+			#{regionId},
+	    </if>
+	    <if test="name != null" >
+			#{name},
+	    </if>
+	    <if test="ctime != null" >
+			#{ctime},
+	    </if>
+	    
+	    <if test="remark != null" >
+			#{remark},
+	    </if>
+	    <if test="uuid != null" >
+			#{uuid},
+	    </if>
+	    <if test="geoInfo != null" >
+			#{geoInfo},
+	    </if>
+	    <if test="introduction != null" >
+			#{introduction},
+	    </if>
+	    <if test="pic != null" >
+			#{pic},
+	    </if>
+	    <if test="area != null" >
+			#{area},
+	    </if>
+	    <if test="products != null" >
+			#{products},
+	    </if>
+	    <if test="address != null" >
+			#{address},
+	    </if>
+	  </trim>
+	</insert>
+
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="long">
+		<![CDATA[
+			DELETE FROM base_info
+				WHERE ID = #{id}
+		]]>
+	</delete>
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.cattsoft.ny.base.entity.Base">
+	    <![CDATA[
+			UPDATE base_info 
+	    ]]>
+		<set>
+		<if test="custId != null">
+    	<![CDATA[ CUST_ID = #{custId}, ]]>
+		</if>
+		<if test="regionId != null">
+    	<![CDATA[ REGION_ID = #{regionId}, ]]>
+		</if>
+		<if test="name != null">
+    	<![CDATA[ NAME = #{name}, ]]>
+		</if>
+		<if test="ctime != null">
+    	<![CDATA[ C_TIME = #{ctime}, ]]>
+		</if>
+		<if test="state != null">
+    	<![CDATA[ STATE = #{state}, ]]>
+		</if>
+		<if test="remark != null">
+    	<![CDATA[ REMARK = #{remark}, ]]>
+		</if>
+		<if test="uuid != null">
+    	<![CDATA[ UUID = #{uuid}, ]]>
+		</if>
+		<if test="geoInfo != null">
+    	<![CDATA[ GEO_INFO = #{geoInfo}, ]]>
+		</if>
+		<if test="introduction != null">
+    	<![CDATA[ INTRODUCTION = #{introduction}, ]]>
+		</if>
+		<if test="pic != null">
+    	<![CDATA[ PIC = #{pic}, ]]>
+		</if>
+		<if test="area != null">
+    	<![CDATA[ AREA = #{area}, ]]>
+		</if>
+		<if test="products != null">
+    	<![CDATA[ PRODUCTS = #{products}, ]]>
+		</if>
+		<if test="address != null">
+    	<![CDATA[ ADDRESS = #{address}, ]]>
+		</if>
+		</set>
+	    <![CDATA[
+	        WHERE ID = #{id}
+	    ]]>
+	</update>
+
+	<!-- 根据主键查询记录 -->
+	<select id="select" parameterType="long" resultMap="baseList">
+		<include refid="sqlSelectAll" />
+		<![CDATA[
+			WHERE ID = #{id}
+			and dv.domain_id=49
+		]]>
+	</select>
+
+	<!-- 条件查询所有记录 -->
+	<select id="selectList" parameterType="com.cattsoft.ny.base.entity.querybean.BaseQB"
+		resultMap="baseList">
+		<include refid="sqlSelectList" />
+	</select>
+
+	<!-- 分页条件查询所有记录 -->
+	<select id="selectPage" parameterType="PagingQueryBean"
+		resultMap="baseList">
+		<include refid="sqlSelectPage" />
+		<include refid="pagingFooter" />
+	</select>
+	<!-- 查询记录总数 -->
+	<select id="selectCount" parameterType="PagingQueryBean"
+		resultType="int">
+		<include refid="countingHeader" />
+		<include refid="sqlSelectPage" />
+		<include refid="countingFooter" />
+	</select>
+
+	<resultMap id="baseList" type="com.cattsoft.ny.base.entity.Base">
+		<result property="id" column="ID" />
+		<result property="custId" column="CUST_ID" />
+		<result property="regionId" column="REGION_ID" />
+		<result property="name" column="NAME" />
+		<result property="ctime" column="C_TIME" />
+		<result property="state" column="STATE" />
+		
+		<result property="remark" column="REMARK" />
+		<result property="uuid" column="UUID" />
+		<result property="geoInfo" column="GEO_INFO" />
+		<result property="introduction" column="INTRODUCTION" />
+		<result property="pic" column="PIC" />
+		<result property="area" column="AREA" />
+		<result property="products" column="PRODUCTS" />
+		<result property="address" column="ADDRESS" />
+	</resultMap>
+
+	<sql id="sqlSelectList">
+		<include refid="sqlSelectAll" />
+		<where>
+			dv.domain_id=49
+			<if test="id != null">
+			<![CDATA[ AND ID = #{id} ]]>
+			</if>
+			<if test="custId != null">
+			<![CDATA[ AND CUST_ID = #{custId} ]]>
+			</if>
+			<if test="regionId != null">
+			<![CDATA[ AND REGION_ID = #{regionId} ]]>
+			</if>
+			<if test="name != null and name !='' ">
+			<![CDATA[ AND NAME = #{name} ]]>
+			</if>
+			<if test="ctime != null">
+			<![CDATA[ AND C_TIME = #{ctime} ]]>
+			</if>
+			<if test="state != null">
+			<![CDATA[ AND STATE = #{state} ]]>
+			</if>
+			<if test="remark != null">
+			<![CDATA[ AND REMARK = #{remark} ]]>
+			</if>
+			<if test="uuid != null">
+			<![CDATA[ AND UUID = #{uuid} ]]>
+			</if>
+			<if test="geoInfo != null">
+			<![CDATA[ AND GEO_INFO = #{geoInfo} ]]>
+			</if>
+			<if test="introduction != null">
+			<![CDATA[ AND INTRODUCTION = #{introduction} ]]>
+			</if>
+			<if test="pic != null">
+			<![CDATA[ AND PIC = #{pic} ]]>
+			</if>
+			<if test="area != null">
+			<![CDATA[ AND AREA = #{area} ]]>
+			</if>
+			<if test="products != null">
+			<![CDATA[ AND PRODUCTS = #{products} ]]>
+			</if>
+			<if test="address != null">
+			<![CDATA[ AND ADDRESS = #{address} ]]>
+			</if>
+			
+		</where>
+	</sql>
+	
+	<sql id="sqlSelectPage">
+		<include refid="sqlSelectAll" />
+		<where>	     
+		dv.domain_id=49				
+	    <if test="queryBean.id != null">
+		<![CDATA[ AND ID = #{queryBean.id} ]]>
+		</if>
+	    <if test="queryBean.custId != null">
+		<![CDATA[ AND CUST_ID = #{queryBean.custId} ]]>
+		</if>
+	    <if test="queryBean.regionId != null">
+		<![CDATA[ AND REGION_ID = #{queryBean.regionId} ]]>
+		</if>
+	    <if test="queryBean.name != null and queryBean.name !='' ">
+		<![CDATA[ AND NAME  like CONCAT('%',#{queryBean.name},'%')  ]]>
+		</if>
+	    <if test="queryBean.ctime != null">
+		<![CDATA[ AND C_TIME = #{queryBean.ctime} ]]>
+		</if>
+	    <if test="queryBean.state != null">
+		<![CDATA[ AND STATE = #{queryBean.state} ]]>
+		</if>
+	    <if test="queryBean.remark != null">
+		<![CDATA[ AND REMARK = #{queryBean.remark} ]]>
+		</if>
+	    <if test="queryBean.uuid != null">
+		<![CDATA[ AND UUID = #{queryBean.uuid} ]]>
+		</if>
+		<if test="queryBean.geoInfo != null">
+		<![CDATA[ AND GEO_INFO = #{queryBean.geoInfo} ]]>
+		</if>
+	    <if test="queryBean.introduction != null">
+		<![CDATA[ AND INTRODUCTION = #{queryBean.introduction} ]]>
+		</if>
+	    <if test="queryBean.pic != null">
+		<![CDATA[ AND PIC = #{queryBean.pic} ]]>
+		</if>
+	    <if test="queryBean.area != null">
+		<![CDATA[ AND AREA = #{queryBean.area} ]]>
+		</if>
+	    <if test="queryBean.products != null">
+		<![CDATA[ AND PRODUCTS = #{queryBean.products} ]]>
+		</if>
+	    <if test="queryBean.address != null">
+		<![CDATA[ AND ADDRESS = #{queryBean.address} ]]>
+		</if>
+		</where>
+	</sql>
+	<sql id="sqlSelectAll">
+			SELECT
+				<include refid="sqlColumn" />,dv.value_name 'stateName'
+			FROM  base_info b left join domain_value dv on b.STATE = dv.value_code
+	</sql>
+	<sql id="sqlColumn">
+		ID,CUST_ID,REGION_ID,NAME,C_TIME,STATE,REMARK,UUID,GEO_INFO,INTRODUCTION,PIC,AREA,PRODUCTS,ADDRESS
+	</sql>
+</mapper>

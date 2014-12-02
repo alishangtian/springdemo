@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.baseplatform.func.sm.persistence.StaffMapper">
+	<!-- Oracle分页查询 -->
+	<sql id="pagingFooter"> limit ${pagingInfo.startIdx-1},#{pagingInfo.pageRows}</sql>
+	<sql id="countingHeader">select count(*) from(</sql>
+	<sql id="countingFooter">) t</sql>
+	
+	<insert id="insert" parameterType="Staff" useGeneratedKeys="true" keyProperty="staffId">
+		INSERT INTO STAFF(STAFF_CODE, STAFF_NAME, DEPT_ID, FIX_NBR, MOBILE_NBR, EMAIL, STS, STS_TIME, CREATE_TIME)
+		VALUES(#{staffCode}, #{staffName}, #{deptId}, #{fixNbr,jdbcType=VARCHAR}, #{mobileNbr,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{sts}, #{stsTime}, #{createTime})
+	</insert>
+
+	<update id="update" parameterType="Staff">
+		UPDATE STAFF
+		<set>
+			<if test="staffCode != null">STAFF_CODE = #{staffCode},</if>
+			<if test="staffName != null">STAFF_NAME = #{staffName},</if>
+			<if test="deptId != null">DEPT_ID = #{deptId},</if>
+			<if test="fixNbr != null">FIX_NBR = #{fixNbr},</if>
+			<if test="mobileNbr != null">MOBILE_NBR = #{mobileNbr},</if>
+			<if test="email != null">EMAIL = #{email},</if>
+			<if test="sts != null">STS = #{sts},</if>
+			STS_TIME = NOW()
+		</set>
+		WHERE STAFF_ID = #{staffId}
+	</update>
+
+	<select id="selectOne" parameterType="long" resultType="Staff">
+		SELECT STAFF_ID    staffId,
+		       STAFF_CODE  staffCode,
+		       STAFF_NAME  staffName,
+		       DEPT_ID     deptId,
+		       FIX_NBR     fixNbr,
+		       MOBILE_NBR  mobileNbr,
+		       EMAIL       email,
+		       STS         sts,
+		       STS_TIME    stsTime,
+		       CREATE_TIME createTime
+		  FROM STAFF
+		 WHERE STAFF_ID = #{staffId}
+	</select>
+	<!-- 获取员工的用户信息 -->
+	<select id="selectSysUsers" parameterType="SysUserQuery" resultType="SysUser">
+		SELECT A.USER_ID       userId,
+		       A.LOGIN_NAME    loginName,
+		       A.USER_TYPE     userType,
+		       A.USER_EXP_TIME userExpTime,
+		       A.PASSWORD      password,
+		       A.OLD_PWD       oldPwd,
+		       A.PWD_CHG_TIME  pwdChgTime,
+		       A.PWD_EXP_TIME  pwdExpTime,
+		       A.STS           sts,
+		       A.STS_TIME      stsTime,
+		       A.CREATE_TIME   createTime
+		  FROM IDEA_USER A, USER_OWNER_RELA B
+		 WHERE A.USER_TYPE = 'C'
+		   AND A.USER_ID = B.USER_ID
+		   AND B.OWNER_TYPE = 'S'
+		   <if test="staffId != null"> AND B.OWNER_ID = #{staffId}</if>
+		   <if test="sts != null"> AND A.STS = #{sts}</if>
+		 ORDER BY loginName
+	</select>
+	<!-- 分页查询依据员工名称，模糊查询满足条件的员工列表 -->
+	<select id="selectPageStaff" parameterType="PagingQueryBean" resultMap="staffDeptList">
+		<include refid="sqlSelectAllStaff" />
+		<include refid="pagingFooter" />
+	</select>
+	<!-- 依据部门名称，模糊查询满足条件的部门总数 -->
+	<select id="selectCountStaff" parameterType="PagingQueryBean" resultType="int">
+		<include refid="countingHeader" />
+		<include refid="sqlSelectAllStaff" />
+		<include refid="countingFooter" />
+	</select>
+	
+	<!-- 分页查询依据员工账号、所属部门，员工姓名模糊查询满足条件的员工列表 -->
+	<select id="selectPageSelectiveStaff" parameterType="PagingQueryBean" resultType="com.cattsoft.baseplatform.func.sm.entity.Staff">
+		<include refid="sqlSelectStaffForChoose" />
+		<include refid="pagingFooter" />
+	</select>
+	<!-- 依据员工账号、所属部门，员工姓名查询满足条件的员工总数 -->
+	<select id="selectCountSelectiveStaff" parameterType="PagingQueryBean" resultType="int">
+		<include refid="countingHeader" />
+		<include refid="sqlSelectStaffForChoose" />
+		<include refid="countingFooter" />
+	</select>
+	
+	<sql id="sqlSelectStaffForChoose">
+      SELECT U.LOGIN_NAME as loginName, S.STAFF_ID as staffId, S.STAFF_NAME as staffName, D.DEPT_NAME as deptName
+		   FROM STAFF S, IDEA_USER U, USER_OWNER_RELA R, SYS_DEPT D
+		  WHERE S.STAFF_ID = R.OWNER_ID
+		    AND U.USER_ID = R.USER_ID
+		    AND S.DEPT_ID = D.DEPT_ID
+		    AND S.STS != 'P'
+	 <if test="queryBean.loginName != null and queryBean.loginName.trim()"> AND U.LOGIN_NAME LIKE CONCAT('%',#{queryBean.loginName},'%')</if>
+	 <if test="queryBean.staffName != null and queryBean.staffName.trim()"> AND S.STAFF_NAME LIKE CONCAT('%',#{queryBean.staffName},'%')</if>
+	 <if test="queryBean.deptId != null"> AND D.DEPT_ID = #{queryBean.deptId}</if>
+	  ORDER BY U.LOGIN_NAME
+	</sql>
+	
+	<!-- 按名称模糊查询员工列表的sql -->
+	<sql id="sqlSelectAllStaff">
+		SELECT A.STAFF_ID      staffId,
+		       A.STAFF_CODE    staffCode,
+		       A.STAFF_NAME    staffName,
+		       A.DEPT_ID       deptId,
+		       A.FIX_NBR       staffFixNbr,
+		       A.MOBILE_NBR    mobileNbr,
+		       A.EMAIL         email,
+		       A.STS           staffSts,
+		       A.STS_TIME      staffStsTime,
+		       A.CREATE_TIME   staffCreateTime,
+		       B.SUPER_DEPT_ID superDeptId,
+		       B.DEPT_CODE     deptCode,
+		       B.DEPT_NAME     deptName,
+		       B.ADDRESS       address,
+		       B.POST_CODE     postCode,
+		       B.TEL_NBR       telNbr,
+		       B.FAX_NBR       sysDeptFaxNbr,
+		       B.LINK_MAN      linkMan,
+		       B.EMAIL_ADDR    emailAddr,
+		       B.WEB_SITE      webSite,
+		       B.REMARKS       remarks,
+		       B.STS           sysDeptSts,
+		       B.STS_TIME      sysDeptStsTime,
+		       B.CREATE_TIME   sysDeptCreateTime
+		  FROM STAFF A, SYS_DEPT B
+		 WHERE A.DEPT_ID = B.DEPT_ID
+		<if test="queryBean.history == false"> AND A.STS != 'P'</if>
+		<if test="queryBean.history == true"> AND A.STS = 'P'</if>
+		<if test="queryBean.staffName != null"> AND A.STAFF_NAME LIKE CONCAT('%',#{queryBean.staffName},'%')</if>
+		<if test="queryBean.staffCode != null"> AND A.STAFF_CODE LIKE CONCAT('%',#{queryBean.staffCode},'%')</if>
+		<if test="queryBean.deptId != null"> AND B.DEPT_ID = #{queryBean.deptId}</if>
+		ORDER BY deptId, staffName
+	</sql>
+	<resultMap id="staffDeptList" type="Staff">
+		<id property="staffId" column="staffId" />
+		<result property="staffCode" column="staffCode" />
+		<result property="staffName" column="staffName" />
+		<result property="deptId" column="deptId" />
+		<result property="fixNbr" column="staffFixNbr" />
+		<result property="mobileNbr" column="mobileNbr" />
+		<result property="email" column="email" />
+		<result property="sts" column="staffSts" />
+		<result property="stsTime" column="staffStsTime" />
+		<result property="createTime" column="staffCreateTime" />
+		<association property="sysDept" column="deptId" javaType="SysDept" resultMap="sysDeptResult" />
+	</resultMap>
+	<resultMap id="sysDeptResult" type="SysDept">
+		<id property="deptId" column="deptId" />
+		<result property="superDeptId" column="superDeptId" />
+		<result property="deptCode" column="deptCode" />
+		<result property="deptName" column="deptName" />
+		<result property="address" column="address" />
+		<result property="postCode" column="postCode" />
+		<result property="telNbr" column="telNbr" />
+		<result property="faxNbr" column="sysDeptFaxNbr" />
+		<result property="linkMan" column="linkMan" />
+		<result property="emailAddr" column="emailAddr" />
+		<result property="webSite" column="webSite" />
+		<result property="remarks" column="remarks" />
+		<result property="sts" column="sysDeptSts" />
+		<result property="stsTime" column="sysDeptStsTime" />
+		<result property="createTime" column="sysDeptCreateTime" />
+		<result property="loginName" column="LOGIN_NAME" />
+		<result property="sts" column="sysDeptSts" />
+	</resultMap>
+	
+	<!-- 获取员工编码的员工[在职、离职、停薪留职]总数 -->
+	<select id="countStaffCode" parameterType="String" resultType="int">
+		SELECT COUNT(*) TOTAL FROM STAFF WHERE STAFF_CODE = #{staffCode}
+	</select>
+</mapper>

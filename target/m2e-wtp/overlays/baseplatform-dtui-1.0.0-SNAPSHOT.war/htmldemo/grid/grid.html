@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" " http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<title>My First Grid</title> 
+
+<style> 
+html, body { 
+    margin: 0; 
+    padding: 0; 
+    font-size: 75%; 
+} 
+</style> 
+
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css"/>
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.min.js"></script>
+	<script src="../../dtui/js/jqgrid/grid.locale-cn.js" type="text/javascript"></script>
+    <script src="../../dtui/js/jqgrid/jquery.jqGrid.js" type="text/javascript"></script>
+    <script src="../../dtui/js/dtui.grid.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="../../htmldemo/demos.css" />
+	
+<script type="text/javascript">
+var mystr =
+	"<?xml version='1.0' encoding='utf-8'?><invoices><rows>"
+	                                 +"<row><cell>1</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>2</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>3</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>4</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>5</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>6</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>7</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>8</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>9</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>10</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>11</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>12</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>13</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>14</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>15</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>16</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>17</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>18</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>19</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>20</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>21</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>22</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>23</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>24</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>25</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>26</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>27</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>28</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>29</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>30</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>31</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>32</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>33</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>34</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>35</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>36</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>37</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>38</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>39</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>40</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>41</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"<row><cell>42</cell><cell>data2</cell><cell>data3</cell><cell>data4</cell><cell>data5</cell><cell>data6</cell></row>"
+	                                 +"</rows></invoices>"; 
+
+	$(document).ready(function(){
+	  /* jQuery("#list").jqGrid({ */
+	  $("#list").dtgrid({
+	    datatype: 'xmlstring', 
+	    datastr : mystr, 
+	    colNames:['InvID','Date', 'Amount','Tax','Total','Notes'], 
+	    
+	    colModel :[ 
+	      {name:'invid', index:'invid', width:55, sorttype:'int',editable:true}, 
+	      {name:'invdate', index:'invdate', width:90, sorttype:'date', datefmt:'Y-m-d',editable:true}, 
+	      {name:'amount', index:'amount', width:80, align:'right', sorttype:'float',editable:true}, 
+	      {name:'tax', index:'tax', width:80, align:'right', sorttype:'float',editable:true}, 
+	      {name:'total', index:'total', width:80, align:'right', sorttype:'float',editable:true}, 
+	      {name:'note', index:'note', width:150, sortable:false,editable:true}], 
+	    
+	    multiselect: true,
+	    rowList:[10,20,30],
+	    rowNum:10, 
+	    showPager: true,
+	    viewrecords: true, 
+	    sortname:'invid',
+	    sortorder:"desc",
+	    //table 名字
+	    caption: 'My first grid' 
+	  }).navGrid('#pager',{edit:false,add:false}); 
+	  
+	  
+	  /* getSelection */
+	  $("#a1").click(function(){
+		  var selectedData=$("#list").dtgrid('getSelection');
+		  alert('InvNo:'+selectedData.invid+'\n'
+			   +'Date:'+selectedData.invdate+'\n'
+			   +'amount:'+selectedData.amount+'\n'
+			   +'tax:'+selectedData.tax+'\n'
+			   +'total:'+selectedData.total+'\n'
+			   +'note:'+selectedData.note
+		  ); 
+	  });
+	  /*update selected*/
+	  $("#a2").click(function(){
+		  var selectedData=$("#list").dtgrid('getSelection');
+		  $("#list").dtgrid('updateRowData',selectedData.invid,{invdate:"2013-4-11",amount:"10000",tax:"80",total:"10080",note:"已处理"});
+	  });
+	  /*setSelection*/
+	  $("#a3").click(function(){
+		 $("#list").dtgrid('setSelection',1,true);
+	  });
+	  /*edit data */
+	   $("#a4").click(function(){
+		 $("#list").dtgrid('editRow',1);
+	  });
+	  /*save data */
+	   $("#a5").click(function(){
+		  $("#list").dtgrid('saveRow',1);
+	  });
+	  /*restore data*/
+	   $("#a6").click(function(){
+		 $("#list").dtgrid('restoreRow',1);
+	  });
+	  /*export data  */
+	   $("#a7").click(function(){
+			 $("#list").dtgrid('exportData', {exptype:'xmlstring',root:'invoices',ident: "\t",url:'Exportxml.txt'});
+	    });
+	}); 
+	</script> 
+	</head> 
+	<body> 
+	<table id="list"></table> 
+	
+	<a href="#" id="a1">1.获取选择行的值</a><br/><br/>
+	<a href="#" id="a2">2.修改选择行的值</a><br/><br/>
+	<a href="#" id="a3">3.测试setSelection</a><br/><br/>
+	<a href="#" id="a4">4.edit row data</a><br/><br/>
+	<a href="#" id="a5">5.save row data</a><br/><br/>
+	<a href="#" id="a6">6.cancel row data</a><br/><br/>
+	<a href="#" id="a7">7.export data</a>
+	</body> 
+	
+	<div class="demo-description">
+	<h3>本实例功能</h3>
+	<ul>
+	<li>根据XML字符串生成表格控件,通过点击超链接对表格的一些基本操作</li>
+	</ul>
+	</div>
+	</html> 

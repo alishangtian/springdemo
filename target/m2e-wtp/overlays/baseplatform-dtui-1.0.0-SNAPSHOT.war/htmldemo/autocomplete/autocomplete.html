@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>jQuery UI Autocomplete - Default functionality</title>
+<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css" />
+<script type="text/javascript" src="../../dtui/js/jquery/jquery.js"></script>
+<script type="text/javascript" src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+<script type="text/javascript" src="../../dtui/js/dtui.autocomplete.js"></script>
+<link rel="stylesheet" href="../demos.css">
+<script type="text/javascript">
+//普通数组测试
+	$(function() {
+		var availableTags = [ "ActionScript", "AppleScript", "Asp", "BASIC",
+				"C", "C++", "Clojure", "COBOL", "ColdFusion", "Erlang",
+				"Fortran", "Groovy", "Haskell", "Java", "JavaScript", "Lisp",
+				"Perl", "PHP", "Python", "Ruby", "Scala", "Scheme" ];
+		
+		
+		$("#tags").dtautocomplete({
+			source : availableTags,
+			label:"普通测试组  ："
+		});
+//简单 key-value 对象数组测试	 以key|value	形式显示  
+//必须赋值 key 和 value 否则默认 普通数组  并不显示  value值   
+		var availableTag1 = [{value:'11',text:'zuqiu'},{value:'12',text:'lanqiu'},{value:'13',text:'paiqiu'}];
+		
+		$("#tag1").dtautocomplete({
+			source : availableTag1,
+			searchProperty:'value',
+			searchValue:'text',
+			label:"JSON 测试组"
+		});
+	});
+</script>
+</head>
+<body>
+
+	<div class="ui-widget">
+		<input id="tags" />
+	</div>
+	<br/><br/>
+	<div class="ui-widget">
+		<input id="tag1" />
+	</div>
+	
+	<div class="demo-description">
+		<h3>本实例功能</h3>
+		<ul>
+			<li>搜索下拉框(普通)以本地数组形式(也可以从程序中读取数据)传入数据生成控件,可以根据关键字搜索符合条件的值生成列表</li>
+			<li>搜索下拉框(JSON)以本地key,value对象数组的形式传入数据生成控件,根据key关键字搜索符合条件的key生成key|value格式的列表</li>
+		</ul>
+	</div>
+</body>
+</html>

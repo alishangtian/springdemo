@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<title>My First Grid</title> 
+
+<style> 
+html, body { 
+    margin: 0; 
+    padding: 0; 
+    font-size: 75%; 
+} 
+</style> 
+
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css"/>
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.min.js"></script>
+	<script src="../../dtui/js/jqgrid/grid.locale-cn.js" type="text/javascript"></script>
+    <script src="../../dtui/js/jqgrid/jquery.jqGrid.js" type="text/javascript"></script>
+    <script src="../../dtui/js/dtui.util.js" type="text/javascript"></script>
+    <script src="../../dtui/js/dtui.grid.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="../../htmldemo/demos.css" />
+	
+<script type="text/javascript">
+var mystr = [
+      		{id:"1",invdate:"2007-10-01",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+      		{id:"2",invdate:"2007-10-02",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+      		{id:"3",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+      		{id:"4",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+      		{id:"5",invdate:"2007-10-05",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+      		{id:"6",invdate:"2007-09-06",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+      		{id:"7",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+      		{id:"8",invdate:"2007-10-03",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+      		{id:"9",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"}
+      		];
+
+	$(document).ready(function(){
+	  $("#list").dtgrid({
+		datatype: "local",
+		height: 220,
+		//colNames:['Inv No','Date', 'Client', 'Amount','Tax','Total','Notes','opt'],
+		shrinkToFit: true,
+		multiselect: true,
+	   	colModel:[
+	   		{name:'id',index:'id', width:'60', sorttype:"int", hidden:true},
+	   		{name:'invdate',index:'invdate', width:'90', sorttype:"date"},
+	   		{name:'name',index:'name', width:'100'},
+	   		{name:'amount',index:'amount', width:'80px', align:"right",sorttype:"float"},
+	   		{name:'tax',index:'tax', width:'80px', align:"right",sorttype:"float"},		
+	   		{name:'total',index:'total', width:80,align:"right",sorttype:"float"},		
+	   		{name:'note',index:'note', width:'150px', sortable:false},
+		    {name:'opt', index:'opt', label:'', width:'50px', formatter:'actions', formatoptions:{editformbutton:true, onEdit: function(){alert(1);return false;}}}],
+	    //table 名字
+	   	caption: "Manipulating Array Data"
+	  }).navGrid('#pager',{edit:false,add:false}); 
+
+	  for(var i=0;i<=mystr.length;i++)
+		 $("#list").dtgrid('addRowData',i+1,mystr[i]);
+	}); 
+	
+
+	</script> 
+	</head> 
+	<body> 
+	<table id="list"></table> 
+	<div class="demo-description">
+		<h3>本实例功能</h3>
+		<ul>
+			<li>利用本地的对象数组生成基本的表格控件</li>
+		</ul>
+	</div>
+	</body> 
+	</html> 

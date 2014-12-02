@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC  
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<constant name="struts.locale" value="zh_CN" />
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	<!-- <constant name="struts.action.extension" value="action,," /> -->
+	<constant name="struts.action.extension" value="action" />
+	<constant name="struts.ui.theme" value="simple" />
+
+	<package abstract="true" name="default" extends="struts-default">
+		<result-types>
+			<result-type name="json" class="org.apache.struts2.json.JSONResult" />
+		</result-types>
+
+		<interceptors>
+			<interceptor name="json" class="org.apache.struts2.json.JSONInterceptor" />
+			<interceptor name="authentication" class="com.cattsoft.baseplatform.func.sm.web.AuthenticationInterceptor" />
+			<interceptor name="authorization" class="com.cattsoft.baseplatform.func.sm.web.AuthorizationInterceptor" />
+
+			<interceptor-stack name="catt.simpleStack">
+				<interceptor-ref name="exception" />
+				<!-- -->
+				<interceptor-ref name="authentication" />
+				<interceptor-ref name="servletConfig" />
+				<interceptor-ref name="modelDriven">
+					<param name="refreshModelBeforeResult">true</param>
+				</interceptor-ref>
+				<interceptor-ref name="actionMappingParams" />
+				<interceptor-ref name="params">
+					<param name="excludeParams">dojo\..*,^struts\..*</param>
+				</interceptor-ref>
+			</interceptor-stack>
+			<interceptor-stack name="catt.commonStack">
+				<interceptor-ref name="exception" />
+				<interceptor-ref name="authentication" />
+				<interceptor-ref name="alias" />
+				<interceptor-ref name="servletConfig" />
+				<interceptor-ref name="prepare" />
+				<interceptor-ref name="chain" />
+				<interceptor-ref name="scopedModelDriven" />
+				<interceptor-ref name="modelDriven">
+					<param name="refreshModelBeforeResult">true</param>
+				</interceptor-ref>
+				<interceptor-ref name="multiselect" />
+				<interceptor-ref name="actionMappingParams" />
+				<interceptor-ref name="params">
+					<param name="excludeParams">dojo\..*,^struts\..*</param>
+				</interceptor-ref>
+			</interceptor-stack>
+			<interceptor-stack name="catt.jsonSimpleStack">
+				<interceptor-ref name="json" />
+				<interceptor-ref name="catt.simpleStack" />
+			</interceptor-stack>
+			<interceptor-stack name="catt.servletAndParamsStack">
+				<interceptor-ref name="servletConfig" />
+				<interceptor-ref name="params">
+					<param name="excludeParams">dojo\..*,^struts\..*</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+
+		<default-interceptor-ref name="catt.simpleStack" />
+
+		<global-results>
+			<result name="home">/</result>
+			<result name="login">/</result>
+			<result name="exception">/pages/common/exception-debug.jsp</result>
+		</global-results>
+
+		<global-exception-mappings>
+			<exception-mapping exception="java.lang.RuntimeException" result="exception" />
+		</global-exception-mappings>
+	</package>
+
+	<package name="" extends="default">
+		<action name="Home" class="com.cattsoft.baseplatform.func.sm.web.LoginAction">
+			<interceptor-ref name="catt.servletAndParamsStack" />
+			<result type="json"><param name="root">resultMsg</param></result>
+		</action>
+	</package>
+	<include file="com/cattsoft/baseplatform/func/sm/struts-sm.xml" />
+	<include file="com/cattsoft/ny/base/struts-business.xml" />
+</struts>

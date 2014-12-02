@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.cattsoft.baseplatform.func.sm.persistence.RoleFuncItemAllocMapper">
+	<insert id="insert" parameterType="RoleFuncItemAlloc" useGeneratedKeys="true" keyProperty="roleId">
+		<!--  <selectKey keyProperty="roleFuncItemAllocId" resultType="long" order="BEFORE">
+			SELECT SEQ_ROLE_FUNC_ITEM_ALLOC_ID.NEXTVAL FROM DUAL
+		</selectKey>-->
+		INSERT INTO ROLE_FUNC_ITEM_ALLOC(ROLE_FUNC_ALLOC_ID, FUNC_ITEM_ID, DESIGNATE, STS, STS_TIME, CREATE_TIME)
+		VALUES(#{roleFuncAllocId}, #{funcItemId}, #{designate}, #{sts}, #{stsTime}, #{createTime})
+	</insert>
+	<!-- 收回用户的功能下的某个功能操作或所有功能操作的授权信息 -->
+	<update id="retake" parameterType="RoleFuncAuthQuery">
+		UPDATE ROLE_FUNC_ITEM_ALLOC
+		   SET STS = 'P', STS_TIME = now()
+		 WHERE STS = 'A'
+		 <if test="funcItemId != null"> AND FUNC_ITEM_ID = #{funcItemId} </if>
+		   AND ROLE_FUNC_ALLOC_ID IN
+		       (SELECT A.ROLE_FUNC_ALLOC_ID
+		          FROM ROLE_FUNC_ALLOC A
+		         WHERE A.STS = 'A'
+		           AND A.ROLE_ID = #{roleId}
+		           AND A.FUNC_NODE_ID = #{funcNodeId})
+	</update>
+	<!-- 角色注销时，注销角色对应的功能操作授权信息 -->
+	<update id="destroyRole" parameterType="long">
+		UPDATE ROLE_FUNC_ITEM_ALLOC
+		   SET STS = 'P', STS_TIME =now()
+		 WHERE STS = 'A'
+		   AND ROLE_FUNC_ALLOC_ID IN
+		       (SELECT A.ROLE_FUNC_ALLOC_ID
+		          FROM ROLE_FUNC_ALLOC A
+		         WHERE A.STS = 'A'
+		           AND A.ROLE_ID = #{roleId})
+	</update>
+	<!-- 获取角色在指定功能下的所有功能操作授权信息 -->
+	<select id="selectAllocFuncItems" parameterType="RoleFuncAuthQuery" resultType="RoleFuncItemAlloc">
+		SELECT DISTINCT B.FUNC_ITEM_ID funcItemId, B.DESIGNATE designate
+		  FROM ROLE_FUNC_ALLOC A, ROLE_FUNC_ITEM_ALLOC B, FUNC_ITEM C
+		 WHERE A.ROLE_ID = #{roleId}
+		   AND A.FUNC_NODE_ID = #{funcNodeId}
+		   AND A.ROLE_FUNC_ALLOC_ID = B.ROLE_FUNC_ALLOC_ID
+		   AND B.FUNC_ITEM_ID = C.FUNC_ITEM_ID
+		   AND A.STS = 'A'
+		   AND B.STS = 'A'
+		   AND C.STS = 'A'
+	</select>
+</mapper>

@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.baseplatform.func.sm.persistence.SysRoleMapper">
+	<!-- Oracle分页查询 -->
+	<!--  <sql id="pagingHeader">select * from(select row_.*,rownum rownum_ from(</sql>
+	<sql id="pagingFooter">) row_ where rownum &lt;= #{pagingInfo.endIdx}) where rownum_ &gt;= #{pagingInfo.startIdx}</sql>
+	-->
+	<sql id="pagingFooter"> limit ${pagingInfo.startIdx-1},#{pagingInfo.pageRows}</sql>
+	<sql id="countingHeader">select count(*) from(</sql>
+	<sql id="countingFooter">) t</sql>
+	
+	<insert id="insert" parameterType="SysRole" useGeneratedKeys="true" keyProperty="roleId">
+		<!--  <selectKey keyProperty="roleId" resultType="long" order="BEFORE">
+			SELECT SEQ_IDEA_ROLE_ID.NEXTVAL FROM DUAL
+		</selectKey>-->
+		INSERT INTO IDEA_ROLE(ROLE_NAME, ROLE_DESC, STS, STS_TIME, CREATE_TIME)
+		VALUES(#{roleName}, #{roleDesc,jdbcType=VARCHAR}, #{sts}, #{stsTime}, #{createTime})
+	</insert>
+	<!-- 更新角色名称、角色描述、角色状态 -->
+	<update id="update" parameterType="SysRole">
+		UPDATE IDEA_ROLE
+		<set>
+			<if test="roleName != null">ROLE_NAME = #{roleName},</if>
+			<if test="roleDesc != null">ROLE_DESC = #{roleDesc},</if>
+			<if test="sts != null">STS = #{sts},</if>
+			STS_TIME = NOW()
+		</set>
+		WHERE ROLE_ID = #{roleId}
+	</update>
+
+	<select id="selectOne" parameterType="long" resultType="SysRole">
+		SELECT ROLE_ID     roleId,
+		       ROLE_NAME   roleName,
+		       ROLE_DESC   roleDesc,
+		       STS         sts,
+		       STS_TIME    stsTime,
+		       CREATE_TIME createTime
+		  FROM IDEA_ROLE
+		 WHERE ROLE_ID = #{roleId}
+	</select>
+	<!-- 查询所有在用角色 -->
+	<select id="selectAll" resultType="SysRole">
+		SELECT ROLE_ID     roleId,
+		       ROLE_NAME   roleName,
+		       ROLE_DESC   roleDesc,
+		       STS         sts,
+		       STS_TIME    stsTime,
+		       CREATE_TIME createTime
+		  FROM IDEA_ROLE
+		 WHERE STS = 'A'
+	</select>
+	<!-- 分页查询依据角色名称，模糊查询满足条件的角色列表 -->
+	<select id="selectPageSysRole" parameterType="PagingQueryBean" resultType="SysRole">
+		<!-- <include refid="pagingHeader" /> -->
+		<include refid="sqlSelectAllSysRole" />
+		<include refid="pagingFooter" />
+	</select>
+	<!-- 依据角色名称，模糊查询满足条件的角色总数 -->
+	<select id="selectCountSysRole" parameterType="PagingQueryBean" resultType="int">
+		<include refid="countingHeader" />
+		<include refid="sqlSelectAllSysRole" />
+		<include refid="countingFooter" />
+	</select>
+	<!-- 按名称模糊查询角色列表的sql -->
+	<sql id="sqlSelectAllSysRole">
+		SELECT A.ROLE_ID     roleId,
+		       A.ROLE_NAME   roleName,
+		       A.ROLE_DESC   roleDesc,
+		       A.STS         sts,
+		       A.STS_TIME    stsTime,
+		       A.CREATE_TIME createTime
+		  FROM IDEA_ROLE A
+		 WHERE A.STS = 'A'
+		 <if test="queryBean.roleName != null"> AND A.ROLE_NAME LIKE CONCAT('%',#{queryBean.roleName},'%')</if>
+		 ORDER BY A.ROLE_NAME
+	</sql>
+	
+	<!-- 查询所有使用者类型为部门，且已与指定角色建立授权关系的系统用户的记录总数 -->
+	<select id="selectCountDeptUser" parameterType="PagingQueryBean" resultType="int">
+		<include refid="countingHeader" />
+		<include refid="sqlSelectAllDeptUser" />
+		<include refid="countingFooter" />
+	</select>	
+	<!-- 分页查询所有使用者类型为部门，且已与指定角色建立授权关系的系统用户 -->
+	<select id="selectPageDeptUser" parameterType="PagingQueryBean" resultMap="deptUserList">
+		<!--  <include refid="pagingHeader" />-->
+		<include refid="sqlSelectAllDeptUser" />
+		<include refid="pagingFooter" />
+	</select>
+	<sql id="sqlSelectAllDeptUser">
+		SELECT A.USER_ID       userId,
+		       A.LOGIN_NAME    loginName,
+		       A.USER_TYPE     userType,
+		       A.USER_EXP_TIME userExpTime,
+		       A.PASSWORD      password,
+		       A.OLD_PWD       oldPwd,
+		       A.PWD_CHG_TIME  pwdChgTime,
+		       A.PWD_EXP_TIME  pwdExpTime,
+		       A.STS           userSts,
+		       A.STS_TIME      userStsTime,
+		       A.CREATE_TIME   userCreateTime,
+		       C.DEPT_ID       deptId,
+		       C.SUPER_DEPT_ID superDeptId,
+		       C.DEPT_CODE     deptCode,
+		       C.DEPT_NAME     deptName,
+		       C.ADDRESS       address,
+		       C.POST_CODE     postCode,
+		       C.TEL_NBR       telNbr,
+		       C.FAX_NBR       faxNbr,
+		       C.LINK_MAN      linkMan,
+		       C.EMAIL_ADDR    emailAddr,
+		       C.WEB_SITE      webSite,
+		       C.REMARKS       remarks,
+		       C.STS           deptSts,
+		       C.STS_TIME      deptStsTime,
+		       C.CREATE_TIME   deptCreateTime
+		  FROM IDEA_USER A, USER_OWNER_RELA B, SYS_DEPT C, USER_ROLE_ALLOC D
+		 WHERE A.USER_TYPE = 'C'
+		   AND A.USER_ID = B.USER_ID
+		   AND B.OWNER_TYPE = 'D'
+		   AND B.OWNER_ID = C.DEPT_ID
+		   AND D.USER_ID = A.USER_ID
+		   AND A.STS = 'A'
+		   AND B.STS = 'A'
+		   AND D.STS = 'A'
+		   AND A.USER_EXP_TIME > NOW()
+		   AND D.ROLE_ID = #{queryBean.roleId}
+		   <if test="queryBean.loginName != null"> AND A.LOGIN_NAME LIKE CONCAT('%',#{queryBean.loginName},'%')</if>
+		   <if test="queryBean.ownerName != null"> AND C.DEPT_NAME LIKE  CONCAT('%',#{queryBean.ownerName},'%')</if>
+	</sql>
+	<resultMap id="deptUserList" type="SysUser">
+		<id property="userId" column="userId" />
+		<result property="loginName" column="loginName" />
+		<result property="userType" column="userType" />
+		<result property="userExpTime" column="userExpTime" />
+		<result property="password" column="password" />
+		<result property="oldPwd" column="oldPwd" />
+		<result property="pwdChgTime" column="pwdChgTime" />
+		<result property="pwdExpTime" column="pwdExpTime" />
+		<result property="sts" column="userSts" />
+		<result property="stsTime" column="userStsTime" />
+		<result property="createTime" column="userCreateTime" />
+		<association property="sysDept" column="deptId" javaType="SysDept" resultMap="sysDeptResult" />
+	</resultMap>
+	<resultMap id="sysDeptResult" type="SysDept">
+		<id property="deptId" column="deptId" />
+		<result property="superDeptId" column="superDeptId" />
+		<result property="deptCode" column="deptCode" />
+		<result property="deptName" column="deptName" />
+		<result property="address" column="address" />
+		<result property="postCode" column="postCode" />
+		<result property="telNbr" column="telNbr" />
+		<result property="faxNbr" column="faxNbr" />
+		<result property="linkMan" column="linkMan" />
+		<result property="emailAddr" column="emailAddr" />
+		<result property="webSite" column="webSite" />
+		<result property="remarks" column="remarks" />
+		<result property="sts" column="deptSts" />
+		<result property="stsTime" column="deptStsTime" />
+		<result property="createTime" column="deptCreateTime" />
+	</resultMap>
+	
+	<!-- 查询所有使用者类型为员工，且已与指定角色建立授权关系的系统用户的记录总数 -->
+	<select id="selectCountStaffUser" parameterType="PagingQueryBean" resultType="int">
+		<include refid="countingHeader" />
+		<include refid="sqlSelectAllStaffUser" />
+		<include refid="countingFooter" />
+	</select>	
+	<!-- 分页查询所有使用者类型为员工，且已与指定角色建立授权关系的系统用户 -->
+	<select id="selectPageStaffUser" parameterType="PagingQueryBean" resultMap="staffUserList">
+		<!--  <include refid="pagingHeader" />-->
+		<include refid="sqlSelectAllStaffUser" />
+		<include refid="pagingFooter" />
+	</select>
+	<sql id="sqlSelectAllStaffUser">
+		SELECT A.USER_ID       userId,
+		       A.LOGIN_NAME    loginName,
+		       A.USER_TYPE     userType,
+		       A.USER_EXP_TIME userExpTime,
+		       A.PASSWORD      password,
+		       A.OLD_PWD       oldPwd,
+		       A.PWD_CHG_TIME  pwdChgTime,
+		       A.PWD_EXP_TIME  pwdExpTime,
+		       A.STS           userSts,
+		       A.STS_TIME      userStsTime,
+		       A.CREATE_TIME   userCreateTime,
+		       C.STAFF_ID      staffId,
+		       C.STAFF_CODE    staffCode,
+		       C.STAFF_NAME    staffName,
+		       C.DEPT_ID       deptId,
+		       C.FIX_NBR       fixNbr,
+		       C.MOBILE_NBR    mobileNbr,
+		       C.EMAIL         email,
+		       C.STS           staffSts,
+		       C.STS_TIME      staffStsTime,
+		       C.CREATE_TIME   staffCreateTime
+		  FROM IDEA_USER A, USER_OWNER_RELA B, STAFF C, USER_ROLE_ALLOC D
+		 WHERE A.USER_TYPE = 'C'
+		   AND A.USER_ID = B.USER_ID
+		   AND B.OWNER_TYPE = 'S'
+		   AND B.OWNER_ID = C.STAFF_ID
+		   AND D.USER_ID = A.USER_ID
+		   AND A.STS = 'A'
+		   AND B.STS = 'A'
+		   AND D.STS = 'A'
+		   AND A.USER_EXP_TIME > NOW()
+		   AND D.ROLE_ID = #{queryBean.roleId}
+		   <if test="queryBean.loginName != null"> AND A.LOGIN_NAME LIKE CONCAT('%',#{queryBean.loginName},'%')</if>
+		   <if test="queryBean.ownerName != null"> AND C.STAFF_NAME LIKE CONCAT('%',#{queryBean.ownerName},'%')</if>
+	</sql>
+	<resultMap id="staffUserList" type="SysUser">
+		<id property="userId" column="userId" />
+		<result property="loginName" column="loginName" />
+		<result property="userType" column="userType" />
+		<result property="userExpTime" column="userExpTime" />
+		<result property="password" column="password" />
+		<result property="oldPwd" column="oldPwd" />
+		<result property="pwdChgTime" column="pwdChgTime" />
+		<result property="pwdExpTime" column="pwdExpTime" />
+		<result property="sts" column="userSts" />
+		<result property="stsTime" column="userStsTime" />
+		<result property="createTime" column="userCreateTime" />
+		<association property="staff" column="staffId" javaType="Staff" resultMap="staffResult" />
+	</resultMap>
+	<resultMap id="staffResult" type="Staff">
+		<id property="staffId" column="staffId" />
+		<result property="staffCode" column="staffCode" />
+		<result property="staffName" column="staffName" />
+		<result property="deptId" column="deptId" />
+		<result property="fixNbr" column="fixNbr" />
+		<result property="mobileNbr" column="mobileNbr" />
+		<result property="email" column="email" />
+		<result property="sts" column="staffSts" />
+		<result property="stsTime" column="staffStsTime" />
+		<result property="createTime" column="staffCreateTime" />
+	</resultMap>
+</mapper>

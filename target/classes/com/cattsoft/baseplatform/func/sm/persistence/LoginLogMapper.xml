@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.baseplatform.func.sm.persistence.LoginLogMapper">
+	<!-- Oracle分页查询 -->
+	<!--  <sql id="pagingHeader">select * from(select row_.*,rownum rownum_ from(</sql>-->
+	<sql id="pagingFooter"> limit ${pagingInfo.startIdx-1},#{pagingInfo.pageRows}</sql>
+	<sql id="countingHeader">select count(*) from(</sql>
+	<sql id="countingFooter">) t</sql>
+	<!-- 分页查询:查询系统日志信息-->
+	<select id="selectPageLoginLog" parameterType="PagingQueryBean" resultType="LoginLog">
+		<!--<include refid="pagingHeader" />-->
+		<include refid="sqlSelectLoginLog" />
+		<include refid="pagingFooter" />
+	</select>
+	<!-- 分页查询：查询记录总数 -->
+	<select id="selectCountLoginLog" parameterType="PagingQueryBean" resultType="int">
+		<include refid="countingHeader" />
+		<include refid="sqlSelectLoginLog" />
+		<include refid="countingFooter" />
+	</select>
+	<!-- 查询登录日志明细的sql -->
+	<sql id="sqlSelectLoginLog">
+		SELECT LOGIN_LOG_ID loginLogId,
+		       SESSION_ID   sessionId,
+		       USER_NAME    userName,
+		       LOGIN_NAME   loginName,
+		       LOGIN_IP     loginIp,
+		       LOGIN_TIME   loginTime,
+		       LOGOUT_TIME  logoutTime
+		  FROM LOGIN_LOG
+		 WHERE 1 = 1
+		<if test="queryBean.userName != null"> AND USER_NAME like '%'|| #{queryBean.userName}||'%'</if>
+		<if test="queryBean.loginName != null"> AND LOGIN_NAME like '%'||#{queryBean.loginName}||'%'</if>
+		<if test="queryBean.loginIp != null"> AND LOGIN_IP like '%'|| #{queryBean.loginIp}||'%'</if>
+		<if test="queryBean.startTime != null"> AND LOGIN_TIME <![CDATA[>=]]>  #{queryBean.startTime}</if>
+		<if test="queryBean.endTime != null"> AND LOGIN_TIME <![CDATA[<=]]> #{queryBean.endTime}</if>
+		ORDER BY loginTime DESC
+	</sql>
+</mapper>

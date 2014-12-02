@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.baseplatform.func.sm.persistence.SysDeptMapper">
+	<!-- Oracle分页查询 -->
+	<sql id="pagingFooter"> limit ${pagingInfo.startIdx-1},#{pagingInfo.pageRows}</sql>
+	<sql id="countingHeader">select count(*) from(</sql>
+	<sql id="countingFooter">) t</sql>
+	
+	<insert id="insert" parameterType="SysDept" useGeneratedKeys="true" keyProperty="deptId">
+		INSERT INTO SYS_DEPT(SUPER_DEPT_ID, DEPT_CODE, DEPT_NAME, ADDRESS, POST_CODE, TEL_NBR, FAX_NBR, LINK_MAN, EMAIL_ADDR, WEB_SITE, REMARKS, STS, STS_TIME, CREATE_TIME)
+		VALUES(
+		#{superDeptId,jdbcType=NUMERIC},
+		#{deptCode}, #{deptName},
+		#{address,jdbcType=VARCHAR},
+		#{postCode,jdbcType=VARCHAR},
+		#{telNbr,jdbcType=VARCHAR},
+		#{faxNbr,jdbcType=VARCHAR},
+		#{linkMan,jdbcType=VARCHAR},
+		#{emailAddr,jdbcType=VARCHAR},
+		#{webSite,jdbcType=VARCHAR},
+		#{remarks,jdbcType=VARCHAR}, #{sts},
+		#{stsTime}, #{createTime})
+	</insert>
+
+	<update id="update" parameterType="SysDept">
+		UPDATE SYS_DEPT
+		<set>
+			<if test="superDeptId != null">SUPER_DEPT_ID = #{superDeptId},</if>
+			<if test="deptCode != null">DEPT_CODE = #{deptCode},</if>
+			<if test="deptName != null">DEPT_NAME = #{deptName},</if>
+			<if test="address != null">ADDRESS = #{address},</if>
+			<if test="postCode != null">POST_CODE = #{postCode},</if>
+			<if test="telNbr != null">TEL_NBR = #{telNbr},</if>
+			<if test="faxNbr != null">FAX_NBR = #{faxNbr},</if>
+			<if test="linkMan != null">LINK_MAN = #{linkMan},</if>
+			<if test="emailAddr != null">EMAIL_ADDR = #{emailAddr},</if>
+			<if test="webSite != null">WEB_SITE = #{webSite},</if>
+			<if test="remarks != null">REMARKS = #{remarks},</if>
+			<if test="sts != null">STS = #{sts},</if>
+			STS_TIME = NOW()
+		</set>
+		WHERE DEPT_ID = #{deptId}
+	</update>
+
+	<select id="selectOne" parameterType="long" resultType="SysDept">
+		SELECT DEPT_ID       deptId,
+		       SUPER_DEPT_ID superDeptId,
+		       DEPT_CODE     deptCode,
+		       DEPT_NAME     deptName,
+		       ADDRESS       address,
+		       POST_CODE     postCode,
+		       TEL_NBR       telNbr,
+		       FAX_NBR       faxNbr,
+		       LINK_MAN      linkMan,
+		       EMAIL_ADDR    emailAddr,
+		       WEB_SITE      webSite,
+		       REMARKS       remarks,
+		       STS           sts,
+		       STS_TIME      stsTime,
+		       CREATE_TIME   createTime
+		  FROM SYS_DEPT
+		 WHERE DEPT_ID = #{deptId}
+	</select>
+	<!-- 依据部门编码、部门名称、上级部门查询所有在用部门 -->
+	<select id="selectList" parameterType="SysDept" resultType="SysDept">
+		SELECT DEPT_ID       deptId,
+		       SUPER_DEPT_ID superDeptId,
+		       DEPT_CODE     deptCode,
+		       DEPT_NAME     deptName,
+		       ADDRESS       address,
+		       POST_CODE     postCode,
+		       TEL_NBR       telNbr,
+		       FAX_NBR       faxNbr,
+		       LINK_MAN      linkMan,
+		       EMAIL_ADDR    emailAddr,
+		       WEB_SITE      webSite,
+		       REMARKS       remarks,
+		       STS           sts,
+		       STS_TIME      stsTime,
+		       CREATE_TIME   createTime
+		  FROM SYS_DEPT
+		 WHERE STS = 'A'
+		<if test="superDeptId != null"> AND SUPER_DEPT_ID = #{superDeptId}</if>
+		<if test="deptCode != null"> AND DEPT_CODE = #{deptCode}</if>
+		<if test="deptName != null"> AND DEPT_NAME like CONCAT('%',#{deptName},'%')</if>
+	</select>
+	<!-- 获取所有部门信息 -->
+	<select id="selectAllSysDeptData" resultType="SysDept">
+		SELECT DEPT_ID       deptId,
+		       SUPER_DEPT_ID superDeptId,
+		       DEPT_CODE     deptCode,
+		       DEPT_NAME     deptName,
+		       ADDRESS       address,
+		       POST_CODE     postCode,
+		       TEL_NBR       telNbr,
+		       FAX_NBR       faxNbr,
+		       LINK_MAN      linkMan,
+		       EMAIL_ADDR    emailAddr,
+		       WEB_SITE      webSite,
+		       REMARKS       remarks,
+		       STS           sts,
+		       STS_TIME      stsTime,
+		       CREATE_TIME   createTime
+		  FROM SYS_DEPT
+		  WHERE STS = 'A'
+	</select>
+	<!-- 查询指定部门及其子部门下的非离职员工总数 -->
+	<select id="countStaff" parameterType="long" resultType="long">
+		SELECT COUNT(A.STAFF_ID)
+		  FROM STAFF A,
+		       (SELECT DISTINCT C.DEPT_ID
+		          FROM SYS_DEPT C
+		         WHERE C.STS = 'A'
+		         START WITH C.DEPT_ID = #{deptId}
+		        CONNECT BY PRIOR C.DEPT_ID = C.SUPER_DEPT_ID) B
+		 where A.STS != 'P'
+		   AND A.DEPT_ID = B.DEPT_ID
+	</select>
+	<!-- 分页查询依据部门名称，模糊查询满足条件的部门列表 -->
+	<select id="selectPageSysDept" parameterType="PagingQueryBean" resultType="SysDept">
+		<include refid="sqlSelectAllSysDept" />
+		<include refid="pagingFooter" />
+	</select>
+	<!-- 依据部门名称，模糊查询满足条件的部门总数 -->
+	<select id="selectCountSysDept" parameterType="PagingQueryBean" resultType="int">
+		<include refid="countingHeader" />
+		<include refid="sqlSelectAllSysDept" />
+		<include refid="countingFooter" />
+	</select>
+	<!-- 按名称模糊查询部门列表的sql -->
+	<sql id="sqlSelectAllSysDept">
+		SELECT DEPT_ID       deptId,
+		       SUPER_DEPT_ID superDeptId,
+		       DEPT_CODE     deptCode,
+		       DEPT_NAME     deptName,
+		       ADDRESS       address,
+		       POST_CODE     postCode,
+		       TEL_NBR       telNbr,
+		       FAX_NBR       faxNbr,
+		       LINK_MAN      linkMan,
+		       EMAIL_ADDR    emailAddr,
+		       WEB_SITE      webSite,
+		       REMARKS       remarks,
+		       STS           sts,
+		       STS_TIME      stsTime,
+		       CREATE_TIME   createTime
+		  FROM SYS_DEPT
+		 WHERE 1 = 1
+		<if test="queryBean.sts != null"> AND STS = #{queryBean.sts}</if>
+		<if test="queryBean.deptName != null"> AND DEPT_NAME like CONCAT('%',#{queryBean.deptName},'%')</if>
+		<if test="queryBean.deptCode != null"> AND DEPT_CODE like CONCAT('%',#{queryBean.deptCode},'%')</if>
+		ORDER BY superDeptId, deptName
+	</sql>
+
+	<!-- 获取部门编码为指定值的部门[在用+注销]总数 -->
+	<select id="countDeptCode" parameterType="String" resultType="int">
+		SELECT COUNT(*) TOTAL FROM SYS_DEPT WHERE DEPT_CODE = #{deptCode}
+	</select>
+	
+	<!-- 查询直接隶属该部门下的非离职的员工 -->
+	<select id="selectStaffList" parameterType="long" resultType="Staff">
+		SELECT A.STAFF_ID    staffId,
+		       A.STAFF_CODE  staffCode,
+		       A.STAFF_NAME  staffName,
+		       A.DEPT_ID     deptId,
+		       A.FIX_NBR     fixNbr,
+		       A.MOBILE_NBR  mobileNbr,
+		       A.EMAIL       email,
+		       A.STS         sts,
+		       A.STS_TIME    stsTime,
+		       A.CREATE_TIME createTime
+		  FROM STAFF A
+		 WHERE A.STS != 'P'
+		   AND A.DEPT_ID = #{deptId}
+	</select>
+	<!-- 查询部门的系统用户信息 -->
+	<select id="selectSysUserList" parameterType="SysUserQuery" resultType="SysUser">
+		SELECT A.USER_ID       userId,
+		       A.LOGIN_NAME    loginName,
+		       A.USER_TYPE     userType,
+		       A.USER_EXP_TIME userExpTime,
+		       A.PASSWORD      password,
+		       A.OLD_PWD       oldPwd,
+		       A.PWD_CHG_TIME  pwdChgTime,
+		       A.PWD_EXP_TIME  pwdExpTime,
+		       A.STS           sts,
+		       A.STS_TIME      stsTime,
+		       A.CREATE_TIME   createTime
+		  FROM IDEA_USER A, USER_OWNER_RELA B
+		 WHERE A.USER_TYPE = 'C'
+		   AND A.USER_ID = B.USER_ID
+		   AND B.OWNER_TYPE = 'D'
+		   <if test="deptId != null"> AND B.OWNER_ID = #{deptId}</if>
+		   <if test="sts != null"> AND A.STS = #{sts}</if>
+		 ORDER BY loginName
+	</select>
+	<!-- 查询指定部门及其所有下级部门的信息 -->
+	<select id="selectCascadeSysDepts" parameterType="long" resultType="SysDept">
+		SELECT A.DEPT_ID       deptId,
+		       A.SUPER_DEPT_ID superDeptId,
+		       A.DEPT_CODE     deptCode,
+		       A.DEPT_NAME     deptName,
+		       A.ADDRESS       address,
+		       A.POST_CODE     postCode,
+		       A.TEL_NBR       telNbr,
+		       A.FAX_NBR       faxNbr,
+		       A.LINK_MAN      linkMan,
+		       A.EMAIL_ADDR    emailAddr,
+		       A.WEB_SITE      webSite,
+		       A.REMARKS       remarks,
+		       A.STS           sts,
+		       A.STS_TIME      stsTime,
+		       A.CREATE_TIME   createTime
+		  FROM SYS_DEPT A
+		 WHERE A.STS = 'A'
+		 START WITH A.DEPT_ID = #{deptId}
+		CONNECT BY PRIOR A.DEPT_ID = A.SUPER_DEPT_ID
+	</select>
+</mapper>

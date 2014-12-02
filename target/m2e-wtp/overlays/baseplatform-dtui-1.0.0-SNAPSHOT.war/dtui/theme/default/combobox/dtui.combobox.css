@@ -1,0 +1,109 @@
+/*combox*/
+.ui-combobox{
+	position: relative;		/*下拉面板跟随输入框，如果不设置，当页面中有滚动条时会错位*/
+	display: inline-block;
+}
+.ui-combobox-icon {
+	cursor: pointer;
+	width: 16px;
+	height: 18px;
+	background: url(images/ui_bg_combobox.gif) 50% 50% no-repeat;
+	float: right;
+}
+
+.ui-combobox .ui-combobox-select,
+.dtui-treecombobox .ui-combobox-select,
+.dtui-gridcombobox .ui-combobox-select,
+.dtui-checkcombobox .ui-combobox-select {
+	display: none;
+	position: absolute;
+	/* position: relative; */
+	padding: 0px;
+	border: 1px solid #A8AAAD;
+	background: white;
+	margin-top: 1px;
+	z-index: 999;
+	font-size: 12px;
+	line-height: 18px;
+	padding: 0;
+	overflow: auto;
+	color: #333;
+	
+	/*overflow: auto;modify*/
+}
+
+.ui-combobox .ui-combobox-select-inner {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	overflow: auto;
+	height: 100%;
+	color: #333;
+	table-layout: fixed;
+}
+.ui-combobox .ui-combobox-select-inner .td {
+	border: 0;
+	padding: 0;
+	margin: 0;
+    /* background-color: #FFFFFF;*/
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.ui-combobox-text {
+	border: 0px;
+	outline:none;
+}
+
+.ui-combobox-head {
+	border: #aecaf0 1px solid;
+	min-height:16px;
+	max-height:none;
+}
+
+.ui-combobox .ui-combobox-option-over {
+	background-color: #3399FF;
+	cursor: pointer;
+	color: #FFFFFF;
+}
+.ui-combobox .ui-combobox-option-select {
+	background-color: #3399FF;
+	cursor: pointer;
+	color: #FFFFFF;
+}
+
+/*add  by  wdx   目的是修改下拉组件下拉框的样式  */
+.ui-combobox-content{
+	border-color:#aecaf0;
+	margin:0px;
+    /* border-top:0px; */
+}
+
+
+/* add by whc 11/07/21 */
+.ui-multisearch-display-span{
+	 display:-moz-inline-box;
+     display:inline-block;
+     height:20px;
+}
+.ui-multisearch-display-separator {
+	display:-moz-inline-box;
+    display:inline-block;
+	width:2px;
+	height:20px;
+	/* margin:0 0px 0 0px; */
+	background: url(paginationimages/separator.gif)  center;
+}
+.ui-combobox-hidden{
+	width:0px;
+	height:0px;
+	padding:0px;
+	border:0px;
+	margin:0px;
+}
+
+.ui-combobox .input-rightpadding {
+	vertical-align: middle;
+}
+/* .ui-autocomplete-input { margin: 0; padding: 0.48em 0 0.47em 0.45em; overflow:visible; } */

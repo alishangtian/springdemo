@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>简单的编辑器</title>
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css" />
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/ckeditor/ckeditor.js"></script>
+	<script src="../../dtui/js/dtui.util.js"></script>
+	<script src="../../dtui/js/dtui.ckeditor.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('#editor1').dtckeditor();
+			//CKEDITOR.replace( 'editor1' );
+			$('#update_btn').click(function(){
+				$('#editor1').dtckeditor('updateElement');
+			});
+			$('#serialize_btn').click(function(){
+				var value = $('#form1').serializeArray();
+				console.log(value);
+			});
+		});
+		
+	</script>
+</head>
+<body>
+<div>
+	<form id="form1" action="">
+		<textarea id="editor1" name="text" rows="10" cols="100">asdfwf</textarea>
+		<input id="update_btn" type="button" value="更新" />
+		<input id="serialize_btn" type="button" value="序列化" />
+		<input type="submit" value="提交" />
+	</form>
+</div>
+
+<div class="demo-description">
+	<h3>本实例功能</h3>
+	<ul>
+		<li>把生成的编辑器组件放到表单之中,支持表单提交之类的操作.</li>
+	</ul>
+</div>
+</body>
+</html>

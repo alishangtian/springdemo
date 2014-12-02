@@ -1,0 +1,7 @@
+xmlstring  jsonstring 时 读 自己拼的string 串
+xml  json 要 ajax从后台读数据  
+json jsonstring 区别在于 json 要从后台读数据 jsonstring 是用户 自己写的json字符串
+
+不论 json 还是 jsonstring都要符合jsonReader中的格式   jsonReader中格式  用户可以 改滴，没改则为默认格式
+
+xml 应该和json 类似  必须符合 xmlReader 格式

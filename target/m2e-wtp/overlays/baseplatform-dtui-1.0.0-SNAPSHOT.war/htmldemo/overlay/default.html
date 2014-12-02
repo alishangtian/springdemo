@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<TITLE>手动创建遮罩层</TITLE>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css"
+		type="text/css">
+
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/dtui.overlay.js"></script>
+	<script src="../../dtui/js/dtui.progressbar.js"></script>
+	<link rel="stylesheet" href="../demos.css">
+	<script type="text/javascript">
+		$(function(){
+       		var overlay = null;
+       		
+       		$('#showbtn').click(function(){
+       			if (overlay){
+       				overlay.dtoverlay('show');
+       			}
+       			else {
+	       			overlay = $('<div>').dtoverlay({text:'数据加载中...', focusElem: pb})
+       			}
+       			pb.show();
+    			pb.dtprogressbar( "value", false );
+    			setTimeout(progress, 500);
+    			pb.css('z-index', 99999);
+       		});
+       		
+       		$('#hidebtn').click(function(){
+       			overlay.dtoverlay('hide');
+       		});
+       		       		
+    		var pb = $( "#progressbar" );
+
+    		pb.dtprogressbar({
+    			width: '600px',
+    			height:'15px',
+    			value: false,
+    			change: function(event, ui) {
+    				//$(this).find('.ui-progressbar-label').text(progressbar.dtprogressbar( "value" )+'%%');
+    			},
+    			complete: function() {
+    				//progressLabel.text( "Complete!" );
+    				overlay.dtoverlay('hide');
+    			}
+    		}).hide();
+
+    		function progress() {
+    			var val = pb.dtprogressbar( "value" ) || 0;
+
+    			pb.dtprogressbar( "value", val + 1 );
+
+    			if ( val < 99 ) {
+    				setTimeout( progress, 100 );
+    			}
+    		}
+    		
+		});
+	</script>
+ </HEAD>
+
+<BODY>
+	<button id='showbtn'>显示遮罩</button>
+
+		<div id="progressbar"></div>
+	
+	<button id='hidebtn'>隐藏遮罩</button>
+	
+	
+	<div class="demo-description">
+	<h3>本实例功能</h3>
+	<ul>
+		<li>本实例演示使用dtoverlay创建遮罩层。</li>
+	</ul>
+	</div>
+	
+	
+</BODY>
+</HTML>
+
+
+

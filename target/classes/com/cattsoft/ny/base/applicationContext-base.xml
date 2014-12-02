@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	 ">
+
+	<!-- components -->
+	<bean id="portalcfgComponent" class="com.cattsoft.ny.base.component.PortalcfgComponent">
+		<property name="portalcfgMapper" ref="portalcfgMapper" />
+	</bean>
+	<bean id="portalcfgService" class="com.cattsoft.ny.base.service.impl.PortalcfgServiceImpl">
+		<property name="portalcfgComponent" ref="portalcfgComponent" />
+	</bean>
+	<!-- 采摘操作 -->
+	<bean id="pickWorksInfoComponent" class="com.cattsoft.ny.base.component.PickWorksInfoComponent">
+		<property name="pickWorksInfoMapper" ref="pickWorksInfoMapper" />
+	</bean>
+	<bean id="pickWorksInfoService"
+		class="com.cattsoft.ny.base.service.impl.PickWorksInfoServiceImpl">
+		<property name="pickWorksInfoComponent" ref="pickWorksInfoComponent" />
+	</bean>
+	<!-- 温室管理 -->
+	<bean id="baseGreenHouseInfoComponent"
+		class="com.cattsoft.ny.base.component.BaseGreenHouseInfoComponent">
+		<property name="baseGreenHouseInfoMapper" ref="baseGreenHouseInfoMapper" />
+	</bean>
+	<bean id="baseGreenHouseInfoService"
+		class="com.cattsoft.ny.base.service.impl.BaseGreenHouseInfoServiceImpl">
+		<property name="baseGreenHouseInfoComponent" ref="baseGreenHouseInfoComponent" />
+	</bean>
+
+	<!-- 生产管理开始 -->
+	<bean id="produceWorksInfoComponent"
+		class="com.cattsoft.ny.base.component.ProduceWorksInfoComponent">
+		<property name="produceWorksInfoMapper" ref="produceWorksInfoMapper" />
+	</bean>
+	<bean id="produceWorksInfoService"
+		class="com.cattsoft.ny.base.service.impl.ProduceWorksInfoServiceImpl">
+		<property name="produceWorksInfoComponent" ref="produceWorksInfoComponent" />
+	</bean>
+
+
+	<!-- 生产管理结束 -->
+
+
+
+	<!-- 种植季管理开始 -->
+	<bean id="produceSeasonComponent" class="com.cattsoft.ny.base.component.ProduceSeasonComponent">
+		<property name="produceSeasonMapper" ref="produceSeasonMapper" />
+	</bean>
+	<bean id="produceAccidentComponent" class="com.cattsoft.ny.base.component.ProduceAccidentComponent">
+		<property name="produceAccidentMapper" ref="produceAccidentMapper" />
+	</bean>
+	<bean id="produceSeasonService"
+		class="com.cattsoft.ny.base.service.impl.ProduceSeasonServiceImpl">
+		<property name="produceSeasonComponent" ref="produceSeasonComponent" />
+		<property name="produceAccidentComponent" ref="produceAccidentComponent"></property>
+	</bean>
+	<!-- 种植季管理结束 -->
+
+	<!-- 基地管理开始 -->
+	<bean id="baseComponent" class="com.cattsoft.ny.base.component.BaseComponent">
+		<property name="baseMapper" ref="baseMapper" />
+	</bean>
+	<bean id="baseService" class="com.cattsoft.ny.base.service.impl.BaseServiceImpl">
+		<property name="baseComponent" ref="baseComponent" />
+	</bean>
+	<!-- 基地管理结束 -->
+
+	<!-- 温室管理开始 -->
+	<bean id="greenHouseComponent" class="com.cattsoft.ny.base.component.GreenHouseComponent">
+		<property name="greenHouseMapper" ref="greenHouseMapper" />
+	</bean>
+	<bean id="greenHouseService" class="com.cattsoft.ny.base.service.impl.GreenHouseServiceImpl">
+		<property name="greenHouseComponent" ref="greenHouseComponent" />
+	</bean>
+	<!-- 温室管理结束 -->
+
+	<!-- 客户管理开始 -->
+	<bean id="customerComponent" class="com.cattsoft.ny.base.component.CustomerComponent">
+		<property name="customerMapper" ref="customerMapper" />
+	</bean>
+	<bean id="customerService" class="com.cattsoft.ny.base.service.impl.CustomerServiceImpl">
+		<property name="customerComponent" ref="customerComponent" />
+	</bean>
+	<!-- 客户管理结束 -->
+
+	<!-- 种植季管理开始 -->
+	<bean id="prdcSeasonComponent" class="com.cattsoft.ny.base.component.PrdcSeasonComponent">
+		<property name="prdcSeasonMapper" ref="prdcSeasonMapper" />
+	</bean>
+	<bean id="prdcSeasonService" class="com.cattsoft.ny.base.service.impl.PrdcSeasonServiceImpl">
+		<property name="prdcSeasonComponent" ref="prdcSeasonComponent" />
+	</bean>
+	<!-- 种植季管理结束 -->
+	<!-- 用药管理开始 -->
+	<bean id="insercticidesWorksInfoComponent"
+		class="com.cattsoft.ny.base.component.InsercticidesWorksInfoComponent">
+		<property name="insercticidesWorksInfoMapper" ref="insercticidesWorksInfoMapper" />
+	</bean>
+	<bean id="insercticidesWorksInfoService"
+		class="com.cattsoft.ny.base.service.impl.InsercticidesWorksInfoServiceImpl">
+		<property name="insercticidesWorksInfoComponent" ref="insercticidesWorksInfoComponent" />
+	</bean>
+	<!-- 用药管理结束 -->
+
+	<!-- 操作管理开始 -->
+	<bean id="operationWorksInfoComponent"
+		class="com.cattsoft.ny.base.component.OperationWorksInfoComponent">
+		<property name="operationWorksInfoMapper" ref="operationWorksInfoMapper" />
+	</bean>
+	<bean id="operationWorksInfoService"
+		class="com.cattsoft.ny.base.service.impl.OperationWorksInfoServiceImpl">
+		<property name="operationWorksInfoComponent" ref="operationWorksInfoComponent" />
+	</bean>
+	<!-- 操作管理结束 -->
+
+
+	<!-- 设备管理 -->
+	<bean id="equipInfoComponent" class="com.cattsoft.ny.base.component.EquipInfoComponent">
+		<property name="equipInfoMapper" ref="equipInfoMapper" />
+	</bean>
+	<bean id="equipAttributeComponent" class="com.cattsoft.ny.base.component.EquipAttributeComponent">
+		<property name="equipAttributeMapper" ref="equipAttributeMapper" />
+	</bean>
+	<bean id="equipTypeComponent" class="com.cattsoft.ny.base.component.EquipTypeComponent">
+		<property name="equipTypeMapper" ref="equipTypeMapper" />
+	</bean>
+	<bean id="equipControlInfoComponent"
+		class="com.cattsoft.ny.base.component.EquipControlInfoComponent">
+		<property name="equipControlInfoMapper" ref="equipControlInfoMapper" />
+	</bean>
+	<bean id="equipInfoService" class="com.cattsoft.ny.base.service.impl.EquipInfoServiceImpl">
+		<property name="equipInfoComponent" ref="equipInfoComponent" />
+		<property name="equipAttributeComponent" ref="equipAttributeComponent" />
+		<property name="equipTypeComponent" ref="equipTypeComponent" />
+		<property name="equipControlInfoComponent" ref="equipControlInfoComponent" />
+	</bean>
+
+	<!-- 设备中间表 -->
+	<bean id="equipSensorsGhouseComponent"
+		class="com.cattsoft.ny.base.component.EquipSensorsGhouseComponent">
+		<property name="equipSensorsGhouseMapper" ref="equipSensorsGhouseMapper" />
+	</bean>
+	<bean id="equipSensorsGhouseService"
+		class="com.cattsoft.ny.base.service.impl.EquipSensorsGhouseServiceImpl">
+		<property name="equipSensorsGhouseComponent" ref="equipSensorsGhouseComponent" />
+	</bean>
+
+	<!-- 设备网络拓扑开始 -->
+	<bean id="equipNetTopologyComponent"
+		class="com.cattsoft.ny.base.component.EquipNetTopologyComponent">
+		<property name="equipNetTopologyMapper" ref="equipNetTopologyMapper" />
+	</bean>
+	<bean id="equipNetTopologyService"
+		class="com.cattsoft.ny.base.service.impl.EquipNetTopologyServiceImpl">
+		<property name="equipNetTopologyComponent" ref="equipNetTopologyComponent" />
+	</bean>
+	<!-- 设备网络拓扑结束 -->
+
+	<!-- 种植季生产安全阈值配置开始 -->
+
+	<bean id="produceThresholdInfoComponent"
+		class="com.cattsoft.ny.base.component.ProduceThresholdInfoComponent">
+		<property name="produceThresholdInfoMapper" ref="produceThresholdInfoMapper" />
+	</bean>
+	<bean id="produceThresholdInfoService"
+		class="com.cattsoft.ny.base.service.impl.ProduceThresholdInfoServiceImpl">
+		<property name="produceThresholdInfoComponent" ref="produceThresholdInfoComponent" />
+	</bean>
+	<!-- 种植季生产安全阈值配置结束 -->
+	<!-- 数据采集 -->
+	<bean id="seaboMxn880StatusResultLService"
+		class="com.cattsoft.ny.base.service.impl.SeaboMxn880StatusResultLServiceImpl">
+		<property name="seaboMxn880StatusResultLComponent" ref="seaboMxn880StatusResultLComponent" />
+	</bean>
+	<bean id="seaboMxn880StatusResultLComponent"
+		class="com.cattsoft.ny.base.component.SeaboMxn880StatusResultLComponent">
+		<property name="seaboMxn880StatusResultLMapper" ref="seaboMxn880StatusResultLMapper" />
+	</bean>
+
+	<bean id="seaboMxs1201ResultLService"
+		class="com.cattsoft.ny.base.service.impl.SeaboMxs1201ResultLServiceImpl">
+		<property name="seaboMxs1201ResultLComponent" ref="seaboMxs1201ResultLComponent" />
+	</bean>
+	<bean id="seaboMxs1201ResultLComponent"
+		class="com.cattsoft.ny.base.component.SeaboMxs1201ResultLComponent">
+		<property name="seaboMxs1201ResultLMapper" ref="seaboMxs1201ResultLMapper" />
+	</bean>
+
+	<bean id="seaboMxs1402aResultLService"
+		class="com.cattsoft.ny.base.service.impl.SeaboMxs1402aResultLServiceImpl">
+		<property name="seaboMxs1402aResultLComponent" ref="seaboMxs1402aResultLComponent" />
+	</bean>
+	<bean id="seaboMxs1402aResultLComponent"
+		class="com.cattsoft.ny.base.component.SeaboMxs1402aResultLComponent">
+		<property name="seaboMxs1402aResultLMapper" ref="seaboMxs1402aResultLMapper" />
+	</bean>
+
+	<bean id="equipDataTypeService"
+		class="com.cattsoft.ny.base.service.impl.EquipDataTypeServiceImpl">
+		<property name="equipDataTypeComponent" ref="equipDataTypeComponent" />
+	</bean>
+	<bean id="equipDataTypeComponent" class="com.cattsoft.ny.base.component.EquipDataTypeComponent">
+		<property name="equipDataTypeMapper" ref="equipDataTypeMapper" />
+	</bean>
+
+	<bean id="equipDataEnvdataService"
+		class="com.cattsoft.ny.base.service.impl.EquipDataEnvdataServiceImpl">
+		<property name="equipDataEnvdataComponent" ref="equipDataEnvdataComponent" />
+	</bean>
+	<bean id="equipDataEnvdataComponent"
+		class="com.cattsoft.ny.base.component.EquipDataEnvdataComponent">
+		<property name="equipDataEnvdataMapper" ref="equipDataEnvdataMapper" />
+	</bean>
+
+	<bean id="equipStateDataService"
+		class="com.cattsoft.ny.base.service.impl.EquipStateDataServiceImpl">
+		<property name="equipStateDataComponent" ref="equipStateDataComponent" />
+	</bean>
+	<bean id="equipStateDataComponent" class="com.cattsoft.ny.base.component.EquipStateDataComponent">
+		<property name="equipStateDataMapper" ref="equipStateDataMapper" />
+	</bean>
+	<bean id="equipStateTypeService"
+		class="com.cattsoft.ny.base.service.impl.EquipStateTypeServiceImpl">
+		<property name="equipStateTypeComponent" ref="equipStateTypeComponent" />
+	</bean>
+	<bean id="equipStateTypeComponent" class="com.cattsoft.ny.base.component.EquipStateTypeComponent">
+		<property name="equipStateTypeMapper" ref="equipStateTypeMapper" />
+	</bean>
+	<bean id="equipDataTypeUtil" class="com.cattsoft.ny.core.EquipDataTypeUtil">
+		<property name="equipDataTypeService" ref="equipDataTypeService" />
+		<property name="equipStateTypeService" ref="equipStateTypeService" />
+		<property name="equipDataEnvdataService" ref="equipDataEnvdataService" />
+		<property name="equipStateDataService" ref="equipStateDataService" />
+	</bean>
+	<!-- 数据采集结束 -->
+	<!-- 消费安全事故管理 -->
+	<bean id="prdcConsAccService"
+		class="com.cattsoft.ny.base.service.impl.PrdcConsumerAccidentsServiceImpl">
+		<property name="prdcConsumerAccidentsComponent" ref="prdcConsumerAccidentsComponent" />
+	</bean>
+	<bean id="prdcConsumerAccidentsComponent" class="com.cattsoft.ny.base.component.PrdcConsumerAccidentsComponent">
+		<property name="prdcConsumerAccidentsMapper" ref="prdcConsumerAccidentsMapper" />
+	</bean>
+		 
+	<bean id="prdcThresholdInfoService"
+		class="com.cattsoft.ny.base.service.impl.PrdcThresholdInfoServiceImpl">
+		<property name="prdcThresholdInfoComponent" ref="prdcThresholdInfoComponent" />
+	</bean>
+	<bean id="prdcThresholdInfoComponent" class="com.cattsoft.ny.base.component.PrdcThresholdInfoComponent">
+		<property name="prdcThresholdInfoMapper" ref="prdcThresholdInfoMapper" />
+	</bean>
+	<!-- 设备报警开始 -->
+		<bean id="msgAlarmService"
+		class="com.cattsoft.ny.base.service.impl.MsgAlarmServiceImpl">
+			<property name="msgAlarmComponent" ref="msgAlarmComponent" />
+		</bean>
+		<bean id="msgAlarmComponent" class="com.cattsoft.ny.base.component.MsgAlarmComponent">
+			<property name="msgAlarmMapper" ref="msgAlarmMapper" />
+		</bean>
+		
+		<bean id="msgTypeService"
+		class="com.cattsoft.ny.base.service.impl.MsgTypeServiceImpl">
+			<property name="msgTypeComponent" ref="msgTypeComponent" />
+		</bean>
+		<bean id="msgTypeComponent" class="com.cattsoft.ny.base.component.MsgTypeComponent">
+			<property name="msgTypeMapper" ref="msgTypeMapper" />
+		</bean>
+	<!-- 设备报警结束 -->
+	<!-- 控制器历史-->
+		<bean id="equipControlInfoHService"
+		class="com.cattsoft.ny.base.service.impl.EquipControlInfoHServiceImpl">
+			<property name="equipControlInfoHComponent" ref="equipControlInfoHComponent" />
+		</bean>
+		<bean id="equipControlInfoHComponent" class="com.cattsoft.ny.base.component.EquipControlInfoHComponent">
+			<property name="equipControlInfoHMapper" ref="equipControlInfoHMapper" />
+		</bean>
+</beans>

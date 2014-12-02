@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.ny.base.persistence.EquipNetTopologyMapper">
+
+	<!-- Oracle分页查询 -->
+	<sql id="pagingFooter"> limit ${pagingInfo.startIdx-1},#{pagingInfo.pageRows}
+	</sql>
+	<sql id="countingHeader">SELECT COUNT(*) FROM(</sql>
+	<sql id="countingFooter">) t</sql>
+
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="com.cattsoft.ny.base.entity.EquipNetTopology">
+	 
+		<![CDATA[
+			INSERT INTO equip_net_topology
+		]]>
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+
+			<if test="equipInfoId != null">
+				EQUIP_INFO_ID,
+			</if>
+			<if test="parentNodeId != null">
+				PARENT_NODE_ID,
+			</if>
+			<if test="nodeOrder != null">
+				NODE_ORDER,
+			</if>
+			<if test="type != null">
+				TYPE,
+			</if>
+			<if test="nodeDeep != null">
+				NODE_DEEP,
+			</if>
+			<if test="parentPort != null">
+				PARENT_PORT
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+
+			<if test="equipInfoId != null">
+				#{equipInfoId},
+			</if>
+			<if test="parentNodeId != null">
+				#{parentNodeId},
+			</if>
+			<if test="nodeOrder != null">
+				#{nodeOrder},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="nodeDeep != null">
+				#{nodeDeep},
+			</if>
+			<if test="parentPort != null">
+				#{parentPort}
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="long">
+		<![CDATA[
+			DELETE FROM equip_net_topology
+				WHERE ID = #{id}
+		]]>
+	</delete>
+
+	<!-- 通过设备id删除记录 -->
+	<delete id="deleteByEquipId" parameterType="long">
+		<![CDATA[
+			DELETE FROM equip_net_topology
+				WHERE EQUIP_INFO_ID = #{id}
+		]]>
+	</delete>
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.cattsoft.ny.base.entity.EquipNetTopology">
+	    <![CDATA[
+			UPDATE equip_net_topology 
+	    ]]>
+		<set>
+			<if test="equipInfoId != null">
+    	<![CDATA[ EQUIP_INFO_ID = #{equipInfoId}, ]]>
+			</if>
+			<if test="parentNodeId != null">
+    	<![CDATA[ PARENT_NODE_ID = #{parentNodeId}, ]]>
+			</if>
+			<if test="nodeOrder != null">
+    	<![CDATA[ NODE_ORDER = #{nodeOrder}, ]]>
+			</if>
+			<if test="type != null">
+    	<![CDATA[ TYPE = #{type}, ]]>
+			</if>
+			<if test="nodeDeep != null">
+    	<![CDATA[ NODE_DEEP = #{nodeDeep}, ]]>
+			</if>
+			<if test="parentPort != null">
+    	<![CDATA[ PARENT_PORT = #{parentPort}, ]]>
+			</if>
+		</set>
+	    <![CDATA[
+	        WHERE ID = #{id}
+	    ]]>
+	</update>
+
+	<!-- 根据主键查询记录 -->
+	<select id="select" parameterType="long" resultMap="equipNetTopologyList">
+		<include refid="sqlSelectAll" />
+		<![CDATA[
+			WHERE ID = #{id}
+		]]>
+	</select>
+
+	<!-- 条件查询所有记录 -->
+	<select id="selectList"
+		parameterType="com.cattsoft.ny.base.entity.querybean.EquipNetTopologyQB"
+		resultMap="equipNetTopologyListName">
+		<include refid="sqlSelectList" />
+	</select>
+
+	<!-- 条件查询所有记录 -->
+	<select id="find"
+		parameterType="com.cattsoft.ny.base.entity.querybean.EquipNetTopologyQB"
+		resultMap="equipNetTopologyList">
+		<include refid="sqlSelectAll" />
+		<include refid="whereSql" />
+	</select>
+
+	<sql id="whereSql">
+		<where>
+			<if test="id != null">
+		<![CDATA[ID = #{id} ]]>
+			</if>
+			<if test="equipInfoId != null">
+		<![CDATA[ AND EQUIP_INFO_ID = #{equipInfoId} ]]>
+			</if>
+			<if test="parentNodeId != null">
+		<![CDATA[ AND PARENT_NODE_ID = #{parentNodeId} ]]>
+			</if>
+			<if test="nodeOrder != null">
+		<![CDATA[ AND NODE_ORDER = #{nodeOrder} ]]>
+			</if>
+			<if test="type != null">
+		<![CDATA[ AND TYPE = #{type} ]]>
+			</if>
+			<if test="nodeDeep != null">
+		<![CDATA[ AND NODE_DEEP = #{nodeDeeep} ]]>
+			</if>
+			<if test="parentPort != null">
+		<![CDATA[ AND PARENT_PORT = #{parentPort} ]]>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 分页条件查询所有记录 -->
+	<select id="selectPage" parameterType="PagingQueryBean"
+		resultMap="equipNetTopologyList">
+		<!-- <include refid="pagingHeader" /> -->
+		<include refid="sqlSelectPage" />
+		<include refid="pagingFooter" />
+	</select>
+	<!-- 查询记录总数 -->
+	<select id="selectCount" parameterType="PagingQueryBean"
+		resultType="int">
+		<include refid="countingHeader" />
+		<include refid="sqlSelectPage" />
+		<include refid="countingFooter" />
+	</select>
+
+	<resultMap id="equipNetTopologyList" type="com.cattsoft.ny.base.entity.EquipNetTopology">
+		<result property="id" column="ID" />
+		<result property="equipInfoId" column="EQUIP_INFO_ID" />
+		<result property="parentNodeId" column="PARENT_NODE_ID" />
+		<result property="nodeOrder" column="NODE_ORDER" />
+		<result property="nodeDeep" column="NODE_DEEP" />
+		<result property="parentPort" column="PARENT_PORT" />
+	</resultMap>
+
+	<resultMap id="equipNetTopologyListName" type="com.cattsoft.ny.base.entity.EquipNetTopology">
+		<result property="id" column="ID" />
+		<result property="equipInfoId" column="EQUIP_INFO_ID" />
+		<result property="parentNodeId" column="PARENT_NODE_ID" />
+		<result property="nodeOrder" column="NODE_ORDER" />
+		<result property="nodeDeep" column="NODE_DEEP" />
+		<result property="parentPort" column="PARENT_PORT" />
+		<result property="name" column="name" />
+	</resultMap>
+
+	<sql id="sqlSelectList">
+		<include refid="joinName" />
+		<where>
+			a.EQUIP_INFO_ID = b.ID
+			<if test="id != null">
+			<![CDATA[ AND a.ID = #{id} ]]>
+			</if>
+			<if test="equipInfoId != null">
+			<![CDATA[ AND a.EQUIP_INFO_ID = #{equipInfoId} ]]>
+			</if>
+			<if test="parentNodeId != null">
+			<![CDATA[ AND a.PARENT_NODE_ID = #{parentNodeId} ]]>
+			</if>
+			<if test="nodeOrder != null">
+			<![CDATA[ AND a.NODE_ORDER = #{nodeOrder} ]]>
+			</if>
+			<if test="type != null">
+			<![CDATA[ AND a.TYPE = #{type} ]]>
+			</if>
+			<if test="nodeDeep != null">
+			<![CDATA[ AND a.NODE_DEEP = #{nodeDeep} ]]>
+			</if>
+			<if test="parentPort != null">
+			<![CDATA[ AND a.PARENT_PORT = #{parentPort} ]]>
+			</if>
+		</where>
+	</sql>
+
+	<sql id="sqlSelectPage">
+		<include refid="joinName" />
+		<where>
+			<if test="queryBean.id != null">
+		<![CDATA[ AND ID = #{queryBean.id} ]]>
+			</if>
+			<if test="queryBean.equipInfoId != null">
+		<![CDATA[ AND EQUIP_INFO_ID = #{queryBean.equipInfoId} ]]>
+			</if>
+			<if test="1==1">
+		<![CDATA[ AND a.EQUIP_INFO_ID=b.ID ]]>
+			</if>
+			<if test="queryBean.parentNodeId != null">
+		<![CDATA[ AND a.PARENT_NODE_ID = #{queryBean.parentNodeId} ]]>
+			</if>
+			<if test="queryBean.nodeOrder != null">
+		<![CDATA[ AND NODE_ORDER = #{queryBean.nodeOrder} ]]>
+			</if>
+			<if test="queryBean.type != null">
+		<![CDATA[ AND TYPE = #{queryBean.type} ]]>
+			</if>
+			<if test="queryBean.nodeDeep != null">
+		<![CDATA[ AND NODE_DEEP = #{queryBean.nodeDeeep} ]]>
+			</if>
+			<if test="queryBean.parentPort != null">
+		<![CDATA[ AND PARENT_PORT = #{queryBean.parentPort} ]]>
+			</if>
+		</where>
+	</sql>
+	<sql id="sqlSelectAll">
+		SELECT
+		<include refid="sqlColumn" />
+		FROM equip_net_topology
+	</sql>
+
+	<sql id="sqlColumn">
+		ID,EQUIP_INFO_ID,PARENT_NODE_ID,NODE_ORDER,NODE_DEEP,PARENT_PORT
+	</sql>
+	<sql id="joinName">
+		select a.*,b.name from equip_net_topology a,equip_info b
+	</sql>
+</mapper>

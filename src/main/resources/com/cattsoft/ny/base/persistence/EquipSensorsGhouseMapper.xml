@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.ny.base.persistence.EquipSensorsGhouseMapper">
+
+	<!-- mysql分页查询 -->
+	<sql id="pagingFooter"> limit ${pagingInfo.startIdx-1},#{pagingInfo.pageRows}
+	</sql>
+	<sql id="countingHeader">SELECT COUNT(*) FROM(</sql>
+	<sql id="countingFooter">) t</sql>
+
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="com.cattsoft.ny.base.entity.EquipSensorsGhouse"
+		useGeneratedKeys="true" keyProperty="id">
+		<![CDATA[
+			INSERT INTO equip_sensors_ghouse
+		]]>
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID,
+			<if test="baseId != null">
+				BASE_ID,
+			</if>
+			<if test="houseId != null">
+				HOUSE_ID,
+			</if>
+			<if test="equipInfoId != null">
+				EQUIP_INFO_ID,
+			</if>
+			 
+			<if test="custId != null">
+				CUST_ID,
+			</if>
+			<if test="type != null">
+				TYPE,
+			</if>
+			<if test="status != null">
+				STATUS,
+			</if>
+			<if test="startTime != null">
+				START_TIME,
+			</if>
+			<if test="stopTime!= null">
+				STOP_TIME
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id},
+			<if test="baseId != null">
+				#{baseId},
+			</if>
+			<if test="houseId != null">
+				#{houseId},
+			</if>
+			<if test="equipInfoId != null">
+				#{equipInfoId},
+			</if>
+		 
+			<if test="custId != null">
+				#{custId},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="startTime != null">
+				#{startTime},
+			</if>
+			<if test="stopTime!= null">
+				#{stopTime}
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="long">
+		<![CDATA[
+			DELETE FROM equip_sensors_ghouse
+				WHERE ID = #{id}
+		]]>
+	</delete>
+
+	<!-- 删除记录 -->
+	<delete id="deleteByEquipId" parameterType="long">
+		<![CDATA[
+			DELETE FROM equip_sensors_ghouse
+				WHERE EQUIP_INFO_ID = #{id}
+		]]>
+	</delete>
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.cattsoft.ny.base.entity.EquipSensorsGhouse">
+	    <![CDATA[
+			UPDATE equip_sensors_ghouse 
+	    ]]>
+		<set>
+			<if test="baseId != null">
+    	<![CDATA[ BASE_ID = #{baseId}, ]]>
+			</if>
+			<if test="houseId != null">
+    	<![CDATA[ HOUSE_ID = #{houseId}, ]]>
+			</if>
+			<if test="equipInfoId != null">
+    	<![CDATA[ EQUIP_INFO_ID = #{equipInfoId}, ]]>
+			</if>
+		 
+			<if test="custId != null">
+    	<![CDATA[ CUST_ID = #{custId}, ]]>
+			</if>
+			<if test="type != null">
+    	<![CDATA[ TYPE = #{type}, ]]>
+			</if>
+			<if test="status != null">
+    	<![CDATA[ STATUS = #{status}, ]]>
+			</if>
+			<if test="startTime != null">
+    	<![CDATA[ START_TIME = #{startTime}, ]]>
+			</if>
+			<if test="stopTime != null">
+    	<![CDATA[ STOP_TIME = #{stopTime} ]]>
+			</if>
+		</set>
+	    <![CDATA[
+	        WHERE ID = #{id}
+	    ]]>
+	</update>
+
+	<!-- 根据主键查询记录 -->
+	<select id="select" parameterType="long" resultMap="equipSensorsGhouseList">
+		<include refid="sqlSelectAll" />
+		<![CDATA[
+			WHERE ID = #{id}
+		]]>
+	</select>
+
+	<!-- 条件查询所有记录 -->
+	<select id="selectList"
+		parameterType="com.cattsoft.ny.base.entity.querybean.EquipSensorsGhouseQB"
+		resultMap="equipSensorsGhouseList">
+		<include refid="sqlSelectList" />
+	</select>
+
+	<!-- 分页条件查询所有记录 -->
+	<select id="selectPage" parameterType="PagingQueryBean"
+		resultMap="equipSensorsGhouseList">
+		<include refid="sqlSelectPage" />
+		<include refid="pagingFooter" />
+	</select>
+	<!-- 查询记录总数 -->
+	<select id="selectCount" parameterType="PagingQueryBean"
+		resultType="int">
+		<include refid="countingHeader" />
+		<include refid="sqlSelectPage" />
+		<include refid="countingFooter" />
+	</select>
+
+	<resultMap id="equipSensorsGhouseList"
+		type="com.cattsoft.ny.base.entity.EquipSensorsGhouse">
+		<result property="id" column="ID" />
+		<result property="baseId" column="BASE_ID" />
+		<result property="houseId" column="HOUSE_ID" />
+		<result property="equipInfoId" column="EQUIP_INFO_ID" />
+		<result property="custId" column="CUST_ID" />
+		<result property="type" column="TYPE" />
+		<result property="status" column="STATUS" />
+		<result property="startTime" column="START_TIME" />
+		<result property="stopTime" column="STOP_TIME" />
+	</resultMap>
+
+	<select id="findOne"
+		parameterType="com.cattsoft.ny.base.entity.querybean.EquipSensorsGhouseQB"
+		resultMap="equipSensorsGhouseList">
+		<include refid="sqlSelectAll" />
+		<where>
+			<if test="id != null">
+			<![CDATA[ AND ID = #{id} ]]>
+			</if>
+			<if test="baseId != null">
+			<![CDATA[ AND BASE_ID = #{baseId} ]]>
+			</if>
+			<if test="houseId != null">
+			<![CDATA[ AND HOUSE_ID = #{houseId} ]]>
+			</if>
+			<if test="equipInfoId != null">
+			<![CDATA[ AND EQUIP_INFO_ID = #{equipInfoId} ]]>
+			</if>
+			<if test="custId != null">
+			<![CDATA[ AND CUST_ID = #{custId} ]]>
+			</if>
+			<if test="type != null">
+			<![CDATA[ AND TYPE = #{type} ]]>
+			</if>
+			<if test="status != null">
+			<![CDATA[ AND STATUS = #{status} ]]>
+			</if>
+			<if test="startTime != null">
+			<![CDATA[ AND START_TIME = #{startTime} ]]>
+			</if>
+			<if test="stopTime != null">
+			<![CDATA[ AND STOP_TIME = #{stopTime} ]]>
+			</if>
+		</where>
+	</select>
+
+	<sql id="sqlSelectList">
+		<include refid="sqlSelectAll" />
+		<where>
+			<if test="id != null">
+			<![CDATA[ AND ID = #{id} ]]>
+			</if>
+			<if test="baseId != null">
+			<![CDATA[ AND BASE_ID = #{baseId} ]]>
+			</if>
+			<if test="houseId != null">
+			<![CDATA[ AND HOUSE_ID = #{houseId} ]]>
+			</if>
+			<if test="equipInfoId != null">
+			<![CDATA[ AND EQUIP_INFO_ID = #{equipInfoId} ]]>
+			</if>
+			<if test="custId != null">
+			<![CDATA[ AND CUST_ID = #{custId} ]]>
+			</if>
+			<if test="type != null">
+			<![CDATA[ AND TYPE = #{type} ]]>
+			</if>
+			<if test="status != null">
+			<![CDATA[ AND STATUS = #{status} ]]>
+			</if>
+			<if test="startTime != null">
+			<![CDATA[ AND START_TIME = #{startTime} ]]>
+			</if>
+			<if test="stopTime != null">
+			<![CDATA[ AND STOP_TIME = #{stopTime} ]]>
+			</if>
+		</where>
+	</sql>
+
+	<sql id="sqlSelectPage">
+		<include refid="sqlSelectAll" />
+		<where>
+			<if test="queryBean.id != null">
+		<![CDATA[ AND ID = #{queryBean.id} ]]>
+			</if>
+			<if test="queryBean.baseId != null">
+		<![CDATA[ AND BASE_ID = #{queryBean.baseId} ]]>
+			</if>
+			<if test="queryBean.houseId != null">
+		<![CDATA[ AND HOUSE_ID = #{queryBean.houseId} ]]>
+			</if>
+			<if test="queryBean.equipInfoId != null">
+		<![CDATA[ AND EQUIP_INFO_ID = #{queryBean.equipInfoId} ]]>
+			</if>
+			<if test="queryBean.custId != null">
+		<![CDATA[ AND CUST_ID = #{queryBean.custId} ]]>
+			</if>
+			<if test="queryBean.type != null">
+		<![CDATA[ AND TYPE = #{queryBean.type} ]]>
+			</if>
+			<if test="queryBean.status != null">
+		<![CDATA[ AND STATUS = #{queryBean.status} ]]>
+			</if>
+			<if test="queryBean.status != null">
+		<![CDATA[ AND STATUS = #{queryBean.status} ]]>
+			</if>
+		</where>
+	</sql>
+	<sql id="sqlSelectAll">
+		SELECT
+		<include refid="sqlColumn" />
+		FROM equip_sensors_ghouse
+	</sql>
+	<sql id="sqlColumn">
+		ID,BASE_ID,HOUSE_ID,EQUIP_INFO_ID,CUST_ID,TYPE,STATUS,STOP_TIME,START_TIME
+	</sql>
+	<!-- 获取设备信息 -->
+	<select id="selectAllEquip"
+		parameterType="com.cattsoft.ny.base.entity.querybean.EquipSensorsGhouseQB"
+		resultType="com.cattsoft.ny.base.entity.EquipInfo">
+		SELECT B.DEVICE_ID deviceId,
+		B.NAME name,
+		B.ID id,
+		FROM
+		equip_sensors_ghouse A, equip_info B
+		WHERE A.EQUIP_INFO_ID = B.ID
+		AND
+		A.TYPE=#{type}
+		AND B.TYPE =#{equipInfo.type}
+		AND B.STATE =
+		#{equipInfo.state}
+	</select>
+	<!-- 获取控制设备信息 -->
+	<select id="selectControlEquip"
+		parameterType="com.cattsoft.ny.base.entity.querybean.EquipSensorsGhouseQB"
+		resultType="com.cattsoft.ny.base.entity.EquipInfo">
+		SELECT A.EQUIP_INFO_ID id,
+		B.NAME name
+		FROM
+		equip_sensors_ghouse A, equip_info B
+		WHERE A.EQUIP_INFO_ID = B.ID AND
+	</select>
+</mapper>

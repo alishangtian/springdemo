@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css"/>
+<script src="../../dtui/js/jquery/jquery.js"></script>
+<script src="../../dtui/js/jqueryui/jquery-ui.min.js"></script>
+<script src="../../dtui/js/dtui.util.js" type="text/javascript"></script>
+<script src="../../dtui/js/dtui.dialog.js" type="text/javascript"></script>
+<script src="../../dtui/js/dtui.messagebox.js" type="text/javascript"></script>
+<script src="../../dtui/js/dtui.input.js" type="text/javascript"></script>
+<link rel="stylesheet" href="../../htmldemo/demos.css" />
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#input1").dtinput({label:' 整型输入框：',inputType:'int',width:'50%'});
+	    $("#input2").dtinput({label:' 浮点型输入框：',inputType:'float'});
+	    $("#input3").dtinput({label:' email：',inputType:'email'});
+	    $("#input4").dtinput({label:' mobile：',inputType:'mobile'});
+	    $("#input5").dtinput({label:'  tel：',inputType:'tel'});
+	    $("#input6").dtinput({label:' lxdh：',inputType:'lxdh'});
+	    $("#input7").dtinput({label:'  URL：',inputType:'url'});
+	    $("#input8").dtinput({label:' password：',inputType:'password'});
+	    $("#input9").dtinput({label:' zipcode：',inputType:'zipcode', immValidate: true,length:6});
+	    $("#input10").dtinput({label:' identity： ',inputType:'identity'});
+	    $("#input11").dtinput({label:' Regular：',inputType:/^t[a|b]n$/});
+	    $("#input12").dtinput({label:'  工号：',inputType:/^\d{6}$/});
+	    
+	}); 
+	
+ </script> 
+</head>
+<body>
+    <p>
+	   <input id="input1" type="text"/>
+	</p>
+	<br/>
+	<p>
+	   <input id="input2" type="text"/>
+	</p>
+	<br/>
+	<p>
+	    <input id="input3" type="text"/>
+	</p>
+	<br/>
+	<p>
+	    <input id="input4" type="text"/>
+	</p>
+	<br/>
+	<p>
+	   <input id="input5" type="text"/>
+	</p>
+	<br/>
+	<p>
+	  <input id="input6" type="text"/>
+	</p>
+	<br/>
+	<p>
+	 <input id="input7" type="text"/>
+	</p>
+	<br/>
+	<p>
+	  <input id="input8" type="password"/> 格式要求：以字母开头，长度在6-18之间，只能包含字符、数字和下划线
+	</p>
+	<br/>
+	<p>
+	  <input id="input9" type="text"/>
+	</p>
+	<br/>
+	<p>
+	 <input id="input10" type="text"/>
+	</p>
+	<br/>
+	<p>
+	  <input id="input11" type="text"/> 用户自定义的校验方式 只能输入tan或tbn
+	</p>
+	<br/>
+	<p>
+	 <input id="input12" type="text"/>     用户自定义的校验方式 只能输入6位数字
+	</p>
+	
+	<div class="demo-description">
+	<h3>本实例功能</h3>
+	<ul>
+		<li>各个输入框根据各自的校验功能,当输入框失去焦点时开始校验,输入错误会提示错误信息.</li>
+	</ul>
+	</div>
+</body>
+</html>

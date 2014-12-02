@@ -1,0 +1,47 @@
+.dtui-check{
+/* 	margin: 0 auto; */
+/* 	MARGIN-RIGHT: auto; MARGIN-LEFT: auto; */
+/* 	display:table-cell; */
+/* 	vertical-align: middle; */
+}
+
+.dtui-check a,
+.dtui-check a:link,
+.dtui-check a:visited {
+	color: #2779aa;
+	text-decoration: none;
+}
+
+.ui-state-disabled a {
+	cursor: default;
+}
+
+.dtui-check-container {
+	display:table-cell;
+	vertical-align: middle;
+}
+
+
+.dtui-checkgroup {
+/* 	margin-bottom: 25px; */
+	display: inline-block;
+	overflow: hidden;
+}
+.dtui-checkgroup .dtui-checkgroup-fieldset {
+	/* display:inline; */
+	/* height: 100%; */
+}
+
+.dtui-checkgroup .dtui-checkgroup-item {
+ 	padding-left: 15px; 
+ 	padding-right: 15px; 
+ 	/* display: inline; */
+ 	width: 8em;
+}
+
+/*
+.dtui-checkgroup{
+	heigth: 100%;
+	weidth: 100%;
+}
+*/

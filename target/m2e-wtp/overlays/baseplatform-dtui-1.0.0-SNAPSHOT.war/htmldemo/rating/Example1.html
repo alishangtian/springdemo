@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>jQuery UI Button - Default functionality</title>
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css">
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/dtui.rating.js"></script>
+	<link rel="stylesheet" href="../demos.css">
+	<script type="text/javascript">
+		$(function() {
+			
+			$(".basic").dtRating();
+			
+			$(".exemple2").dtRating({
+				  type:'small', // type of the rate.. can be set to 'small' or 'big'
+				  length : 40, // nb of stars
+				  decimalLength : 1, // number of decimal in the rate
+				  dataaverage: 10
+			});
+			
+			$(".exemple3").dtRating({
+				step:true,
+				length : 20, // nb of stars
+				decimalLength:0 ,// number of decimal in the rate
+				dataaverage:18
+			});
+			
+			$(".exemple4").dtRating({
+				 disabled : true,
+				 dataaverage: 10
+			});
+			
+			$(".exemple5").dtRating({
+				  length:10,
+				  decimalLength:1,
+				  dataaverage:10,
+				  onSuccess : function(){
+					alert('Success : your rate has been saved :)');
+				  },
+				  onError : function(){
+					alert('Error : please retry');
+				  }
+			});
+			
+			$(".exemple6").dtRating({
+				  dataaverage: 10,
+				  onSuccess : function(){
+					jSuccess('Success : your rate has been saved :)',{
+					  HorizontalPosition:'center',
+					  VerticalPosition:'top'
+					});
+				  },
+				  onError : function(){
+					jError('Error : please retry');
+				  }
+			});
+			
+			$(".exemple7").dtRating({
+				  dataaverage: 12,
+				  showRateInfo:false
+			});
+			
+			 $(".exemple8").dtRating({
+				  step:true,
+				  length : 20,
+				  canRateAgain : true,
+				  nbRates : 3,
+				  dataaverage: 10
+			});
+		});
+	</script>
+</head>
+<body>
+
+DEMO_1<div class="basic"    data-id="1"></div>
+<br/><br/>
+DEMO_2<div class="exemple2" data-id="2"></div>
+<br/><br/>
+DEMO_3<div class="exemple3" data-id="3"></div>
+<br/><br/>
+DEMO_4<div class="exemple4" data-id="4"></div>
+<br/><br/>
+DEMO_5<div class="exemple5" data-id="5"></div>
+<br/><br/>
+DEMO_6<div class="exemple6" data-id="6"></div> 
+<br/><br/>
+DEMO_7<div class="exemple7" data-id="7"></div>
+<br/><br/>
+DEMO_8<div class="exemple8" data-id="8"></div>
+
+
+<div class="demo-description">
+	<h3>本实例功能</h3>
+	<ul>
+	    <li>所有实例摘自 http://demos.myjqueryplugins.com/jrating/ 部分实例运行缺少必要的action 效果不佳</li>
+		<li>DEMO_1    没有任何参数.</li>
+		<li>DEMO_2    有40个小星星 默认选中10个 小数位为一位.</li>
+		<li>DEMO_3  20个星星默认选中18个 没有小数位 星星选中都是整数个 不存在半个等情况.</li>
+		<li>DEMO_4     默认选中2.5个   并且不可以选择.</li>
+		<li>DEMO_5  10个星星默认选中5个 并且操作成功或错误时会调用 回调函数  alert方式 提示状态消息.</li>
+		<li>DEMO_6  5个星星默认选中2.5个 操作完成后.模态窗口提示状态消息</li>
+		<li>DEMO_7      不显示提示信息.</li>
+		<li>DEMO_8  20个星星默认选中10个,可以重复选择3次,选中星星必须为整数,显示提示信息.</li>
+	</ul>
+</div>
+
+</body>
+
+</html>

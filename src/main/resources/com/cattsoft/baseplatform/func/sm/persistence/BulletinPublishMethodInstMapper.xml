@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.baseplatform.func.sm.persistence.BulletinPublishMethodInstMapper">
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="BulletinPublishMethodInst">
+		<selectKey keyProperty="bullPubMethodInstId" resultType="long" order="BEFORE">
+			SELECT SEQ_BULL_PUB_METHOD_INST_ID.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO BULLETIN_PUBLISH_METHOD_INST(BULL_PUB_METHOD_INST_ID, BULLETIN_ID, BULL_PUB_METHOD_ID, STS, STS_TIME, CREATE_TIME)
+		VALUES(#{bullPubMethodInstId}, #{bulletinId}, #{bullPubMethodId}, #{sts}, #{stsTime}, #{createTime})
+	</insert>
+
+	<!-- 更新记录 -->
+	<update id="updateByBulletinId" parameterType="BulletinPublishMethodInst">
+		UPDATE BULLETIN_PUBLISH_METHOD_INST
+		<set>
+			<if test="bullPubMethodId != null">BULL_PUB_METHOD_ID = #{bullPubMethodId},</if>
+			<if test="sts != null">STS = #{sts},</if>
+			<if test="stsTime != null">STS_TIME = #{stsTime},</if>
+			<if test="createTime != null">CREATE_TIME = #{createTime}</if>
+		</set>
+		WHERE BULLETIN_ID =	#{bulletinId}
+	</update>
+	
+	<!-- 修改状态记录 -->
+	<update id="deleteBySts" parameterType="long">
+		UPDATE BULLETIN_PUBLISH_METHOD_INST
+		<set>
+			STS = 'P'
+		</set>
+		WHERE BULLETIN_ID =	#{bulletinId}
+	</update>
+	
+	<!-- 删除记录 -->
+	<delete id="deleteByBulletinId" parameterType="long">
+		DELETE FROM BULLETIN_PUBLISH_METHOD_INST WHERE BULLETIN_ID = #{bulletinId}
+	</delete>
+	
+	<!-- 根据主键查询记录 -->
+	<select id="selectByBulletinId" parameterType="long" resultMap="bulletinPublishMethodInstList">
+		SELECT
+			BULL_PUB_METHOD_INST_ID,
+			BULLETIN_ID,
+			BULL_PUB_METHOD_ID,
+			STS,
+			STS_TIME,
+			CREATE_TIME
+		FROM BULLETIN_PUBLISH_METHOD_INST
+		WHERE STS = 'A' 
+		AND BULLETIN_ID = #{bulletinId}
+	</select>
+	<!-- 结果集映射 -->
+	<resultMap id="bulletinPublishMethodInstList" type="BulletinPublishMethodInst">
+		<id property="bullPubMethodInstId" column="BULL_PUB_METHOD_INST_ID" />
+		<result property="bulletinId" column="BULLETIN_ID" />
+		<result property="bullPubMethodId" column="BULL_PUB_METHOD_ID" />
+		<result property="sts" column="STS" />
+		<result property="stsTime" column="STS_TIME" />
+		<result property="createTime" column="CREATE_TIME" />
+	</resultMap>
+</mapper>

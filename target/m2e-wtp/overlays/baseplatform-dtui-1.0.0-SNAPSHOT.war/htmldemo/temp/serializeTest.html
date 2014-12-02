@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>jQuery UI Button - Default functionality</title>
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css">
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/dtui.button.js"></script>
+	<link rel="stylesheet" href="../demos.css">
+	<script type="text/javascript">
+		$(function() {
+			$( "#btnSerialize" )
+				.dtbutton()
+				.click(function( event ) {
+					alert( $("#form1").serialize());
+					$("#results1").append( "<tt>" + $("#form1").serialize() + "</tt>" );
+				});
+			
+			$( "#btnSerializeArray" )
+			.dtbutton()
+			.click(function( event ) {
+				var fields = $("#form1").serializeArray();
+				jQuery.each( fields, function(i, field){
+					  $("#results2").append(field.name +"="+field.value + ", ");
+				});
+				
+			});
+		});
+	</script>
+</head>
+<body>
+
+<button id="btnSerialize">serialize</button>
+
+<button id="btnSerializeArray">serializeArray</button>
+
+<form id="form1">
+  <select name="single">
+    <option>Single</option>
+    <option>Single2</option>
+  </select>
+  <select name="multiple" multiple="multiple">
+    <option selected="selected">Multiple</option>
+    <option>Multiple2</option>
+    <option selected="selected">Multiple3</option>
+  </select><br/>
+  <input type="checkbox" name="check" value="check1"/> check1
+  <input type="checkbox" name="check" value="check2" checked="checked"/> check2
+  <input type="radio" name="radio" value="radio1" checked="checked"/> radio1
+  <input type="radio" name="radio" value="radio2"/> radio2
+
+</form>
+
+<p id="results1"><b>Serialize Results: </b> </p>
+<p id="results2"><b>SerializeArray Results: </b> </p>
+
+</body>
+
+</html>

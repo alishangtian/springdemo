@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css" />
+<script src="../../dtui/js/jquery/jquery.js"></script>
+<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+<script src="../../dtui/js/dtui.util.js" type="text/javascript"></script>
+<script type="text/javascript" src="../../dtui/js/dtui.combobox.js"></script>
+<link rel="stylesheet" href="../demos.css" />
+<script type="text/javascript">
+$(function(){
+	
+	$("#shengfen").dtcombobox({id:'shengfen', label:'省',name:'shengfen',relaId:'city',
+		hasNull:true,selectIndex:'-1',width:'80%',keyField:'id',valueField:'name',onChange:function(){
+			$("#shengfen").dtcombobox('val','');
+		},
+		datasource:[{'id':'henan','name':'河南'},{'id':'liaoning','name':'辽宁'}]});
+
+	//setTimeout(window, 1000);
+	$("#city").dtcombobox({refreshUrl:'../../ComboboxAction',selectValue:'',
+				readyOnly:'true',sourceTargetId:'shengfen',id:'city', paramkey:'id',
+				keyField:'id',selectIndex:'-1',hasNull:true,onChange:'',
+				name:'city',valueField:'name',hasAll:'true',datasource:''});
+	
+
+	var setting = {
+			width: '100px',
+		id : 'shengfen2',
+		name : 'comboxName',
+		datasource : [{"id":"henan","name":"河南"},{"id":"liaoning","name":"辽宁"}],
+		
+		keyField : "id",	
+		valueField : "name",
+		selectIndex : -1,
+		selectValue :  'liaoning',
+		hasAll : false,
+		allKey : "all",
+		allValue : '--全部--',
+		hasNull : true,
+			
+		nullValue : "--请选择--",
+		
+		relaId : 'city',
+		
+		
+		paramkey : '',
+		prompt : '下拉框',
+		required : false,
+		readonly : false	
+	};
+	
+	$('#testdiv').dtcombobox(setting);		
+	
+});
+</script> 
+</head>
+<body >
+<div class="a" id="shengfen"></div>
+<br/>
+<div id="city" ></div>
+
+<br />
+<div id="testdiv"></div>
+
+
+<div class="demo-description">
+	<h3>本实例功能</h3>
+	<ul>
+		<li>级联下拉框中父下拉框根据本地JSON数据源生成,子下拉框根据父框的id找到父框并取选择的值根据值异步生成自己的下拉框</li>
+		<li>子的sourceTargetId要与父的id一致 才能实现级联(父的relaId要与子的id一致 这条暂时没用到)</li>
+	</ul>
+</div>
+</body>
+</html>

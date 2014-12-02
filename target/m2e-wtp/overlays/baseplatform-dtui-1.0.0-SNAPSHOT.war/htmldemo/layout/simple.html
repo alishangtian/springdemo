@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>简单的布局</title>
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css" />
+	<!-- 
+	 <link rel="stylesheet" href="../../dtui/theme/default/layout/dtui.layout.css" type="text/css" />
+	  -->
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/layout/jquery.layout-latest.js"></script>
+	<script src="../../dtui/js/dtui.layout.js"></script>
+	<link rel="stylesheet" href="../../htmldemo/demos.css" />
+	<script type="text/javascript">
+		//页面加载完成创建布局
+		$(function(){
+			$('#container').dtlayout();
+		});
+		
+		//演示几个常用的函数
+		function destroyLayout(){
+			$('#container').dtlayout('destroy');
+		}
+		function createLayout(){
+			$('#container').dtlayout();
+		}
+		
+		function openPane(pane){
+			$('#container').dtlayout('open', pane);
+		}
+		function closePane(pane){
+			$('#container').dtlayout('close', pane);
+		}
+		function showPane(pane){
+			$('#container').dtlayout('show', pane);
+		}
+		function hidePane(pane){
+			$('#container').dtlayout('hide', pane);
+		}
+	</script>
+</head>
+<body>
+<div id="container" style="position: relative; width: 1000px; height: 400px; border: solid 1px #efefef;">
+<div class="ui-layout-center">
+	<button onclick="createLayout()">创建</button>
+	<button onclick="destroyLayout()">销毁</button>
+	<button onclick="openPane('west')">打开west</button>
+	<button onclick="closePane('west')">关闭west</button>
+	<button onclick="showPane('west')">显示west</button>
+	<button onclick="hidePane('west')">隐藏west</button>
+	Center
+	<P>
+		如果引入juery-ui.js，Pane可以缩放和有动画
+	</P>
+	<P>
+		* Pane-resizing is disabled because ui.draggable.js is not linked
+	</P>
+	<P>
+		* Pane-animation is disabled because ui.effects.js is not linked
+	</P>
+</div>
+<div class="ui-layout-north" style="height:100px;">
+	North
+	<br />
+	North
+</div>
+<div class="ui-layout-south">
+	South
+</div>
+<div class="ui-layout-east">
+	<div class="header">East - Title</div>
+	East
+</div>
+<div class="ui-layout-west">
+	<div class="header">West - Title</div>
+	West
+</div>
+</div>
+
+<div class="demo-description">
+	<h3>本实例功能s</h3>
+	<ul>
+		<li>本例构造了简单的布局控件,通过按钮事件对布局控件一些简单的操作.</li>
+	</ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.ny.base.persistence.PortalcfgMapper">
+
+	<!-- Oracle分页查询 -->
+	<sql id="pagingHeader">SELECT * FROM(SELECT ROW_.*,ROWNUM ROWNUM_ FROM(</sql>
+	<sql id="pagingFooter">) ROW_ WHERE ROWNUM &lt;= #{pagingInfo.endIdx}) WHERE ROWNUM_ &gt;= #{pagingInfo.startIdx}</sql>
+	<sql id="countingHeader">SELECT COUNT(*) FROM(</sql>
+	<sql id="countingFooter">)</sql>
+
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="com.cattsoft.ny.base.entity.Portalcfg">
+		<selectKey keyProperty="portalId" resultType="String" order="BEFORE">
+			SELECT SYS_GUID() FROM DUAL
+		</selectKey>
+		<![CDATA[
+			INSERT INTO portalcfg
+		]]>
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			PORTAL_ID,
+	    <if test="custId != null" >
+			CUST_ID,
+	    </if>
+	    <if test="databaseIp != null" >
+			DATABASE_IP,
+	    </if>
+	    <if test="serverName != null" >
+			SERVER_NAME,
+	    </if>
+	    <if test="databaseName != null" >
+			DATABASE_NAME,
+	    </if>
+	    <if test="userName != null" >
+			USER_NAME,
+	    </if>
+	    <if test="userPasswd != null" >
+			USER_PASSWD,
+	    </if>
+	    <if test="instanceType != null" >
+			INSTANCE_TYPE,
+	    </if>
+	    <if test="createDate != null" >
+			CREATE_DATE,
+	    </if>
+	    <if test="sts != null" >
+			STS,
+	    </if>
+	    <if test="remark != null" >
+			REMARK,
+	    </if>
+	    <if test="uuid != null" >
+			UUID,
+	    </if>
+	  </trim>
+	  <trim prefix="values (" suffix=")" suffixOverrides="," >
+	  	#{portalId},
+	    <if test="custId != null" >
+			#{custId},
+	    </if>
+	    <if test="databaseIp != null" >
+			#{databaseIp},
+	    </if>
+	    <if test="serverName != null" >
+			#{serverName},
+	    </if>
+	    <if test="databaseName != null" >
+			#{databaseName},
+	    </if>
+	    <if test="userName != null" >
+			#{userName},
+	    </if>
+	    <if test="userPasswd != null" >
+			#{userPasswd},
+	    </if>
+	    <if test="instanceType != null" >
+			#{instanceType},
+	    </if>
+	    <if test="createDate != null" >
+			#{createDate},
+	    </if>
+	    <if test="sts != null" >
+			#{sts},
+	    </if>
+	    <if test="remark != null" >
+			#{remark},
+	    </if>
+	    <if test="uuid != null" >
+			#{uuid},
+	    </if>
+	  </trim>
+	</insert>
+
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="long">
+		<![CDATA[
+			DELETE FROM portalcfg
+				WHERE PORTAL_ID = #{portalId}
+		]]>
+	</delete>
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.cattsoft.ny.base.entity.Portalcfg">
+	    <![CDATA[
+			UPDATE portalcfg 
+	    ]]>
+		<set>
+		<if test="custId != null">
+    	<![CDATA[ CUST_ID = #{custId}, ]]>
+		</if>
+		<if test="databaseIp != null">
+    	<![CDATA[ DATABASE_IP = #{databaseIp}, ]]>
+		</if>
+		<if test="serverName != null">
+    	<![CDATA[ SERVER_NAME = #{serverName}, ]]>
+		</if>
+		<if test="databaseName != null">
+    	<![CDATA[ DATABASE_NAME = #{databaseName}, ]]>
+		</if>
+		<if test="userName != null">
+    	<![CDATA[ USER_NAME = #{userName}, ]]>
+		</if>
+		<if test="userPasswd != null">
+    	<![CDATA[ USER_PASSWD = #{userPasswd}, ]]>
+		</if>
+		<if test="instanceType != null">
+    	<![CDATA[ INSTANCE_TYPE = #{instanceType}, ]]>
+		</if>
+		<if test="createDate != null">
+    	<![CDATA[ CREATE_DATE = #{createDate}, ]]>
+		</if>
+		<if test="sts != null">
+    	<![CDATA[ STS = #{sts}, ]]>
+		</if>
+		<if test="remark != null">
+    	<![CDATA[ REMARK = #{remark}, ]]>
+		</if>
+		<if test="uuid != null">
+    	<![CDATA[ UUID = #{uuid}, ]]>
+		</if>
+		</set>
+	    <![CDATA[
+	        WHERE PORTAL_ID = #{portalId}
+	    ]]>
+	</update>
+
+	<!-- 根据主键查询记录 -->
+	<select id="select" parameterType="long" resultMap="portalcfgList">
+		<include refid="sqlSelectAll" />
+		<![CDATA[
+			WHERE PORTAL_ID = #{portalId}
+		]]>
+	</select>
+
+	<!-- 条件查询所有记录 -->
+	<select id="selectList" parameterType="com.cattsoft.ny.base.entity.querybean.PortalcfgQB"
+		resultMap="portalcfgList">
+		<include refid="sqlSelectList" />
+	</select>
+
+	<!-- 分页条件查询所有记录 -->
+	<select id="selectPage" parameterType="PagingQueryBean"
+		resultMap="portalcfgList">
+		<include refid="pagingHeader" />
+		<include refid="sqlSelectPage" />
+		<include refid="pagingFooter" />
+	</select>
+	<!-- 查询记录总数 -->
+	<select id="selectCount" parameterType="PagingQueryBean"
+		resultType="int">
+		<include refid="countingHeader" />
+		<include refid="sqlSelectPage" />
+		<include refid="countingFooter" />
+	</select>
+
+	<resultMap id="portalcfgList" type="com.cattsoft.ny.base.entity.Portalcfg">
+		<result property="portalId" column="PORTAL_ID" />
+		<result property="custId" column="CUST_ID" />
+		<result property="databaseIp" column="DATABASE_IP" />
+		<result property="serverName" column="SERVER_NAME" />
+		<result property="databaseName" column="DATABASE_NAME" />
+		<result property="userName" column="USER_NAME" />
+		<result property="userPasswd" column="USER_PASSWD" />
+		<result property="instanceType" column="INSTANCE_TYPE" />
+		<result property="createDate" column="CREATE_DATE" />
+		<result property="sts" column="STS" />
+		<result property="remark" column="REMARK" />
+		<result property="uuid" column="UUID" />
+	</resultMap>
+
+	<sql id="sqlSelectList">
+		<include refid="sqlSelectAll" />
+		<where>
+			<if test="portalId != null">
+			<![CDATA[ AND PORTAL_ID = #{portalId} ]]>
+			</if>
+			<if test="custId != null">
+			<![CDATA[ AND CUST_ID = #{custId} ]]>
+			</if>
+			<if test="databaseIp != null">
+			<![CDATA[ AND DATABASE_IP = #{databaseIp} ]]>
+			</if>
+			<if test="serverName != null">
+			<![CDATA[ AND SERVER_NAME = #{serverName} ]]>
+			</if>
+			<if test="databaseName != null">
+			<![CDATA[ AND DATABASE_NAME = #{databaseName} ]]>
+			</if>
+			<if test="userName != null">
+			<![CDATA[ AND USER_NAME = #{userName} ]]>
+			</if>
+			<if test="userPasswd != null">
+			<![CDATA[ AND USER_PASSWD = #{userPasswd} ]]>
+			</if>
+			<if test="instanceType != null">
+			<![CDATA[ AND INSTANCE_TYPE = #{instanceType} ]]>
+			</if>
+			<if test="createDate != null">
+			<![CDATA[ AND CREATE_DATE = #{createDate} ]]>
+			</if>
+			<if test="sts != null">
+			<![CDATA[ AND STS = #{sts} ]]>
+			</if>
+			<if test="remark != null">
+			<![CDATA[ AND REMARK = #{remark} ]]>
+			</if>
+			<if test="uuid != null">
+			<![CDATA[ AND UUID = #{uuid} ]]>
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="sqlSelectPage">
+		<include refid="sqlSelectAll" />
+		<where>	     				
+	    <if test="queryBean.portalId != null">
+		<![CDATA[ AND PORTAL_ID = #{queryBean.portalId} ]]>
+		</if>
+	    <if test="queryBean.custId != null">
+		<![CDATA[ AND CUST_ID = #{queryBean.custId} ]]>
+		</if>
+	    <if test="queryBean.databaseIp != null">
+		<![CDATA[ AND DATABASE_IP = #{queryBean.databaseIp} ]]>
+		</if>
+	    <if test="queryBean.serverName != null">
+		<![CDATA[ AND SERVER_NAME = #{queryBean.serverName} ]]>
+		</if>
+	    <if test="queryBean.databaseName != null">
+		<![CDATA[ AND DATABASE_NAME = #{queryBean.databaseName} ]]>
+		</if>
+	    <if test="queryBean.userName != null">
+		<![CDATA[ AND USER_NAME = #{queryBean.userName} ]]>
+		</if>
+	    <if test="queryBean.userPasswd != null">
+		<![CDATA[ AND USER_PASSWD = #{queryBean.userPasswd} ]]>
+		</if>
+	    <if test="queryBean.instanceType != null">
+		<![CDATA[ AND INSTANCE_TYPE = #{queryBean.instanceType} ]]>
+		</if>
+	    <if test="queryBean.createDate != null">
+		<![CDATA[ AND CREATE_DATE = #{queryBean.createDate} ]]>
+		</if>
+	    <if test="queryBean.sts != null">
+		<![CDATA[ AND STS = #{queryBean.sts} ]]>
+		</if>
+	    <if test="queryBean.remark != null">
+		<![CDATA[ AND REMARK = #{queryBean.remark} ]]>
+		</if>
+	    <if test="queryBean.uuid != null">
+		<![CDATA[ AND UUID = #{queryBean.uuid} ]]>
+		</if>
+		</where>
+	</sql>
+	<sql id="sqlSelectAll">
+			SELECT
+				<include refid="sqlColumn" />
+			FROM portalcfg 
+	</sql>
+	<sql id="sqlColumn">
+		PORTAL_ID,CUST_ID,DATABASE_IP,SERVER_NAME,DATABASE_NAME,USER_NAME,USER_PASSWD,INSTANCE_TYPE,CREATE_DATE,STS,REMARK,UUID
+	</sql>
+</mapper>

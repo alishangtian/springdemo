@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>jQuery UI Button - Default functionality</title>
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css">
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/dtui.checkbox.js"></script>
+	<script src="../../dtui/js/dtui.button.js"></script>
+	<link rel="stylesheet" href="../demos.css">
+	<script type="text/javascript">
+		$(function() {
+			function checkClick(event, ui){
+				alert($(this).dtcheck('value'));
+			}
+			
+			$('#ck1').dtcheck({value:'java',checked:false,name:'language',text:'Java',click: checkClick, height: 50, width: 200});
+			$('#ck2').dtcheck({value:'c',checked:true,name:'language',text:'C',click: checkClick});
+			
+			$('#setMChecked').dtbutton().click(function(){
+				//$('#ck1').dtcheck('option','checked', true);
+				$('#ck1').dtcheck('check', true);
+			});
+			$('#switchFState').dtbutton().click(function(){
+				var state = $('#ck2').dtcheck('option','disabled');
+				//$('#ck2').dtcheck('option','disabled', !state);
+				$('#ck2').dtcheck(state?'enable':'disable');
+			});
+			
+			$('#button1').dtbutton().click(function(){
+				alert(1);
+			});
+			$('#button2').dtbutton().click(function(){
+				$('#button1').dtbutton('option','disabled', true);
+			});
+			
+		});
+	</script>
+</head>
+<body>
+
+
+<span id="ck1" ></span>
+<span id="ck2" ></span>
+
+<br>
+<button id='setMChecked'>将Java设置为选中状态</button>
+<button id='switchFState'>切换C复选框的可用状态</button>
+<a id = 'button1' href="javascript:void(0)">测试按钮</a>
+
+<a id = 'button2' href="javascript:void(0)">禁用测试按钮</a>
+
+<div class="demo-description">
+	<h3>本实例功能</h3>
+	<ul>
+		<li>调用按钮事件选中特定复选框,复选框的可用状态,测试按钮,测试按钮的禁用</li>
+	</ul>
+</div>
+
+
+</body>
+
+</html>

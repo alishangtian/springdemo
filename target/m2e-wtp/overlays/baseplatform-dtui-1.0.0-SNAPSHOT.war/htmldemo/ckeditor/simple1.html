@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>编辑器配置项和方法使用</title>
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css" />
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/ckeditor/ckeditor.js"></script>
+	<script src="../../dtui/js/dtui.util.js"></script>
+	<script src="../../dtui/js/dtui.ckeditor.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('#editor1').dtckeditor({
+				filebrowserUploadUrl: 'upload.jsp',
+				toolbar: [
+		 			[ 'Source', '-', 'Bold', 'Italic' ]
+		 		],
+		 		height: 400,
+		 		width: 300
+			});
+			
+			$('#get_data_btn').click(function(){
+				var data = $('#editor1').dtckeditor('getData');
+				console.log(data)
+			});
+			
+			$('#resize_btn').click(function(){
+				$('#editor1').dtckeditor('resize', 400, 100, true);
+			});
+			
+			$('#insert_btn').click(function(){
+				$('#editor1').dtckeditor('insertHtml', '<p>插入数据</p>');
+			});
+		});
+		
+	</script>
+</head>
+<body>
+<div id="editor1">
+	<div>编辑内容</div>
+</div>
+<button id="get_data_btn">点击获取数据</button>
+<button id="resize_btn">缩放</button>
+<button id="insert_btn">插入数据</button>
+
+	<div class="demo-description">
+	<h3>本实例功能</h3>
+	<ul>
+		<li>通过编辑器属性的设置 定制用户自己的简单文本编辑器</li>
+		<li>通过事件的调用,支持用户对编辑器的简单操作</li>
+	</ul>
+	</div>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.ny.base.persistence.PrdcThresholdInfoMapper">
+
+		<!-- MySql分页查询 -->
+	<sql id="pagingFooter"> limit ${pagingInfo.startIdx-1},#{pagingInfo.pageRows}</sql>
+	<sql id="countingHeader">SELECT COUNT(*) FROM(</sql>
+	<sql id="countingFooter">) t</sql>
+
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="com.cattsoft.ny.base.entity.PrdcThresholdInfo">
+	 
+		<![CDATA[
+			INSERT INTO prdc_threshold_info
+		]]>
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+		 
+	    <if test="name != null" >
+			NAME,
+	    </if>
+	    <if test="crops != null" >
+			CROPS,
+	    </if>
+	    <if test="state != null" >
+			STATE,
+	    </if>
+	    <if test="createTime != null" >
+			CREATE_TIME,
+	    </if>
+	  </trim>
+	  <trim prefix="values (" suffix=")" suffixOverrides="," >
+	   
+	    <if test="name != null" >
+			#{name},
+	    </if>
+	    <if test="crops != null" >
+			#{crops},
+	    </if>
+	    <if test="state != null" >
+			#{state},
+	    </if>
+	    <if test="createTime != null" >
+			#{createTime},
+	    </if>
+	  </trim>
+	</insert>
+
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="long">
+		<![CDATA[
+			DELETE FROM prdc_threshold_info
+				WHERE ID = #{id}
+		]]>
+	</delete>
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.cattsoft.ny.base.entity.PrdcThresholdInfo">
+	    <![CDATA[
+			UPDATE prdc_threshold_info 
+	    ]]>
+		<set>
+		<if test="name != null">
+    	<![CDATA[ NAME = #{name}, ]]>
+		</if>
+		<if test="crops != null">
+    	<![CDATA[ CROPS = #{crops}, ]]>
+		</if>
+		<if test="state != null">
+    	<![CDATA[ STATE = #{state}, ]]>
+		</if>
+		<if test="createTime != null">
+    	<![CDATA[ CREATE_TIME = #{createTime}, ]]>
+		</if>
+		</set>
+	    <![CDATA[
+	        WHERE ID = #{id}
+	    ]]>
+	</update>
+
+	<!-- 根据主键查询记录 -->
+	<select id="select" parameterType="long" resultMap="prdcThresholdInfoList">
+		<include refid="sqlSelectAll" />
+		<![CDATA[
+			WHERE ID = #{id}
+		]]>
+	</select>
+
+	<!-- 条件查询所有记录 -->
+	<select id="selectList" parameterType="com.cattsoft.ny.base.entity.querybean.PrdcThresholdInfoQB"
+		resultMap="prdcThresholdInfoList">
+		<include refid="sqlSelectList" />
+	</select>
+
+	<!-- 分页条件查询所有记录 -->
+	<select id="selectPage" parameterType="PagingQueryBean"
+		resultMap="prdcThresholdInfoList">
+		<include refid="sqlSelectPage" />
+		<include refid="pagingFooter" />
+	</select>
+	<!-- 查询记录总数 -->
+	<select id="selectCount" parameterType="PagingQueryBean"
+		resultType="int">
+		<include refid="countingHeader" />
+		<include refid="sqlSelectPage" />
+		<include refid="countingFooter" />
+	</select>
+
+	<resultMap id="prdcThresholdInfoList" type="com.cattsoft.ny.base.entity.PrdcThresholdInfo">
+		<result property="id" column="ID" />
+		<result property="name" column="NAME" />
+		<result property="crops" column="CROPS" />
+		<result property="state" column="STATE" />
+		<result property="createTime" column="CREATE_TIME" />
+	</resultMap>
+
+	<sql id="sqlSelectList">
+		<include refid="sqlSelectAll" />
+		<where>
+			<if test="id != null">
+			<![CDATA[ AND ID = #{id} ]]>
+			</if>
+			<if test="name != null">
+			<![CDATA[ AND NAME = #{name} ]]>
+			</if>
+			<if test="crops != null">
+			<![CDATA[ AND CROPS = #{crops} ]]>
+			</if>
+			<if test="state != null">
+			<![CDATA[ AND STATE = #{state} ]]>
+			</if>
+			<if test="createTime != null">
+			<![CDATA[ AND CREATE_TIME = #{createTime} ]]>
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="sqlSelectPage">
+		<include refid="sqlSelectAll" />
+		<where>	     				
+	    <if test="queryBean.id != null">
+		<![CDATA[ AND ID = #{queryBean.id} ]]>
+		</if>
+	    <if test="queryBean.name != null">
+		<![CDATA[ AND NAME = #{queryBean.name} ]]>
+		</if>
+	    <if test="queryBean.crops != null">
+		<![CDATA[ AND CROPS = #{queryBean.crops} ]]>
+		</if>
+	    <if test="queryBean.state != null">
+		<![CDATA[ AND STATE = #{queryBean.state} ]]>
+		</if>
+	    <if test="queryBean.createTime != null">
+		<![CDATA[ AND CREATE_TIME = #{queryBean.createTime} ]]>
+		</if>
+		</where>
+	</sql>
+	<sql id="sqlSelectAll">
+			SELECT
+				<include refid="sqlColumn" />
+			FROM prdc_threshold_info 
+			
+	</sql>
+	<sql id="sqlColumn">
+		ID,NAME,CROPS,STATE,CREATE_TIME
+	</sql>
+</mapper>

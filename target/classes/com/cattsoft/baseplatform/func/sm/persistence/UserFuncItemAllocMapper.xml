@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.cattsoft.baseplatform.func.sm.persistence.UserFuncItemAllocMapper">
+	<insert id="insert" parameterType="UserFuncItemAlloc" useGeneratedKeys="true" keyProperty="userFuncItemAllocId">
+		INSERT INTO USER_FUNC_ITEM_ALLOC(USER_FUNC_ALLOC_ID, FUNC_ITEM_ID, DESIGNATE, STS, STS_TIME, CREATE_TIME)
+		VALUES(#{userFuncAllocId}, #{funcItemId}, #{designate}, #{sts}, #{stsTime}, #{createTime})
+	</insert>
+	<!-- 收回用户的功能下的某个功能操作或所有功能操作授权信息 -->
+	<update id="retake" parameterType="UserFuncAuthQuery">
+		UPDATE USER_FUNC_ITEM_ALLOC
+		   SET STS = 'P', STS_TIME = NOW()
+		 WHERE STS = 'A'
+		 <if test="funcItemId != null"> AND FUNC_ITEM_ID = #{funcItemId} </if>
+		   AND USER_FUNC_ALLOC_ID IN
+		       (SELECT A.USER_FUNC_ALLOC_ID
+		          FROM USER_FUNC_ALLOC A
+		         WHERE A.STS = 'A'
+		           AND A.USER_ID = #{userId}
+		           AND A.FUNC_NODE_ID = #{funcNodeId})
+	</update>
+	<!-- 用户注销时，注销用户对应的功能操作授权信息 -->
+	<update id="destroyUser" parameterType="long">
+		UPDATE USER_FUNC_ITEM_ALLOC
+		   SET STS = 'P', STS_TIME = NOW()
+		 WHERE STS = 'A'
+		   AND USER_FUNC_ALLOC_ID IN
+		       (SELECT A.USER_FUNC_ALLOC_ID
+		          FROM USER_FUNC_ALLOC A
+		         WHERE A.STS = 'A'
+		           AND A.USER_ID = #{userId})
+	</update>
+	<!-- 获取用户在某功能下已获得授权的功能操作列表 -->
+	<select id="selectAllocFuncItems" parameterType="UserFuncAuthQuery" resultType="UserFuncItemAlloc">
+		SELECT DISTINCT A.FUNC_ITEM_ID funcItemId, A.DESIGNATE designate
+		  FROM USER_FUNC_ITEM_ALLOC A, USER_FUNC_ALLOC B, FUNC_ITEM C
+		 WHERE A.USER_FUNC_ALLOC_ID = B.USER_FUNC_ALLOC_ID
+		   AND A.FUNC_ITEM_ID = C.FUNC_ITEM_ID
+		   AND A.STS = 'A'
+		   AND B.STS = 'A'
+		   AND C.STS = 'A'
+		   AND B.USER_ID = #{userId}
+		   AND B.FUNC_NODE_ID = #{funcNodeId}
+	</select>
+</mapper>

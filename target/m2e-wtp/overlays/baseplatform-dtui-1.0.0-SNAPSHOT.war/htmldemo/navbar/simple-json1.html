@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>异步加载菜单1</title>
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css" />
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/dtui.navbar.js"></script>
+	<script type="text/javascript">
+		//页面加载完成创建布局
+		$(function(){
+			$('#nav').dtnavbar({
+				url: 'data1.json',
+				select: function(){
+					console.log(this);
+				}
+			});
+		});
+	</script>
+</head>
+<body>
+	<div id="nav">
+	</div>
+</body>
+</html>

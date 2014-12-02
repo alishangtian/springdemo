@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.baseplatform.func.sm.persistence.SysUserMapper">
+	<!-- Oracle分页查询 -->
+	<sql id="pagingFooter"> limit ${pagingInfo.startIdx-1},#{pagingInfo.pageRows}</sql>
+	<sql id="countingHeader">select count(*) from(</sql>
+	<sql id="countingFooter">) t</sql>
+
+	<insert id="insert" parameterType="SysUser" useGeneratedKeys="true" keyProperty="userId">
+		INSERT INTO IDEA_USER(LOGIN_NAME, USER_TYPE, USER_EXP_TIME, PASSWORD, OLD_PWD, PWD_CHG_TIME, PWD_EXP_TIME, STS, STS_TIME, CREATE_TIME)
+		VALUES(#{loginName}, #{userType},
+		#{userExpTime}, #{password}, #{oldPwd,jdbcType=VARCHAR},
+		#{pwdChgTime,jdbcType=DATE}, #{pwdExpTime},
+		#{sts}, #{stsTime}, #{createTime})
+	</insert>
+	<!-- 更新用户失效时间、用户状态及密码相关信息 -->
+	<update id="update" parameterType="SysUser">
+		UPDATE IDEA_USER
+		<set>
+			<if test="password != null">PASSWORD = #{password},</if>
+			<if test="oldPwd != null">OLD_PWD = #{oldPwd},</if>
+			<if test="userExpTime != null">USER_EXP_TIME = #{userExpTime},</if>
+			<if test="pwdChgTime != null">PWD_CHG_TIME = #{pwdChgTime},</if>
+			<if test="pwdExpTime != null">PWD_EXP_TIME = #{pwdExpTime},</if>
+			<if test="sts != null">STS = #{sts},</if>
+			STS_TIME = NOW()
+		</set>
+		WHERE USER_ID = #{userId}
+	</update>
+	<!-- 获取用户的基本信息 -->
+	<select id="selectOne" parameterType="long" resultType="SysUser">
+		SELECT USER_ID       userId,
+		       LOGIN_NAME    loginName,
+		       USER_TYPE     userType,
+		       USER_EXP_TIME userExpTime,
+		       PASSWORD      password,
+		       OLD_PWD       oldPwd,
+		       PWD_CHG_TIME  pwdChgTime,
+		       PWD_EXP_TIME  pwdExpTime,
+		       STS           sts,
+		       STS_TIME      stsTime,
+		       CREATE_TIME   createTime,
+		       LOGIN_USER_ID loginUserId
+		  FROM IDEA_USER
+		 WHERE USER_ID = #{userId}
+	</select>
+	<!-- 依据唯一的登录名称查询未注销的用户信息 -->
+	<select id="selectListByName" parameterType="String" resultType="SysUser">
+		SELECT USER_ID       userId,
+		       LOGIN_NAME    loginName,
+		       USER_TYPE     userType,
+		       USER_EXP_TIME userExpTime,
+		       PASSWORD      password,
+		       OLD_PWD       oldPwd,
+		       PWD_CHG_TIME  pwdChgTime,
+		       PWD_EXP_TIME  pwdExpTime,
+		       STS           sts,
+		       STS_TIME      stsTime,
+		       CREATE_TIME   createTime,
+		       LOGIN_USER_ID loginUserId
+		  FROM IDEA_USER
+		 WHERE LOGIN_NAME = #{loginName}
+		   AND STS = 'A'
+	</select>
+	<!-- 查询所有使用者类型为部门的系统用户的记录总数 -->
+	<select id="selectCountDeptUser" parameterType="PagingQueryBean" resultType="int">
+		<include refid="countingHeader" />
+		<include refid="sqlSelectAllDeptUser" />
+		<include refid="countingFooter" />
+	</select>	
+	<!-- 分页查询所有使用者类型为部门的系统用户 -->
+	<select id="selectPageDeptUser" parameterType="PagingQueryBean" resultMap="deptUserList">
+		<include refid="sqlSelectAllDeptUser" />
+		<include refid="pagingFooter" />
+	</select>
+	<sql id="sqlSelectAllDeptUser">
+		SELECT A.USER_ID       userId,
+		       A.LOGIN_NAME    loginName,
+		       A.USER_TYPE     userType,
+		       A.USER_EXP_TIME userExpTime,
+		       A.PASSWORD      password,
+		       A.OLD_PWD       oldPwd,
+		       A.PWD_CHG_TIME  pwdChgTime,
+		       A.PWD_EXP_TIME  pwdExpTime,
+		       A.STS           userSts,
+		       A.STS_TIME      userStsTime,
+		       A.CREATE_TIME   userCreateTime,
+		       C.DEPT_ID       deptId,
+		       C.SUPER_DEPT_ID superDeptId,
+		       C.DEPT_CODE     deptCode,
+		       C.DEPT_NAME     deptName,
+		       C.ADDRESS       address,
+		       C.POST_CODE     postCode,
+		       C.TEL_NBR       telNbr,
+		       C.FAX_NBR       faxNbr,
+		       C.LINK_MAN      linkMan,
+		       C.EMAIL_ADDR    emailAddr,
+		       C.WEB_SITE      webSite,
+		       C.REMARKS       remarks,
+		       C.STS           deptSts,
+		       C.STS_TIME      deptStsTime,
+		       C.CREATE_TIME   deptCreateTime
+		  FROM IDEA_USER A, USER_OWNER_RELA B, SYS_DEPT C
+		 WHERE A.USER_TYPE = 'C'
+		   AND A.USER_ID = B.USER_ID
+		   AND B.OWNER_TYPE = 'D'
+		   AND B.OWNER_ID = C.DEPT_ID
+		   <if test="queryBean.sts != null"> AND A.STS = #{queryBean.sts}</if>
+		   <if test="queryBean.userExpTime != null"> AND A.USER_EXP_TIME > #{queryBean.userExpTime}</if>
+		   <if test="queryBean.loginName != null"> AND A.LOGIN_NAME LIKE CONCAT('%',#{queryBean.loginName},'%')</if>
+		   <if test="queryBean.ownerName != null"> AND C.DEPT_NAME LIKE CONCAT('%',#{queryBean.ownerName},'%')</if>
+	</sql>
+	<resultMap id="deptUserList" type="SysUser">
+		<id property="userId" column="userId" />
+		<result property="loginName" column="loginName" />
+		<result property="userType" column="userType" />
+		<result property="userExpTime" column="userExpTime" />
+		<result property="password" column="password" />
+		<result property="oldPwd" column="oldPwd" />
+		<result property="pwdChgTime" column="pwdChgTime" />
+		<result property="pwdExpTime" column="pwdExpTime" />
+		<result property="sts" column="userSts" />
+		<result property="stsTime" column="userStsTime" />
+		<result property="createTime" column="userCreateTime" />
+		<association property="sysDept" column="deptId" javaType="SysDept" resultMap="sysDeptResult" />
+	</resultMap>
+	<resultMap id="sysDeptResult" type="SysDept">
+		<id property="deptId" column="deptId" />
+		<result property="superDeptId" column="superDeptId" />
+		<result property="deptCode" column="deptCode" />
+		<result property="deptName" column="deptName" />
+		<result property="address" column="address" />
+		<result property="postCode" column="postCode" />
+		<result property="telNbr" column="telNbr" />
+		<result property="faxNbr" column="faxNbr" />
+		<result property="linkMan" column="linkMan" />
+		<result property="emailAddr" column="emailAddr" />
+		<result property="webSite" column="webSite" />
+		<result property="remarks" column="remarks" />
+		<result property="sts" column="deptSts" />
+		<result property="stsTime" column="deptStsTime" />
+		<result property="createTime" column="deptCreateTime" />
+	</resultMap>
+	
+	<!-- 查询所有使用者类型为员工的系统用户的记录总数 -->
+	<select id="selectCountStaffUser" parameterType="PagingQueryBean" resultType="int">
+		<include refid="countingHeader" />
+		<include refid="sqlSelectAllStaffUser" />
+		<include refid="countingFooter" />
+	</select>	
+	<!-- 分页查询所有使用者类型为员工的系统用户 -->
+	<select id="selectPageStaffUser" parameterType="PagingQueryBean" resultMap="staffUserList">
+		<include refid="sqlSelectAllStaffUser" />
+		<include refid="pagingFooter" />
+	</select>
+	<sql id="sqlSelectAllStaffUser">
+		SELECT A.USER_ID       userId,
+		       A.LOGIN_NAME    loginName,
+		       A.USER_TYPE     userType,
+		       A.USER_EXP_TIME userExpTime,
+		       A.PASSWORD      password,
+		       A.OLD_PWD       oldPwd,
+		       A.PWD_CHG_TIME  pwdChgTime,
+		       A.PWD_EXP_TIME  pwdExpTime,
+		       A.STS           userSts,
+		       A.STS_TIME      userStsTime,
+		       A.CREATE_TIME   userCreateTime,
+		       C.STAFF_ID      staffId,
+		       C.STAFF_CODE    staffCode,
+		       C.STAFF_NAME    staffName,
+		       C.DEPT_ID       deptId,
+		       C.FIX_NBR       fixNbr,
+		       C.MOBILE_NBR    mobileNbr,
+		       C.EMAIL         email,
+		       C.STS           staffSts,
+		       C.STS_TIME      staffStsTime,
+		       C.CREATE_TIME   staffCreateTime
+		 FROM IDEA_USER A, USER_OWNER_RELA B, STAFF C
+		 WHERE A.USER_TYPE = 'C'
+		   AND A.USER_ID = B.USER_ID
+		   AND B.OWNER_TYPE = 'S'
+		   AND B.OWNER_ID = C.STAFF_ID
+		   <if test="queryBean.sts != null"> AND A.STS = #{queryBean.sts}</if>
+		   <if test="queryBean.userExpTime != null"> AND A.USER_EXP_TIME > #{queryBean.userExpTime}</if>
+		   <if test="queryBean.loginName != null"> AND A.LOGIN_NAME LIKE CONCAT('%',#{queryBean.loginName},'%')</if>
+		   <if test="queryBean.ownerName != null"> AND C.STAFF_NAME LIKE CONCAT('%',#{queryBean.ownerName},'%')</if>
+	</sql>
+	<resultMap id="staffUserList" type="SysUser">
+		<id property="userId" column="userId" />
+		<result property="loginName" column="loginName" />
+		<result property="userType" column="userType" />
+		<result property="userExpTime" column="userExpTime" />
+		<result property="password" column="password" />
+		<result property="oldPwd" column="oldPwd" />
+		<result property="pwdChgTime" column="pwdChgTime" />
+		<result property="pwdExpTime" column="pwdExpTime" />
+		<result property="sts" column="userSts" />
+		<result property="stsTime" column="userStsTime" />
+		<result property="createTime" column="userCreateTime" />
+		<association property="staff" column="staffId" javaType="Staff" resultMap="staffResult" />
+	</resultMap>
+	<resultMap id="staffResult" type="Staff">
+		<id property="staffId" column="staffId" />
+		<result property="staffCode" column="staffCode" />
+		<result property="staffName" column="staffName" />
+		<result property="deptId" column="deptId" />
+		<result property="fixNbr" column="fixNbr" />
+		<result property="mobileNbr" column="mobileNbr" />
+		<result property="email" column="email" />
+		<result property="sts" column="staffSts" />
+		<result property="stsTime" column="staffStsTime" />
+		<result property="createTime" column="staffCreateTime" />
+	</resultMap>
+	<!-- 获取用户的所有功能授权信息功能:通过角色授权和功能授权获得的权限的集合 -->
+	<select id="selectUserAuthFuncs" parameterType="UserFuncAuthQuery" resultType="FuncNode">
+		SELECT DISTINCT C.FUNC_NODE_ID   funcNodeId,
+		                C.NODE_TREE_ID   nodeTreeId,
+		                C.FUNC_NODE_CODE funcNodeCode,
+		                C.FUNC_NODE_NAME funcNodeName,
+		                C.FUNC_NODE_DESC funcNodeDesc,
+		                C.FUNC_NODE_URL  funcNodeUrl,
+		                C.ACTION_NAME    actionName,
+		                C.METHOD_NAME    methodName,
+		                C.DISPLAY_ORDER  displayOrder
+		  FROM USER_ROLE_ALLOC A, ROLE_FUNC_ALLOC B, FUNC_NODE C
+		 WHERE A.USER_ID = #{userId}
+		   AND A.ROLE_ID = B.ROLE_ID
+		   AND B.FUNC_NODE_ID = C.FUNC_NODE_ID
+		   AND A.STS = 'A'
+		   AND B.STS = 'A'
+		   AND C.STS = 'A'
+		   <if test="designate != null">
+		   	 AND A.DESIGNATE = #{designate} 
+		   	 AND B.DESIGNATE = #{designate}
+		   </if>
+		   <if test="nodeTreeId != null"> AND C.NODE_TREE_ID = #{nodeTreeId} </if>
+		UNION
+		SELECT DISTINCT B.FUNC_NODE_ID   funcNodeId,
+		                B.NODE_TREE_ID   nodeTreeId,
+		                B.FUNC_NODE_CODE funcNodeCode,
+		                B.FUNC_NODE_NAME funcNodeName,
+		                B.FUNC_NODE_DESC funcNodeDesc,
+		                B.FUNC_NODE_URL  funcNodeUrl,
+		                B.ACTION_NAME    actionName,
+		                B.METHOD_NAME    methodName,
+		                B.DISPLAY_ORDER  displayOrder
+		  FROM USER_FUNC_ALLOC A, FUNC_NODE B
+		 WHERE A.USER_ID = #{userId}
+		   AND A.FUNC_NODE_ID = B.FUNC_NODE_ID
+		   AND A.STS = 'A'
+		   AND B.STS = 'A'
+		   <if  test="nodeTreeId != null"> AND B.NODE_TREE_ID = #{nodeTreeId} </if>
+		   <if test="designate != null"> AND A.DESIGNATE = #{designate} </if>
+	</select>
+	
+	<!-- 获取用户指定功能下的功能操作授权信息：通过角色授权和功能授权获得权限的集合 -->
+	<select id="selectUserAuthFuncItems" parameterType="UserFuncAuthQuery" resultType="FuncItem">
+		SELECT DISTINCT D.FUNC_ITEM_ID   funcItemId,
+		                D.FUNC_NODE_ID   funcNodeId,
+		                D.FUNC_ITEM_NAME funcItemName,
+		                D.FUNC_ITEM_DESC funcItemDesc,
+		                D.ACTION_NAME    actionName,
+		                D.METHOD_NAME    methodName,
+		                D.STS            sts,
+		                D.STS_TIME       stsTime
+		  FROM USER_ROLE_ALLOC      A,
+		       ROLE_FUNC_ALLOC      B,
+		       ROLE_FUNC_ITEM_ALLOC C,
+		       FUNC_ITEM            D
+		 WHERE A.USER_ID = #{userId}
+		   AND A.ROLE_ID = B.ROLE_ID
+		   AND B.FUNC_NODE_ID = #{funcNodeId}
+		   AND C.ROLE_FUNC_ALLOC_ID = B.ROLE_FUNC_ALLOC_ID
+		   AND C.FUNC_ITEM_ID = D.FUNC_ITEM_ID
+		   AND A.STS = 'A'
+		   AND B.STS = 'A'
+		   AND C.STS = 'A'
+		   AND D.STS = 'A'
+		   <if test="designate != null">
+			   AND A.DESIGNATE = #{designate}
+			   AND B.DESIGNATE = #{designate}
+			   AND C.DESIGNATE = #{designate}
+		   </if>
+		UNION
+		SELECT DISTINCT C.FUNC_ITEM_ID   funcItemId,
+		                C.FUNC_NODE_ID   funcNodeId,
+		                C.FUNC_ITEM_NAME funcItemName,
+		                C.FUNC_ITEM_DESC funcItemDesc,
+		                C.ACTION_NAME    actionName,
+		                C.METHOD_NAME    methodName,
+		                C.STS            sts,
+		                C.STS_TIME       stsTime
+		  FROM USER_FUNC_ALLOC A, USER_FUNC_ITEM_ALLOC B, FUNC_ITEM C
+		 WHERE A.USER_ID = #{userId}
+		   AND A.FUNC_NODE_ID = #{funcNodeId}
+		   AND B.USER_FUNC_ALLOC_ID = A.USER_FUNC_ALLOC_ID
+		   AND B.FUNC_ITEM_ID = C.FUNC_ITEM_ID
+		   AND A.STS = 'A'
+		   AND B.STS = 'A'
+		   AND C.STS = 'A'
+		   <if test="designate != null">
+			   AND B.DESIGNATE = #{designate}
+			   AND A.DESIGNATE = #{designate}
+		   </if>
+	</select>
+	<!-- 获取用户的所有功能菜单快捷方式 -->
+	<select id="selectUserShortcut" parameterType="long" resultType="FuncNode">
+		SELECT funcNodeId,
+		       nodeTreeId,
+		       funcNodeCode,
+		       funcNodeName,
+		       funcNodeDesc,
+		       funcNodeUrl,
+		       actionName,
+		       methodName
+		  FROM (SELECT DISTINCT C.FUNC_NODE_ID   funcNodeId,
+		                        C.NODE_TREE_ID   nodeTreeId,
+		                        C.FUNC_NODE_CODE funcNodeCode,
+		                        C.FUNC_NODE_NAME funcNodeName,
+		                        C.FUNC_NODE_DESC funcNodeDesc,
+		                        C.FUNC_NODE_URL  funcNodeUrl,
+		                        C.ACTION_NAME    actionName,
+		                        C.METHOD_NAME    methodName,
+		                        D.ORDER_NUM      orderNum
+		          FROM USER_ROLE_ALLOC A,
+		               ROLE_FUNC_ALLOC B,
+		               FUNC_NODE       C,
+		               USER_SHORTCUT   D
+		         WHERE A.USER_ID = #{userId}
+		           AND D.USER_ID = #{userId}
+		           AND A.ROLE_ID = B.ROLE_ID
+		           AND B.FUNC_NODE_ID = C.FUNC_NODE_ID
+		           AND D.FUNC_NODE_ID = C.FUNC_NODE_ID
+		           AND A.STS = 'A'
+		           AND B.STS = 'A'
+		           AND C.STS = 'A'
+		        UNION
+		        SELECT DISTINCT B.FUNC_NODE_ID   funcNodeId,
+		                        B.NODE_TREE_ID   nodeTreeId,
+		                        B.FUNC_NODE_CODE funcNodeCode,
+		                        B.FUNC_NODE_NAME funcNodeName,
+		                        B.FUNC_NODE_DESC funcNodeDesc,
+		                        B.FUNC_NODE_URL  funcNodeUrl,
+		                        B.ACTION_NAME    actionName,
+		                        B.METHOD_NAME    methodName,
+		                        C.ORDER_NUM      orderNum
+		          FROM USER_FUNC_ALLOC A, FUNC_NODE B, USER_SHORTCUT C
+		         WHERE A.USER_ID = #{userId}
+		           AND C.USER_ID = #{userId}
+		           AND A.FUNC_NODE_ID = B.FUNC_NODE_ID
+		           AND C.FUNC_NODE_ID = B.FUNC_NODE_ID
+		           AND A.STS = 'A'
+		           AND B.STS = 'A') USC
+		 ORDER BY USC.orderNum, USC.funcNodeName
+	</select>
+	<!-- 新增用户的功能快捷方式 -->
+	<insert id="insertShortcut" parameterType="UserShortcut" useGeneratedKeys="true" keyProperty="shortcutId">
+		INSERT INTO USER_SHORTCUT(FUNC_NODE_ID, USER_ID, ORDER_NUM, CREATE_TIME)
+		VALUES(#{funcNodeId}, #{userId}, #{orderNum}, #{createTime})
+	</insert>
+	<!-- 删除用户的功能快捷方式 -->
+	<delete id="deleteShortcut" parameterType="UserShortcut">
+		DELETE FROM USER_SHORTCUT WHERE 1 = 1
+		<if test="userId != null"> AND USER_ID = #{userId}</if>
+		<if test="funcNodeId != null"> AND FUNC_NODE_ID = #{funcNodeId}</if>
+	</delete>
+</mapper>

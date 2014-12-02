@@ -1,0 +1,20 @@
+.input-init{
+			width: 100%;
+			height: 100%;
+			display:block;
+			border: 0px;
+			margin:0px;
+			padding:0px;
+				
+}
+.input-Container{
+		border: 1px solid #aecaf0;
+		height: 100%;
+		padding:0px;
+}
+
+
+.input-rightpadding{
+	float: right;
+	height: 100%;
+}

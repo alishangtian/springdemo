@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>jQuery MultiSelect Widget Demo</title>
+
+
+<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css" />
+<script src="../../dtui/js/jquery/jquery.js"></script>
+<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+<script src="../../dtui/js/dtui.util.js" type="text/javascript"></script>
+<script src="../../dtui/js/dtui.abscombobox.js" type="text/javascript"></script>
+<script type="text/javascript" src="../../dtui/js/dtui.checkcombobox.js"></script>
+<link rel="stylesheet" href="../demos.css" />
+
+<script type="text/javascript">
+$(function(){
+
+	
+	function test(){
+		console.log('触发了change事件');
+	}
+	/*************************基础方法测试************************************/
+	$("#select1").dtcheckcombobox({change:test,label:'同步数据Array:', id:'sports', name:'sports',required:true,items:[{value:'11',text:'足球'},{value:'12',text:'篮球'},{value:'13',text:'羽毛球'}],textField:'text',valueField:'value'});
+	$("#select1").dtcheckcombobox('addItem',{value:"14",text:"乒乓球"});
+	$("#select1").dtcheckcombobox('removeItem',{value:"11",text:"足球"});
+	$("#select1").dtcheckcombobox('addItem',{value:"15",text:"足球"});
+	$("#select1").dtcheckcombobox('value',["12","13"]); 
+	$("#select1").dtcheckcombobox('addItem',{value:"11",text:"网球"});
+	$("#ceshi1_Value").click(function(){
+		var returnValue=$("#select1").dtcheckcombobox('value');
+		alert(returnValue);
+	}); 
+	$("#ceshi1_Text").click(function(){
+		var returnText=$("#select1").dtcheckcombobox('text');
+		alert(returnText);
+	}); 
+	
+	$("#select3").dtcheckcombobox({change:test,label:'同步数据Map:',initValue:'11',initText:'足球',id:'ball',name:'ball',items:{'11':'足球','12':'篮球','13':'羽毛球'},textField:'text',valueField:'value'});
+	$("#select3").dtcheckcombobox('addItem',{"14":"乒乓球"});
+	$("#ceshi3_Value").click(function(){
+		var returnValue=$("#select3").dtcheckcombobox('value');
+		alert(returnValue);
+	}); 
+	$("#ceshi3_Text").click(function(){
+		var returnText=$("#select3").dtcheckcombobox('text');
+		alert(returnText);
+	}); 
+	
+	/***********************url测试  *****url没有action 不能测试  否则 会出现 错误  */
+	
+	 $("#select2").dtcheckcombobox({label:' 异步数据:',url:"../../CheckBoxAction",textField:'val',valueField:'key'});
+	 $("#select2").dtcheckcombobox('value',["apple"]);
+	
+     $("#ceshi2_Value").click(function(){
+		var returenvalue=$("#select2").dtcheckcombobox('value');
+		alert(returenvalue);
+	}); 
+     $("#ceshi2_Text").click(function(){
+ 		var returenvalue=$("#select2").dtcheckcombobox('text');
+ 		alert(returenvalue);
+ 	}); 
+	
+});
+
+</script> 
+</head>
+<body >
+<form>
+     <p>
+	  <input id="select1" type="text"></input>
+	 </p> 
+	 <p>
+	 	<input id="ceshi1_Value" type="button" value="获取键值KEY" ></input>
+	 	<input id="ceshi1_Text" type="button" value="获取值域Value" ></input>
+	 </p>
+	  <div id="select3"></div>
+	  <br/>
+	 <p>
+	 	<input id="ceshi3_Value" type="button" value="获取键值KEY" ></input>
+	 	<input id="ceshi3_Text" type="button" value="获取值域Value" ></input>
+	 </p>
+    <p>
+	 <select id="select2"></select>
+	</p>
+	<p>
+	 	<input id="ceshi2_Value" type="button" value="获取键值KEY" ></input>
+	 	<input id="ceshi2_Text" type="button" value="获取值域Value" ></input>
+	</p>
+	
+</form>
+
+	<div class="demo-description">
+	    <h3>本示例功能</h3>
+	    <ul>
+	      <li>本例分别通过array、map形式的同步数据 和action的异步数据三种方式读取数据并生成多选下拉框</li>
+	      <li>点击下拉按钮 点击下拉页中的多选框 可完成选择 选择的值会出现在 下拉文本框中</li>
+	    </ul>
+	</div>
+
+</body>
+</html>

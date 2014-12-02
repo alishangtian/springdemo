@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>年月选择下拉框</title>
+<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css"/>
+<script src="../../dtui/js/jquery/jquery.js"></script>
+<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+
+<script src="../../dtui/js/dtui.util.js" type="text/javascript"></script>
+<script src="../../dtui/js/dtui.button.js" type="text/javascript"></script>
+<script src="../../dtui/js/dtui.abscombobox.js" type="text/javascript"></script>
+<script src="../../dtui/js/dtui.monthpicker.js" type="text/javascript"></script>
+<link rel="stylesheet" href="../demos.css" type="text/css"/>
+<script type="text/javascript">
+	$(function() {
+		$("#monthpicker1").dtmonthpicker({width: '50%'});
+		$("#monthpicker2").dtmonthpicker({readonly:true});
+		$("#monthpicker3").dtmonthpicker({disabled: true});
+		$("#monthpicker4").dtmonthpicker({valueFormat: 'yyyy-mm',initValue:'2010-10'});
+		
+		
+	});
+</script>
+</head>
+<body>
+<form action="">
+	正常显示<input type="text" id="monthpicker1" /> 
+	<br></br>
+	只读<input type="text" id="monthpicker2" /> 
+	<br />
+	不可用<input type="text" id="monthpicker3" /> 
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	yyyy-mm格式<input type="text" id="monthpicker4" /> 
+	<input type="reset"/>
+</form>
+<br />
+	<div class="demo-description">
+		<h3>本实例功能</h3>
+		<ul>
+			<li>年月选择控件基本功能演示</li>
+		</ul>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>jQuery UI Button - Default functionality</title>
+<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css">
+<script src="../../dtui/js/jquery/jquery.js"></script>
+<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+<script src="../../dtui/js/dtui.util.js"></script>
+<script src="../../dtui/js/dtui.checkbox.js"></script>
+<script src="../../dtui/js/dtui.button.js"></script>
+<link rel="stylesheet" href="../demos.css">
+<script type="text/javascript">
+	$(function() {
+		function checkgroupChange(event, ui){
+			alert(ui.dtcheck('value'));
+			//或者
+			//alert($(this).dtcheckgroup('value'));
+		}
+		
+		$('#checkgroup1').dtcheckgroup({
+			items : [ {
+				value : 'age10',
+				text : '程序员'
+			}, {
+				value : 'age20',
+				text : '高级程序员'
+			}, {
+				value : 'age30',
+				text : '测试工程师'
+			}, {
+				value : 'age40',
+				text : '系统分析员'
+			}, {
+				value : 'age50',
+				text : '系统架构师'
+			} ],
+			name : 'person.age',
+			title : '职位',
+			value : 'age30',
+			col : 2,
+			height: 120,
+			width: 300,
+			keyField:'value',
+			valueField:'text',
+			required: true,
+			change: checkgroupChange
+		});
+
+		$('#checkgroup2').dtcheckgroup({
+			items : {
+				'age10':'程序员',
+				'age20':'高级程序员',
+				'age30':'测试工程师工程师',
+				'age40':'系统分析员',
+				'age50':'系统架构师'
+			},
+			name : 'person1.age',
+			title : '年龄范围',
+			value : 'age40,age50',
+			col : 2,
+			height: 120,
+			width: 300,
+			change: checkgroupChange
+		});
+		
+		$('#getValue').dtbutton().click(function(){
+			alert($('#checkgroup1').dtcheckgroup('value'));
+		});
+		
+		$('#setValue').dtbutton().click(function(){
+			$('#checkgroup1').dtcheckgroup('value', 'age50,age10');
+		});
+	});
+</script>
+</head>
+<body>
+
+
+	<div id="checkgroup1" style='display:block'></div>
+<br/>
+<button id='getValue'>getValue</button>
+<button id='setValue'>setValue</button>
+<br>
+	<div id="checkgroup2"></div>
+
+
+	<div class="demo-description">
+	    <h3>本实例功能</h3>
+	    <ul>
+	      <li>通过array或map形式的数据 生成radiogroup</li>
+	      <li>通过按钮获得和设置单选按钮组的值</li>
+	    </ul>
+	</div>
+
+
+
+</body>
+
+</html>

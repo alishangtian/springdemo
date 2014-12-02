@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>工具条</title>
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css">
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/dtui.button.js"></script>
+	<script src="../../dtui/js/dtui.toolbar.js"></script>
+	<link rel="stylesheet" href="../demos.css">
+	<script>
+	$(function() {
+		$("#toolbar").dttoolbar({
+			items:[
+			    {
+			    	icons:{primary: "ui-icon-locked"}
+			    },
+			    {
+			    	icons:{primary: "ui-icon-locked"}
+			    },
+			    {
+			    	icons:{primary: "ui-icon-locked"}
+			    }
+			]
+		});
+	});
+	</script>
+</head>
+<body>
+<ul id="toolbar">
+	<li><a href="#add">增加</a></li>
+	<li><a href="#del">删除</a></li>
+	<li>
+		<a href="#mod">修改</a>
+		<ul>
+			<li><a href="#">菜单一</a></li>
+			<li><a href="#">菜单二</a></li>
+		</ul>
+	</li>
+</ul>
+</body>
+</html>

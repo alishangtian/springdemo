@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>jQuery UI Spinner - Decimal</title>
+<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css" />
+<script src="../../dtui/js/jquery/jquery.js"></script>
+<script src="js/jquery.mousewheel.js"></script>
+<script src="js/globalize.js"></script>
+<script src="js/globalize.culture.de-DE.js"></script>
+<script src="js/globalize.culture.ja-JP.js"></script>
+<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+<script src="../../dtui/js/spinner/jquery.ui.spinner.js"></script>
+<script type="text/javascript" src="../../dtui/js/dtui.spinner.js"></script>
+<link rel="stylesheet" href="../demos.css"/>
+<script type="text/javascript">
+	$(function() {
+		$( "#spinner" ).dtspinner({step: 0.01,numberFormat: "n"});
+		$( "#culture" ).change(function() {
+			var current = $( "#spinner" ).dtspinner( "value" );
+			Globalize.culture( $(this).val() );
+			$( "#spinner" ).dtspinner( "value", current );
+		});
+	});
+	</script>
+</head>
+<body>
+
+	<p>
+		<label for="spinner">Decimal spinner:</label> <input id="spinner"
+			name="spinner" value="5.06">
+	</p>
+	<p>
+		<label for="culture">Select a culture to use for formatting:</label> <select
+			id="culture">
+			<option value="en-EN" selected="selected">English</option>
+			<option value="de-DE">German</option>
+			<option value="ja-JP">Japanese</option>
+		</select>
+	</p>
+
+	<div class="demo-description">
+		<h3>本实例功能</h3>
+		<ul>
+			<li>这是一个小数微调器的实例，步长设置为0.01</li>
+			<li>小数微调器中的值会随着环境选择框的值得选择而重新改变输入框中值的格式</li>
+			<li>如果需要更多的格式，别忘了使用前引用环境的js文件
+			<li>
+		</ul>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+.dtui-toolbar{
+	padding: .4em .8em;
+}
+.dtui-toolbar-item{
+	float: left;
+	padding: 0 .2em;
+}
+.dtui-toolbar-menu{
+	position: absolute;
+}

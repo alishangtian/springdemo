@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>jQuery UI Button - Default functionality</title>
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css">
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/dtui.button.js"></script>
+	<link rel="stylesheet" href="../demos.css">
+	<script type="text/javascript">
+		$(function() {
+			$( "#btnSerialize" )
+				.dtbutton()
+				.click(function( event ) {
+					$.each( { name: "John", lang: "JS" }, function(i, n){
+						//alert( "Name: " + i + ", Value: " + n );
+						$("#results1").append( "<tt>" + "Name: " + i + ", Value: " + n + "</tt><br>" );
+					});					
+				});
+			
+			$( "#btnSerialize2" )
+			.dtbutton()
+			.click(function( event ) {
+				var ds =  {
+					"01":"北京",
+					"02":"上海",
+					"10":"广州",
+					"11":"重庆"
+				}	
+				for (var p in ds) {
+					$("#results1").append( "<tt>" + "Name: " + p + ", Value: " + ds[p] + "</tt><br>" );
+					
+				}
+				$.each( ds, function(i, n){
+					//alert( "Name: " + i + ", Value: " + n );
+					$("#results1").append( "<tt>" + "Name: " + i + ", Value: " + n + "</tt><br>" );
+				});					
+			});
+					
+		});
+	</script>
+</head>
+<body>
+
+<button id="btnSerialize">serialize</button>
+<button id="btnSerialize2">序列化数字属性</button>
+
+
+<p id="results1"><b>Serialize Results: </b><br> </p>
+
+</body>
+
+</html>

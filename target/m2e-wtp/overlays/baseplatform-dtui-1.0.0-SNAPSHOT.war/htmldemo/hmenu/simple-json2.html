@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>异步加载菜单2</title>
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css" />
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/dtui.hmenu.js"></script>
+	<script type="text/javascript">
+		//页面加载完成创建布局
+		$(function(){
+			$('#nav').dthmenu({
+				enable: 2, 	//默认展开第三个菜单
+				url: 'data2.json'
+			});
+		});
+	</script>
+</head>
+<body>
+	<div id="nav">
+	</div>
+	
+	<div class="demo-description">
+	<h3>本实例功能</h3>
+	<ul>
+		<li>异步加载JSON格式数据,生成多级子菜单的横向菜单.</li>
+	</ul>
+	</div>
+</body>
+</html>

@@ -1,0 +1,97 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+.wrap{
+    margin: 5px;
+    min-height: 550px;
+    width: 100%;
+}
+ul{
+	list-style:none;
+}
+.operbar{
+	background-color: #FFFFCD;
+	line-height: 25px;
+	top: -30px;
+	height: 25px;
+	margin-bottom: 5px;
+	display: none;
+	width: 100%;
+	border: 1px solid #CCCCCC;
+	line-height: 25px;
+	position: relative;
+}
+.operbar button{
+    padding: 2px;
+    height: 23px;
+}
+.operbar-close{
+	float: right;
+	margin-right: 10px;
+	display: none;
+}
+.operbar .layOut{
+	height: 25px;
+	float: left;
+	line-height: 25px;
+	padding: 1px;
+}
+.operbar .layOut .layout-icon{
+	float: left;
+	width: 20px;
+	height: 20px;
+	background-color: #AAAAAA;
+	margin-right: 5px;
+	padding: 1px;
+	cursor: pointer;
+}
+.ul{
+	margin:0;
+	padding:0;
+	float: left;
+	width:49%;
+}
+.ul li{
+	padding:0;
+}
+.box{
+	border:1px #ccc solid;
+	margin-bottom:10px;
+	margin-right:10px;
+}
+.box .boxHead{
+	height:30px;
+	border-bottom:1px #ccc solid;
+	margin:5px;
+	background:url(../images/bg3.png) repeat-x 0 100%;
+}
+.box .bhTitle{
+	padding-top:7px;
+	padding-bottom:7px;
+	padding-left:30px;
+	font-size:12px;
+	float:left;
+	background:url(../images/icons/arrow2.png) no-repeat 10% 40%;
+}
+.box .btl{
+	background:url(../images/icons/arrow3.png) no-repeat;
+	border:0;
+	width:15px; 
+	height:15px;
+	float:right;
+	margin:7px 5px 0px 0px;
+	cursor: pointer;
+}
+.box .btr{
+	background:url(../images/icons/close.png) no-repeat;
+	border:0;
+	width:15px; 
+	height:15px;
+	float:right;
+	margin:7px 10px 0px 0px;
+	cursor: pointer;
+}
+.box .boxContent{
+	height:219px;
+}

@@ -1,0 +1,496 @@
+/* CSS Document */
+html,body{height:100%; overflow:hidden; padding:0px; margin:0px;}
+body {
+	margin: 0px;
+	padding: 0px;
+	margin-top: 2px;
+}
+
+.clear {
+	clear: both;
+}
+.clear-auto {
+	border-top:1px solid transparent !important;
+ margin-top:-1px !important;
+ border-top:0;
+ margin-top:0;
+ clear:both;
+ visibility:hidden;
+}
+
+.wrap {
+	margin: 0 auto;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+}
+
+.head {
+}
+
+.head .top {
+	height: 19px;
+	text-align: right;
+	position: relative;
+	top: 41px;
+}
+
+.top a{
+	color: #000000;
+}
+
+.top span{
+	background: url("../image/icon/s1.gif") no-repeat scroll 7px 2px transparent;
+    padding-left: 30px;
+    vertical-align: middle;
+    margin-right: 30px;
+}
+
+.head .logo {
+	width: 10%;
+	height: 46px;
+	margin-left: 20px;
+	float: left;
+	margin-top: 7px;
+	margin-bottom: 10px;
+}
+
+.hidehead {
+	height: 15px;
+	display: none;
+	background: url("../image/tn-bg.gif") repeat-x scroll 0 0 transparent;
+	cursor: pointer;
+}
+
+.hidehead .hideUpIcon {
+	float: right;
+	cursor: pointer;
+	margin-top: 1px;
+	width: 17px;
+	height: 17px;
+	position: absolute;
+	right: 2px;
+}
+
+.head .logobottom {
+	background: url(../image/tn-bg.gif) repeat-x;
+	color: #FFDBDB;
+	height: 18px;
+	z-index: -1;
+}
+
+.menuhead {
+	
+}
+/*页签*/
+.tabs {
+	padding: 0;
+	width: 100%;
+	font-size: 12px;
+}
+
+.tabs .tabhead {
+	float: left;
+	width: 100%;
+	background: url(../image/tn-bg.gif) repeat-x;
+}
+
+.tabs ul {
+	float: left;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	padding-left: 10px;
+}
+
+.tabs li {
+	float: left;
+	display: inline;
+	margin: 0 2px 0 0;
+	padding: 0;
+}
+
+.tabs .tabhead a {
+	float: left;
+	font-weight: bold;
+	color: #FFDBDB;
+}
+
+.tabs a {
+	float: left;
+	margin: 0 2px 0 0;
+	padding: 2px 10px 2px 10px;
+	text-decoration: none;
+	letter-spacing: 1px;
+	display: block;
+}
+
+.tabs a:hover {
+	text-decoration: underline;
+}
+
+.tabs .current a:hover {
+	text-decoration: none;
+}
+/*页签内容----------------------------------------------------------*/
+/*主页面*/
+.left-menu-container {
+	margin-top: 8px;
+	overflow: hidden;
+	background-color: #F3F6F7;
+	height:100%;
+}
+.main-bottom{
+	height:100%;
+}
+/*顶部导航*/
+.tabContent { /*margin-bottom:20px;*/
+	
+}
+
+.tabContent .topNav {
+	padding: 0 0 0 0;;
+	height: 18px;
+	font-size: 12px;
+	border-style: solid;
+	border-width: 0 1px 1px 1px;
+	overflow: hidden;
+}
+
+.topNav  a {
+	color: #000000;
+	padding: 0 0;
+	margin-right: 40px;
+	margin-left: 10px;
+}
+
+.topNav .selected {
+	color: #CB0010;
+}
+
+.tabhead .upIcon {
+	width: 17px;
+	height: 17px;
+	float: right;
+	position: absolute;
+	right: 2px;
+	cursor: pointer;
+	margin-top: 1px;
+}
+
+.tabContent .operbar {
+	height: 6px;
+	float: right;
+	margin: 0;
+	margin-top: 7px;
+}
+
+.operbar a {
+	height: 6px;
+	font-size: 12px;
+}
+/*左侧功能菜单-------------------------------------------*/
+.left-menu-container .list {
+	float: left;
+	width: 190px;
+	font-size: 12px;
+	margin-right: 5px;
+	height: 100%
+}
+
+.list .title {
+	height: 21px;
+}
+
+.list .title span {
+	font-size: 14px;
+	margin-left: 20px;
+	color: #CB0010;
+	font-size: 12px;
+	font-weight: bold;
+	float: left;
+}
+
+.list .title .leftIcon {
+	background: url("../image/icon/arrow_left.png") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    height: 17px;
+    width: 10px;
+    float: right;
+}
+
+.list .content {
+	
+}
+/*功能菜单---内容*/
+.listContent {
+	width: 188px;
+	height: 100%;
+}
+
+.listContent .h{
+	display:block;
+	margin-bottom:5px;
+	padding-left:35px;
+	height:19px;
+}
+
+.left-menu-container .hidelist {
+	float: left;
+	width: 15px;
+	background-color: #CB0010;
+	display: none;
+}
+
+.hidelist .hideLeftIcon {
+	width: 17px;
+	height: 17px;
+	float: right;
+	cursor: pointer;
+	margin-top: 10px;
+}
+/*功能列表*/
+.block1 {
+	margin-top: 16px;
+}
+
+.block1 .f1 {
+	background: url(../image/icon/f1.gif) no-repeat 7px 5px;
+	display: block;
+	padding-left: 30px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.block1 .f2 {
+	background: url(../image/icon/f2.gif) no-repeat 7px 2px;
+	display: block;
+	padding-left: 30px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.block1 .f3 {
+	background: url(../image/icon/f3.gif) no-repeat 7px 2px;
+	display: block;
+	padding-left: 30px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.block1 .f4 {
+	background: url(../image/icon/f4.gif) no-repeat 7px 2px;
+	display: block;
+	padding-left: 30px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+/*快捷方式*/
+.block2{
+	background:url(../image/m_bg.png) repeat-y;
+}
+.block2 a {
+	color:#333333;
+	font-size:12px;
+}
+.block2 a:hover{
+	text-decoration: underline;
+}
+.block2 .f1 {
+    background: url("../image/icon/s1.gif") no-repeat scroll 7px 5px transparent;
+    display: block;
+    padding-bottom: 5px;
+    padding-left: 30px;
+    padding-top: 5px;
+}
+.block2 .favourMenu{
+	position: relative;
+	padding-left: 20px;
+}
+.block2 .favourMenu ul {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+/*--------------------------------------------------*/
+/*右侧功能内容----------------------------------------*/
+.left-menu-container .right {
+	width: auto;
+	margin-left: 195px;
+	height: 100%;
+}
+
+.rightTop {
+	margin-top: 10px;
+	margin-left: 10px;
+	font-size: 14px;
+}
+/*左侧页签---------------------*/
+.lbox {
+	float: left;
+	width: 444px;
+}
+
+.lbox ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.lbox li {
+	display: block;
+	padding: 0;
+}
+
+.lbox a {
+	float: left;
+	padding: 7px 40px 3px 40px;
+	text-decoration: none;
+	letter-spacing: 1px;
+	display: block;
+	background: url(../image/tab2.gif) no-repeat;
+}
+
+.lbox a:hover {
+	text-decoration: underline;
+}
+
+.lbox a.selected {
+	display: block;
+	background: url(../image/tab1.gif) no-repeat;
+}
+/*---------------------------------------------*/
+/*右侧连接+按钮----------------------------------*/
+.rbox {
+	float: right;
+	width: 457px;
+	border-bottom: 1px #8C8C8C solid;
+	margin-right: 9px;
+	padding-left: 150px;
+}
+
+.rbox a {
+	float: left;
+	text-decoration: none;
+	letter-spacing: 1px;
+	display: block;
+	font-size: 12px;
+}
+
+.rbox a:hover {
+	text-decoration: underline;
+}
+
+.rbox .line {
+	float: left;
+}
+
+.rbox .l1 {
+	display: block;
+	background: url(../image/icon/l1.png) no-repeat;
+	padding: 4px 20px 7px 40px;
+}
+
+.rbox .l2 {
+	display: block;
+	background: url(../image/icon/l2.png) no-repeat;
+	padding: 4px 20px 7px 40px;
+}
+
+.rbox .l3 {
+	display: block;
+	background: url(../image/icon/l3.png) no-repeat;
+	padding: 4px 20px 7px 50px;
+}
+
+.rbox .btn {
+	border: 0;
+	width: 77px;
+	height: 22px;
+	padding-top: 5px;
+}
+/*------------------------------------------------*/
+.rightContent {
+	width: 100%;
+}
+
+.rightContent .box {
+	width: 100%;
+	height: 249px;
+	border: 1px #CACACA solid;
+	margin-bottom: 10px;
+}
+
+.box .boxHead {
+	height: 38px;
+	border: 1px #CACACA solid;
+	margin: 5px;
+}
+
+.box .bhTitle {
+	padding-top: 10px;
+	padding-bottom: 7px;
+	padding-left: 30px;
+	font-size: 14px;
+	font-weight: bold;
+	float: left;
+}
+
+.box .btl {
+	border: 0;
+	width: 32px;
+	height: 20px;
+	float: right;
+	margin-top: 10px;
+}
+
+.box .btr {
+	border: 0;
+	width: 35px;
+	height: 20px;
+	float: right;
+	margin-top: 10px;
+	margin-right: 10px;
+}
+
+.left-menu-tabs {
+	width: 25px;
+	float: left;
+}
+
+.left-menu-tabs .tabs-item {
+	margin: 5px 0 0 2px;
+	background-color: #DDDDDD;
+	text-align: center;
+	cursor: pointer;
+	padding: 5px 0 5px 0;
+	color: #000000;
+}
+
+.left-menu-tabs .selected {
+	color: #ffffff;
+	background-color: #CB0010;
+}
+
+.left-menu-tabs .selected-icon {
+	display: none;
+	position: absolute;
+	background: url(../image/icon/arrow_red.png) no-repeat;
+	width: 6px;
+	height: 11px;
+}
+
+.left-menu-tabs-contents {
+	margin: 5px 0 0 27px;
+}
+
+.left-menu-tabs-contents ul {
+	margin-top: 0;
+}
+
+.footer {
+	margin-top: 10px;
+	height: 15px;
+	background: url("../image/tn-bg.gif") repeat-x scroll 0 0 transparent;
+}

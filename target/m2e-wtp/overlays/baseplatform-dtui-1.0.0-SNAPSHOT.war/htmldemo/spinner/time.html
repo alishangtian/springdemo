@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>jQuery UI Spinner - Time</title>
+<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css" />
+<script src="../../dtui/js/jquery/jquery.js"></script>
+
+<script src="js/jquery.mousewheel.js"></script>
+<script src="js/globalize.js"></script>
+<script src="js/globalize.culture.de-DE.js"></script>
+
+<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+<script src="../../dtui/js/spinner/jquery.ui.spinner.js"></script>
+<link rel="stylesheet" href="../demos.css"/>
+<script type="text/javascript">
+	$.widget( "dtui.dttimespinner", $.ui.spinner, {
+		options: {
+			// seconds
+			step: 60 * 1000,
+			// hours
+			page: 60
+		},
+
+		_parse: function( value ) {
+			if ( typeof value === "string" ) {
+				// already a timestamp
+				if ( Number( value ) == value ) {
+					return Number( value );
+				}
+				return +Globalize.parseDate( value );
+			}
+			return value;
+		},
+
+		_format: function( value ) {
+			return Globalize.format( new Date(value), "t" );
+		}
+	});
+
+	$(function() {
+		$( "#spinner" ).dttimespinner();
+
+		$( "#culture" ).change(function() {
+			var current = $( "#spinner" ).dttimespinner( "value" );
+			Globalize.culture( $(this).val() );
+			$( "#spinner" ).dttimespinner( "value", current );
+		});
+	});
+	</script>
+</head>
+<body>
+
+	<p>
+		<label for="spinner">Time spinner:</label> <input id="spinner"
+			name="spinner" value="08:30 PM">
+	</p>
+	<p>
+		<label for="culture">Select a culture to use for formatting:</label> <select
+			id="culture">
+			<option value="en-EN" selected="selected">English</option>
+			<option value="de-DE">German</option>
+		</select>
+	</p>
+
+	<div class="demo-description">
+		<h3>本实例功能</h3>
+		<ul>
+			<li>这是一个时间微调器的实例，step(seconds)设置为 60*1000 page(hours)设置为60</li>
+			<li>它通过继承jquery ui 的spinner，根据用户的step和page属性
+				使用Globalization插件去解析输出时间戳</li>
+			<li>鼠标点击spinner的按钮来切换分钟，键盘的换页(page up/down)来切换小时</li>
+			<li>如果需要更多的格式，别忘了使用前引用环境的js文件
+			<li>
+		</ul>
+	</div>
+
+</body>
+</html>

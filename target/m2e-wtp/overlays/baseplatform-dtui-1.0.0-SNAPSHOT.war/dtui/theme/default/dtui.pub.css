@@ -1,0 +1,14 @@
+.input-star-container {
+	vertical-align: middle; 
+	margin: 0;
+	padding: 0;
+	width: 8px;
+	float: right;
+	height: 100%;
+	text-align: right;
+}
+
+.input-star {
+	color: red;
+	vertical-align: middle;
+}

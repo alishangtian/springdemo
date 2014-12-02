@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.baseplatform.func.sm.persistence.BulletinFeedbackMapper">
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="BulletinFeedback">
+		<selectKey keyProperty="bulletinFeedbackId" resultType="long" order="BEFORE">
+			SELECT SEQ_BULLETIN_FEEDBACK_ID.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO BULLETIN_FEEDBACK(BULLETIN_FEEDBACK_ID, BULLETIN_ID, USER_ID, STS, STS_TIME, CREATE_TIME)
+		VALUES(#{bulletinFeedbackId}, #{bulletinId}, #{userId}, #{sts}, #{stsTime}, #{createTime})
+	</insert>
+
+	<!-- 删除记录 -->
+	<delete id="deleteByFeedback" parameterType="BulletinFeedback">
+		DELETE FROM BULLETIN_FEEDBACK WHERE BULLETIN_ID = #{bulletinId} AND USER_ID = #{userId}
+	</delete>
+	
+	<!-- 根据主键查询记录 -->
+	<select id="selectByFeedback" parameterType="BulletinFeedback" resultMap="bulletinFeedbackList">
+		SELECT
+			BULLETIN_FEEDBACK_ID,
+			BULLETIN_ID,
+			USER_ID,
+			STS,
+			STS_TIME,
+			CREATE_TIME
+		FROM BULLETIN_FEEDBACK
+		WHERE STS='A'
+		AND BULLETIN_ID = #{bulletinId}
+		AND USER_ID = #{userId}
+	</select>
+	
+	<!-- 结果映射-->
+	<resultMap id="bulletinFeedbackList" type="BulletinFeedback">
+		<id property="bulletinFeedbackId" column="BULLETIN_FEEDBACK_ID" />
+		<result property="bulletinId" column="BULLETIN_ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="sts" column="STS" />
+		<result property="stsTime" column="STS_TIME" />
+		<result property="createTime" column="CREATE_TIME" />
+	</resultMap>
+</mapper>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>对话框默认功能</title>
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css">
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/dtui.button.js"></script>
+	<script src="../../dtui/js/dtui.dialog.js"></script>
+	<link rel="stylesheet" href="../demos.css">
+	<script type="text/javascript">
+		$(function() {
+			$( "#btnShow" ).dtbutton().click(function( event ) {
+				$.dtdialog.show({width: 600, height: 300, url:"fragment1.html"});
+			});
+			$( "#btnShowModal" ).dtbutton().click(function( event ) {
+				$.dtdialog.showModal({width: 600, height:300, url:"fragment1.html"});
+			});
+		});
+	</script>
+</head>
+<body>
+
+<button id = "btnShow">显示窗口</button>
+<button id = "btnShowModal">显示模态窗口</button>
+
+<div class="demo-description">
+	<h3>本实例功能</h3>
+	<ul>
+		<li>调用按钮事件 显示 两种 对话框(普通窗口、模态窗口)</li>
+	</ul>
+</div>
+
+</body>
+
+</html>

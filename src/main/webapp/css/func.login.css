@@ -1,0 +1,113 @@
+/* CSS Document */
+.clear{
+	clear:both;
+}
+h1{
+	font-weight:bold;
+	font-size:50px;
+	color:#8abdf1;
+	font-family:Arial, Helvetica, sans-serif;
+}
+input{
+	border:1px #CCCCCC solid;
+	background:#F7F7F7;
+}
+span{
+	display:block;
+
+
+}
+body{
+	background:#F1F4F5;
+	margin:0px;
+	padding:0px;
+}
+.outer {
+	width:1268px;
+	background:url(../images/login/out-bg.png);
+	padding:5px 0px;
+	margin:0px auto;
+}
+.wrap {
+	text-align: left;
+	margin:0px auto;
+	position: relative;
+	width:649px;	
+}
+.container{
+	border-bottom:5px #C2BAC3 solid;
+}
+.logo{
+	margin-top:40px;
+	border-bottom:2px #C4000E solid;
+}
+.lgBody{
+	border-left:10px #C6D2D9 solid;
+	border-bottom:10px #C6D2D9 solid;
+	border-right:10px #C6D2D9 solid;
+	border-top:5px #C6D2D9 solid;
+	height:300px;
+	background:url(../images/login/book.jpg) no-repeat 150px 0px #FFFFFF;
+	padding-left:30px;
+}
+.input{
+	width:300px;
+	height:16px;
+	margin-bottom:10px;
+	font-size:12px;
+	color:#555555;
+	font-weight:bold;
+	padding-left:20px;
+	background:url(../images/login/dian.jpg) no-repeat;
+}
+#userName{
+	width:180px;
+}
+#password{
+	width:180px;
+}
+#verifyCode{
+	width:100px;
+}
+/*.code{
+	position:absolute;
+	left:225px;
+	top:300px;
+}*/
+/*.change{
+	position:absolute;
+	left:290px;
+	top:302px;
+}*/
+.change a{
+	color:#C4000E;
+}
+.change a:hover{
+	color:#FF0000;
+}
+button{
+	width:187px;
+	height:38px;
+	background:url(../images/login/buttom.gif) no-repeat;
+	border:0px;
+	font-size:16px;
+	font-weight:bold;
+	color:#8abdf1;
+	display:block;
+	margin:10px auto 20px auto;
+}
+.sdw{
+	background:url(../images/login/sdw.jpg);
+	height:33px;
+}
+.foot{
+	margin-top:50px;
+	padding-left:50px;
+
+}
+.error {
+	color:#D40010;
+	height:20px;
+	margin-left:50px;
+	margin-top:20px;
+}

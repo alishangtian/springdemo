@@ -1,0 +1,6 @@
+@CHARSET "UTF-8";
+
+.ui-messagebox-image-donne{background:url('images/box-btn-done.gif') no-repeat; }
+.ui-messagebox-image-error{background:url('images/box-btn-error.gif') no-repeat; }
+.ui-messagebox-image-question{background:url('images/box-btn-question.gif') no-repeat; height:44px; }
+.ui-messagebox-image-warn{background:url('images/box-btn-warn.gif') no-repeat; }

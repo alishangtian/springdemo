@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="false"
+	monitoring="off" dynamicConfig="true">
+
+	<!-- <diskStore path="d:/_temp/_temp_cache/" /> -->
+
+	<defaultCache maxElementsInMemory="0" eternal="false"
+		overflowToDisk="false" timeToIdleSeconds="30" timeToLiveSeconds="60">
+	</defaultCache>
+
+	<cache name="com.cattsoft.baseplatform.tableCache"
+		maxElementsInMemory="10000" eternal="true" overflowToDisk="false">
+	</cache>
+
+	<cache name="com.cattsoft.baseplatform.domainCache"
+		maxElementsInMemory="5000" eternal="true" overflowToDisk="false">
+	</cache>
+
+	<cache name="com.cattsoft.baseplatform.sysParamCache"
+		maxElementsInMemory="5000" eternal="true" overflowToDisk="false">
+	</cache>
+	<cache name="com.cattsoft.baseplatform.busiParamCache"
+		maxElementsInMemory="5000" eternal="true" overflowToDisk="false">
+	</cache>
+</ehcache>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.baseplatform.func.sm.persistence.FunctionMapper">
+	<select id="selectListFuncTree" resultType="FuncTree">
+		SELECT NODE_TREE_ID   nodeTreeId,
+		       NODE_TREE_NAME nodeTreeName,
+		       PARENT_ID      parentId,
+		       DESCB          descb,
+		       SUB_SYSTEM     subSystem,
+		       DISPLAY_ORDER  displayOrder
+		  FROM FUNC_TREE
+		 WHERE 1 = 1
+		 ORDER BY parent_id, displayOrder
+	</select>
+
+	<select id="selectListFuncNode" parameterType="long" resultMap="funcNodeResultMap">
+		SELECT FUNC_NODE_ID,
+		       NODE_TREE_ID,
+		       FUNC_NODE_CODE,
+		       FUNC_NODE_NAME,
+		       FUNC_NODE_DESC,
+		       FUNC_NODE_URL,
+		       ACTION_NAME,
+		       METHOD_NAME,
+		       DISPLAY_ORDER,
+		       STS,
+		       STS_TIME
+		  FROM FUNC_NODE
+		 WHERE STS = 'A'
+		   AND NODE_TREE_ID = #{nodeTreeId}
+		 ORDER BY NODE_TREE_ID, DISPLAY_ORDER
+	</select>
+	<resultMap id="funcNodeResultMap" type="FuncNode">
+		<id property="funcNodeId" column="FUNC_NODE_ID" />
+		<result property="nodeTreeId" column="NODE_TREE_ID" />
+		<result property="funcNodeCode" column="FUNC_NODE_CODE" />
+		<result property="funcNodeName" column="FUNC_NODE_NAME" />
+		<result property="funcNodeDesc" column="FUNC_NODE_DESC" />
+		<result property="funcNodeUrl" column="FUNC_NODE_URL" />
+		<result property="actionName" column="ACTION_NAME" />
+		<result property="methodName" column="METHOD_NAME" />
+		<result property="displayOrder" column="DISPLAY_ORDER" />
+		<result property="sts" column="STS" />
+		<result property="stsTime" column="STS_TIME" />
+		<collection property="funcItemList" column="FUNC_NODE_ID"
+			ofType="FuncItem" javaType="ArrayList" select="selectListFuncItem" />
+	</resultMap>
+	<!-- 查询功能下的所有功能操作信息 -->
+	<select id="selectListFuncItem" parameterType="long" resultType="FuncItem">
+		SELECT
+			FUNC_ITEM_ID funcItemId,
+			FUNC_NODE_ID funcNodeId,
+			FUNC_ITEM_NAME funcItemName,
+			FUNC_ITEM_DESC funcItemDesc,
+			ACTION_NAME actionName,
+			METHOD_NAME methodName,
+			STS sts,
+			STS_TIME stsTime
+		FROM FUNC_ITEM
+		WHERE STS = 'A' 
+			AND FUNC_NODE_ID = #{funcNodeId}
+	</select>
+	<!-- 获取直属子节点 -->
+	<select id="selectChildrenFuncTree" parameterType="long" resultType="FuncTree">
+		SELECT NODE_TREE_ID   nodeTreeId,
+		       NODE_TREE_NAME nodeTreeName,
+		       PARENT_ID      parentId,
+		       DESCB          descb,
+		       SUB_SYSTEM     subSystem,
+		       DISPLAY_ORDER  displayOrder
+		  FROM FUNC_TREE
+		 WHERE PARENT_ID = #{nodeTreeId}
+		  ORDER BY displayOrder
+	</select>
+</mapper>

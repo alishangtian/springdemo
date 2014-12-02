@@ -1,0 +1,9 @@
+@CHARSET "UTF-8";
+.sub_menu .ui-menu-item{
+	float: left;
+	width: auto;
+}
+
+.sub_menu .ui-menu-item a{
+	float: left;
+}

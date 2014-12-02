@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>jQuery UI Button - Checkboxes</title>
+
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css">
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/dtui.button.js"></script>
+	<link rel="stylesheet" href="../demos.css">
+	<script>
+	$(function() {
+		$( "#check" ).dtbutton();
+		$( "#format" ).dtbuttonset();
+	});
+	</script>
+	<style>
+	#format { margin-top: 2em; }
+	</style>
+</head>
+<body>
+
+<input type="checkbox" id="check" /><label for="check">Toggle</label>
+
+<div id="format">
+	<input type="checkbox" id="check1" /><label for="check1">B</label>
+	<input type="checkbox" id="check2" /><label for="check2">I</label>
+	<input type="checkbox" id="check3" /><label for="check3">U</label>
+</div>
+
+<div class="demo-description">
+	<h3>本实例功能</h3>
+	<ul>
+		<li>一个复选框被设计成一个开关按钮.标签元素与复选框联系起来可以用于按钮文本.</li>
+		<li>这个实例还演示了三个复选框被设计成按钮组,通过在一个普通的容器中调用".buttonset()"方法.</li>
+	</ul>
+</div>
+</body>
+</html>

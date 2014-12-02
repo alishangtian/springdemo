@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.ny.base.persistence.EquipTypeMapper">
+	<!-- MySql分页查询 -->
+	<sql id="pagingFooter"> limit ${pagingInfo.startIdx-1},#{pagingInfo.pageRows}
+	</sql>
+	<sql id="countingHeader">SELECT COUNT(*) FROM(</sql>
+	<sql id="countingFooter">) t</sql>
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="com.cattsoft.ny.base.entity.EquipType"
+		useGeneratedKeys="true" keyProperty="id">
+	 
+		<![CDATA[
+			INSERT INTO equip_type
+		]]>
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			TYPE,PARENT_ID,DESCRIPTION,level
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="parentId != null">
+				#{parentId},
+			</if>
+			<if test="description != null">
+				#{description},
+			</if>
+			<if test="level != null">
+				#{level},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="long">
+		<![CDATA[
+			DELETE FROM equip_type
+				WHERE ID = #{id}
+		]]>
+	</delete>
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.cattsoft.ny.base.entity.EquipType">
+	    <![CDATA[
+			UPDATE equip_type
+	    ]]>
+		<set>
+			<if test="type != null">
+    	<![CDATA[ TYPE = #{type}, ]]>
+			</if>
+			<if test="description != null">
+    	<![CDATA[ DESCRIPTION = #{description}, ]]>
+			</if>
+			<if test="parentId != null">
+    	<![CDATA[ PARENT_ID = #{parentId}, ]]>
+			</if>
+			<if test="level != null">
+    	<![CDATA[ level = #{level}, ]]>
+			</if>
+		</set>
+	    <![CDATA[
+	        WHERE ID = #{id}
+	    ]]>
+	</update>
+
+	<!-- 根据主键查询记录 -->
+	<select id="select" parameterType="long" resultMap="equipTypeList">
+		<include refid="sqlSelectAll" />
+		<![CDATA[
+			WHERE ID = #{id}
+		]]>
+	</select>
+
+	<!-- 根据父设备类型ID查询设备类型列表  -->
+	<select id="selectByPId" parameterType="long" resultMap="equipTypeList">
+		<include refid="sqlSelectAll" />
+		<![CDATA[
+			WHERE PARENT_ID = #{pId}
+		]]>
+	</select>
+	<select id="findOneEquipType" parameterType="com.cattsoft.ny.base.entity.EquipType" resultMap="equipTypeList">
+		<include refid="sqlSelectAll" />
+		<![CDATA[
+			WHERE level = #{level} AND TYPE = #{type}
+		]]>
+	</select>
+	<select id="selectEquipTypes" parameterType="com.cattsoft.ny.base.entity.EquipType" resultMap="equipTypeList">
+		<include refid="sqlSelectAll" />
+		<where>
+			<if test="type != null">
+		<![CDATA[ TYPE like CONCAT('%',#{type},'%') ]]>
+			</if>
+			<if test="level != null">
+		<![CDATA[ AND level = #{level}  ]]>
+			</if>
+			<if test="parentId != null">
+		<![CDATA[ AND PARENT_ID = #{parentId} ]]>
+			</if>
+		</where>
+	</select>
+
+	<select id="selectList" resultMap="equipTypeList">
+		<include refid="sqlSelectAll" />
+	</select>
+
+	<!-- 条件查询所有记录 -->
+	<select id="selectPage" parameterType="PagingQueryBean"
+		resultMap="equipTypeList">
+		<include refid="sqlSelectPage" />
+		<include refid="pagingFooter" />
+	</select>
+
+	<resultMap id="equipTypeList" type="com.cattsoft.ny.base.entity.EquipType">
+		<result property="id" column="ID" />
+		<result property="type" column="TYPE" />
+		<result property="parentId" column="PARENT_ID" />
+		<result property="description" column="DESCRIPTION" />
+		<result property="level" column="level" />
+	</resultMap>
+
+	<sql id="sqlSelectPage">
+		<include refid="sqlSelectAll" />
+		<where>
+			<if test="queryBean.type != null">
+		<![CDATA[ TYPE like CONCAT('%',#{queryBean.type},'%') ]]>
+			</if>
+			<if test="queryBean.parentId != null">
+		<![CDATA[ AND PARENT_ID = #{queryBean.parentId}  ]]>
+			</if>
+			<if test="queryBean.description != null">
+		<![CDATA[ AND DESCRIPTION like CONCAT('%', #{queryBean.description},'%') ]]>
+			</if>
+			<if test="queryBean.level != null">
+		<![CDATA[ AND level = #{queryBean.level}]]>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 查询记录总数 -->
+	<select id="selectCount" parameterType="PagingQueryBean"
+		resultType="int">
+		<include refid="countingHeader" />
+		<include refid="sqlSelectPage" />
+		<include refid="countingFooter" />
+	</select>
+
+	<sql id="sqlSelectAll">
+		SELECT
+		<include refid="sqlColumn" />
+		FROM equip_type
+	</sql>
+
+	<sql id="sqlColumn">
+		ID,TYPE,PARENT_ID,DESCRIPTION,level
+	</sql>
+</mapper>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.baseplatform.func.sm.persistence.CustomizeAreaMapper">
+	<!-- 获取自定义区域根节点 -->
+	<select id="getRootArea" resultType="CustomizeArea">
+		SELECT AREA_ID     areaId,
+		       AREA_PID    areaPid,
+		       AREA_CODE   areaCode,
+		       AREA_NAME   areaName,
+		       AREA_LEVEL  areaLevel,
+		       STS         sts,
+		       STS_TIME    stsTime,
+		       CREATE_TIME createTime
+		  FROM CUSTOMIZE_AREA
+		 WHERE STS = 'A'
+		   AND AREA_PID IS NULL
+	</select>
+	<!-- 获取自定义区域 -->
+	<select id="getArea" resultType="CustomizeArea">
+		SELECT AREA_ID     areaId,
+		       AREA_PID    areaPid,
+		       AREA_CODE   areaCode,
+		       AREA_NAME   areaName,
+		       AREA_LEVEL  areaLevel,
+		       STS         sts,
+		       STS_TIME    stsTime,
+		       CREATE_TIME createTime
+		  FROM CUSTOMIZE_AREA
+		 WHERE STS = 'A'
+		   AND AREA_ID = #{areaId}
+	</select>
+	<!-- 获取自定义区域的直属下级区域-->
+	<select id="getSubAreas" resultType="CustomizeArea">
+		SELECT AREA_ID     areaId,
+		       AREA_PID    areaPid,
+		       AREA_CODE   areaCode,
+		       AREA_NAME   areaName,
+		       AREA_LEVEL  areaLevel,
+		       STS         sts,
+		       STS_TIME    stsTime,
+		       CREATE_TIME createTime
+		  FROM CUSTOMIZE_AREA
+		 WHERE STS = 'A'
+		   AND AREA_PID = #{areaId}
+	</select>
+	<!-- 新增自定义区域 -->
+	<insert id="insert" parameterType="CustomizeArea">
+		<selectKey keyProperty="areaId" resultType="long" order="BEFORE">
+			SELECT SEQ_AREA_ID.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO CUSTOMIZE_AREA
+		  (AREA_ID,
+		   AREA_PID,
+		   AREA_CODE,
+		   AREA_NAME,
+		   AREA_LEVEL,
+		   STS,
+		   STS_TIME,
+		   CREATE_TIME)
+		VALUES
+		  (#{areaId, jdbcType=NUMERIC},
+		   #{areaPid, jdbcType=NUMERIC},
+		   #{areaCode, jdbcType=VARCHAR},
+		   #{areaName, jdbcType=VARCHAR},
+		   #{areaLevel, jdbcType=VARCHAR},
+		   #{sts, jdbcType=VARCHAR},
+		   #{stsTime, jdbcType=TIMESTAMP},
+		   #{createTime, jdbcType=TIMESTAMP})
+	</insert>
+	<!-- 更新自定义区域 -->
+	<update id="update" parameterType="CustomizeArea">
+		UPDATE CUSTOMIZE_AREA
+		<set>
+			<if test="areaPid != null">AREA_PID = #{areaPid},</if>
+			<if test="areaCode != null">AREA_CODE = #{areaCode},</if>
+			<if test="areaName != null">AREA_NAME = #{areaName},</if>
+			<if test="areaLevel != null">AREA_LEVEL = #{areaLevel},</if>
+			<if test="sts != null">STS = #{sts},</if>
+			STS_TIME = NOW()
+		</set>
+		WHERE AREA_ID = #{areaId}
+	</update>
+	<!-- 获取自定义区域及其所有下级区域-->
+	<select id="getAreaCascade" resultType="CustomizeArea">
+		SELECT AREA_ID     areaId,
+		       AREA_PID    areaPid,
+		       AREA_CODE   areaCode,
+		       AREA_NAME   areaName,
+		       AREA_LEVEL  areaLevel,
+		       STS         sts,
+		       STS_TIME    stsTime,
+		       CREATE_TIME createTime
+		  FROM CUSTOMIZE_AREA
+		 WHERE STS = 'A'
+		 START WITH AREA_ID = #{areaId}
+		CONNECT BY PRIOR AREA_ID = AREA_PID
+	</select>
+	
+	<!-- 依据代码获取自定义区域 -->
+	<select id="getAreaByCode" resultType="CustomizeArea">
+		SELECT AREA_ID     areaId,
+		       AREA_PID    areaPid,
+		       AREA_CODE   areaCode,
+		       AREA_NAME   areaName,
+		       AREA_LEVEL  areaLevel,
+		       STS         sts,
+		       STS_TIME    stsTime,
+		       CREATE_TIME createTime
+		  FROM CUSTOMIZE_AREA
+		 WHERE STS = 'A'
+		   AND AREA_CODE = #{areaCode}
+	</select>
+</mapper>

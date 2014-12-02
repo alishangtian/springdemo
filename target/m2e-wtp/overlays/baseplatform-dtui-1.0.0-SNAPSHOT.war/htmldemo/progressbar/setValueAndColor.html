@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>进度条 设置值、状态和颜色</title>
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css" />
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/dtui.progressbar.js"></script>
+	<link rel="stylesheet" href="../demos.css">
+	<script>
+	$(function() {
+		$( "#progressbar" ).dtprogressbar({
+			value: false
+		});
+		$( "button" ).on( "click", function( event ) {
+			var target = $( event.target ),
+				progressbar = $( "#progressbar" ),
+				progressbarValue = progressbar.find( ".ui-progressbar-value" );
+
+			if ( target.is( "#numButton" ) ) {
+				progressbar.dtprogressbar( "option", {
+					value: Math.floor( Math.random() * 100 )
+				});
+			} else if ( target.is( "#colorButton" ) ) {
+				progressbarValue.css({
+					"background": '#' + Math.floor( Math.random() * 16777215 ).toString( 16 )
+				});
+			} else if ( target.is( "#falseButton" ) ) {
+				progressbar.dtprogressbar( "option", "value", false );
+			}
+		});
+	});
+	</script>
+	<style>
+	#progressbar .ui-progressbar-value {
+		background-color: #ccc;
+	}
+	</style>
+</head>
+<body>
+
+<div id="progressbar"></div>
+<button id="numButton">随机设置进度值</button>
+<button id="falseButton">将进度条设置为初始状态</button>
+<button id="colorButton">设置进度条颜色</button>
+
+<div class="demo-description">
+<p>本示例演示如何设置进度条的值、状态和颜色</p>
+</div>
+</body>
+</html>

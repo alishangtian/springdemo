@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.baseplatform.func.sm.persistence.AdminDivisionMapper">
+	<!-- 获取行政区划根节点 -->
+	<select id="getRootDivision" resultType="AdminDivision">
+		SELECT DIVISION_ID    divisionId,
+		       DIVISION_PID   divisionPid,
+		       DIVISION_CODE  divisionCode,
+		       DIVISION_NAME  divisionName,
+		       DIVISION_LEVEL divisionLevel,
+		       STS            sts,
+		       STS_TIME       stsTime,
+		       CREATE_TIME    createTime
+		  FROM ADMIN_DIVISION
+		 WHERE STS = 'A'
+		   AND DIVISION_PID IS NULL
+	</select>
+	<!-- 获取行政区划 -->
+	<select id="getDivision" resultType="AdminDivision">
+		SELECT DIVISION_ID    divisionId,
+		       DIVISION_PID   divisionPid,
+		       DIVISION_CODE  divisionCode,
+		       DIVISION_NAME  divisionName,
+		       DIVISION_LEVEL divisionLevel,
+		       STS            sts,
+		       STS_TIME       stsTime,
+		       CREATE_TIME    createTime
+		  FROM ADMIN_DIVISION
+		 WHERE STS = 'A'
+		   AND DIVISION_ID = #{divisionId}
+	</select>
+	<!-- 获取行政区划的直属下级区划-->
+	<select id="getSubDivisions" resultType="AdminDivision">
+		SELECT DIVISION_ID    divisionId,
+		       DIVISION_PID   divisionPid,
+		       DIVISION_CODE  divisionCode,
+		       DIVISION_NAME  divisionName,
+		       DIVISION_LEVEL divisionLevel,
+		       STS            sts,
+		       STS_TIME       stsTime,
+		       CREATE_TIME    createTime
+		  FROM ADMIN_DIVISION
+		 WHERE STS = 'A'
+		   AND DIVISION_PID = #{divisionId}
+	</select>
+	<!-- 新增行政区划 -->
+	<insert id="insert" parameterType="AdminDivision">
+		<selectKey keyProperty="divisionId" resultType="long" order="BEFORE">
+			SELECT SEQ_DIVISION_ID.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO ADMIN_DIVISION
+		  (DIVISION_ID,
+		   DIVISION_PID,
+		   DIVISION_CODE,
+		   DIVISION_NAME,
+		   DIVISION_LEVEL,
+		   STS,
+		   STS_TIME,
+		   CREATE_TIME)
+		VALUES
+		  (#{divisionId, jdbcType=NUMERIC},
+		   #{divisionPid, jdbcType=NUMERIC},
+		   #{divisionCode, jdbcType=VARCHAR},
+		   #{divisionName, jdbcType=VARCHAR},
+		   #{divisionLevel, jdbcType=VARCHAR},
+		   #{sts, jdbcType=VARCHAR},
+		   #{stsTime, jdbcType=TIMESTAMP},
+		   #{createTime, jdbcType=TIMESTAMP})
+	</insert>
+	<!-- 更新行政区划 -->
+	<update id="update" parameterType="AdminDivision">
+		UPDATE ADMIN_DIVISION
+		<set>
+			<if test="divisionPid != null">DIVISION_PID = #{divisionPid},</if>
+			<if test="divisionCode != null">DIVISION_CODE = #{divisionCode},</if>
+			<if test="divisionName != null">DIVISION_NAME = #{divisionName},</if>
+			<if test="divisionLevel != null">DIVISION_LEVEL = #{divisionLevel},</if>
+			<if test="sts != null">STS = #{sts},</if>
+			STS_TIME = NOW()
+		</set>
+		WHERE DIVISION_ID = #{divisionId}
+	</update>
+	<!-- 获取行政区划及其所有下级区划-->
+	<select id="getDivisionCascade" resultType="AdminDivision">
+		SELECT DIVISION_ID    divisionId,
+		       DIVISION_PID   divisionPid,
+		       DIVISION_CODE  divisionCode,
+		       DIVISION_NAME  divisionName,
+		       DIVISION_LEVEL divisionLevel,
+		       STS            sts,
+		       STS_TIME       stsTime,
+		       CREATE_TIME    createTime
+		  FROM ADMIN_DIVISION
+		 WHERE STS = 'A'
+		   START WITH DIVISION_ID = #{divisionId}
+		CONNECT BY PRIOR DIVISION_ID = DIVISION_PID
+	</select>
+	<!-- 依据区划代码获取行政区划 -->
+	<select id="getDivisionByCode" resultType="AdminDivision">
+		SELECT DIVISION_ID    divisionId,
+		       DIVISION_PID   divisionPid,
+		       DIVISION_CODE  divisionCode,
+		       DIVISION_NAME  divisionName,
+		       DIVISION_LEVEL divisionLevel,
+		       STS            sts,
+		       STS_TIME       stsTime,
+		       CREATE_TIME    createTime
+		  FROM ADMIN_DIVISION
+		 WHERE STS = 'A'
+		   AND DIVISION_CODE = #{divisionCode}
+	</select>
+</mapper>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>jQuery UI Button - Split button</title>
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css">
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/dtui.button.js"></script>
+	<link rel="stylesheet" href="../demos.css">
+	<style>
+		.ui-menu { position: absolute; width: 100px; }
+	</style>
+	<script>
+	$(function() {
+		$( "#rerun" )
+			.dtbutton()
+			.click(function() {
+				alert( "Running the last action" );
+			})
+			.next()
+				.dtbutton({
+					text: false,
+					icons: {
+						primary: "ui-icon-triangle-1-s"
+					}
+				})
+				.click(function() {
+					var menu = $( this ).parent().next().show().position({
+						my: "left top",
+						at: "left bottom",
+						of: this
+					});
+					$( document ).one( "click", function() {
+						menu.hide();
+					});
+					return false;
+				});
+				
+			$( "#btnset" ).dtbuttonset()
+					.next()
+						.hide()
+						.menu();
+			$( "#testbtn" )
+			.dtbutton()
+	});
+	</script>
+</head>
+<body>
+
+<div>
+	<div id= 'btnset'>
+		<button id="rerun">Run last action</button>
+		<button id="select">Select an action</button>
+	</div>
+	
+	<ul>
+		<li><a href="#">Open...</a></li>
+		<li><a href="#">Save</a></li>
+		<li><a href="#">Delete</a></li>
+	</ul>
+	
+			<button id="testbtn">testbtn</button>
+	
+</div>
+
+<div class="demo-description">
+<h3>本示例功能</h3>
+<ul>
+<li>两个按钮组合成一个按钮，一个按钮是文本的另一个是小图标，它们组合成一个整体。</li>
+</ul>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.baseplatform.func.sm.persistence.PageLayoutMapper">
+	<!-- 获取所有记录的语句 -->
+	<sql id="sqlSelectAll">
+		SELECT
+			PAGE_LAYOUT_ID,
+			THUMBNAIL_LOCATION,
+			SETTING
+		FROM PAGE_LAYOUT
+	</sql>
+
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="PageLayout">
+		INSERT INTO PAGE_LAYOUT(PAGE_LAYOUT_ID, THUMBNAIL_LOCATION, SETTING)
+		VALUES(#{pageLayoutId,jdbcType=NUMERIC}, #{thumbnailLocation,jdbcType=VARCHAR}, #{setting,jdbcType=CLOB})
+	</insert>
+
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM PAGE_LAYOUT
+		WHERE PAGE_LAYOUT_ID = #{pageLayoutId}
+	</delete>
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="PageLayout">
+		UPDATE PAGE_LAYOUT
+		<set>
+			<if test="thumbnailLocation != null">THUMBNAIL_LOCATION = #{thumbnailLocation,jdbcType=VARCHAR},</if>
+			<if test="setting != null">SETTING = #{setting,jdbcType=CLOB}</if>
+		</set>
+		WHERE PAGE_LAYOUT_ID = #{pageLayoutId}
+	</update>
+
+	<!-- 根据主键查询记录 -->
+	<select id="select" parameterType="int" resultType="PageLayout">
+		SELECT
+			PAGE_LAYOUT_ID pageLayoutId,
+			THUMBNAIL_LOCATION thumbnailLocation,
+			SETTING
+		FROM PAGE_LAYOUT
+		WHERE PAGE_LAYOUT_ID = #{pageLayoutId}
+	</select>
+	
+	<!-- 获取所有记录 -->
+	<select id="selectAll" resultMap="pageLayoutList">
+		<include refid="sqlSelectAll" />
+	</select>
+	<resultMap id="pageLayoutList" type="PageLayout">
+		<id property="pageLayoutId" column="PAGE_LAYOUT_ID" />
+		<result property="thumbnailLocation" column="THUMBNAIL_LOCATION" />
+		<result property="setting" column="SETTING" jdbcType="CLOB" />
+	</resultMap>
+</mapper>

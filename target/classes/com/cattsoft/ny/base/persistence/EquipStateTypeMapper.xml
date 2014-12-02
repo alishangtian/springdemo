@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.ny.base.persistence.EquipStateTypeMapper">
+
+	<!-- Oracle分页查询 -->
+	<sql id="pagingFooter"> limit ${pagingInfo.startIdx-1},#{pagingInfo.pageRows}</sql>
+	<sql id="countingHeader">SELECT COUNT(*) FROM(</sql>
+	<sql id="countingFooter">) t</sql>
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="com.cattsoft.ny.base.entity.EquipStateType">
+ 
+		<![CDATA[
+			INSERT INTO equip_state_type
+		]]>
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			 
+	    <if test="name != null" >
+			NAME,
+	    </if>
+	    <if test="equipInfoId != null" >
+			EQUIP_INFO_ID,
+	    </if>
+	    <if test="units != null" >
+			UNITS,
+	    </if>
+	  </trim>
+	  <trim prefix="values (" suffix=")" suffixOverrides="," >
+	  	 
+	    <if test="name != null" >
+			#{name},
+	    </if>
+	    <if test="equipInfoId != null" >
+			#{equipInfoId},
+	    </if>
+	    <if test="units != null" >
+			#{units},
+	    </if>
+	  </trim>
+	</insert>
+
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="long">
+		<![CDATA[
+			DELETE FROM equip_state_type
+				WHERE ID = #{id}
+		]]>
+	</delete>
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.cattsoft.ny.base.entity.EquipStateType">
+	    <![CDATA[
+			UPDATE equip_state_type 
+	    ]]>
+		<set>
+		<if test="name != null">
+    	<![CDATA[ NAME = #{name}, ]]>
+		</if>
+		<if test="equipInfoId != null">
+    	<![CDATA[ EQUIP_INFO_ID = #{equipInfoId}, ]]>
+		</if>
+		<if test="units != null">
+    	<![CDATA[ UNITS = #{units}, ]]>
+		</if>
+		</set>
+	    <![CDATA[
+	        WHERE ID = #{id}
+	    ]]>
+	</update>
+
+	<!-- 根据主键查询记录 -->
+	<select id="select" parameterType="long" resultMap="equipStateTypeList">
+		<include refid="sqlSelectAll" />
+		<![CDATA[
+			WHERE ID = #{id}
+		]]>
+	</select>
+
+	<!-- 条件查询所有记录 -->
+	<select id="selectList" parameterType="com.cattsoft.ny.base.entity.querybean.EquipStateTypeQB"
+		resultMap="equipStateTypeList">
+		<include refid="sqlSelectList" />
+	</select>
+
+	<!-- 分页条件查询所有记录 -->
+	<select id="selectPage" parameterType="PagingQueryBean"
+		resultMap="equipStateTypeList">
+		<!-- <include refid="pagingHeader" /> -->
+		<include refid="sqlSelectPage" />
+		<include refid="pagingFooter" />
+	</select>
+	<!-- 查询记录总数 -->
+	<select id="selectCount" parameterType="PagingQueryBean"
+		resultType="int">
+		<include refid="countingHeader" />
+		<include refid="sqlSelectPage" />
+		<include refid="countingFooter" />
+	</select>
+
+	<resultMap id="equipStateTypeList" type="com.cattsoft.ny.base.entity.EquipStateType">
+		<result property="id" column="ID" />
+		<result property="name" column="NAME" />
+		<result property="equipInfoId" column="EQUIP_INFO_ID" />
+		<result property="units" column="UNITS" />
+	</resultMap>
+
+	<sql id="sqlSelectList">
+		<include refid="sqlSelectAll" />
+		<where>
+			<if test="id != null">
+			<![CDATA[ AND ID = #{id} ]]>
+			</if>
+			<if test="name != null">
+			<![CDATA[ AND NAME = #{name} ]]>
+			</if>
+			<if test="equipInfoId != null">
+			<![CDATA[ AND EQUIP_INFO_ID = #{equipInfoId} ]]>
+			</if>
+			<if test="units != null">
+			<![CDATA[ AND UNITS = #{units} ]]>
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="sqlSelectPage">
+		<include refid="sqlSelectAll" />
+		<where>	     				
+	    <if test="queryBean.id != null">
+		<![CDATA[ AND ID = #{queryBean.id} ]]>
+		</if>
+	    <if test="queryBean.name != null">
+		<![CDATA[ AND NAME = #{queryBean.name} ]]>
+		</if>
+	    <if test="queryBean.equipInfoId != null">
+		<![CDATA[ AND EQUIP_INFO_ID = #{queryBean.equipInfoId} ]]>
+		</if>
+	    <if test="queryBean.units != null">
+		<![CDATA[ AND UNITS = #{queryBean.units} ]]>
+		</if>
+		</where>
+	</sql>
+	<sql id="sqlSelectAll">
+			SELECT
+				<include refid="sqlColumn" />
+			FROM equip_state_type 
+	</sql>
+	<sql id="sqlColumn">
+		ID,NAME,EQUIP_INFO_ID,UNITS
+	</sql>
+</mapper>

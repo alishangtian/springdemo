@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.cattsoft.baseplatform.func.sm.persistence.UserFuncAllocMapper">
+	<insert id="insert" parameterType="UserFuncAlloc" useGeneratedKeys="true" keyProperty="userFuncAllocId">
+		INSERT INTO USER_FUNC_ALLOC( USER_ID, FUNC_NODE_ID,DESIGNATE, STS, STS_TIME, CREATE_TIME)
+		VALUES(#{userId}, #{funcNodeId}, #{designate}, #{sts}, #{stsTime}, #{createTime})
+	</insert>
+	<!-- 收回用户的功能授权信息 -->
+	<update id="retake" parameterType="UserFuncAuthQuery">
+		UPDATE USER_FUNC_ALLOC
+		   SET STS = 'P', STS_TIME = NOW()
+		 WHERE STS = 'A'
+		   AND USER_ID = #{userId}
+		   AND FUNC_NODE_ID = #{funcNodeId}
+	</update>
+	<!-- 用户注销时，注销用户对应的功能授权信息 -->
+	<update id="destroyUser" parameterType="long">
+		UPDATE USER_FUNC_ALLOC
+		   SET STS = 'P', STS_TIME = NOW()
+		 WHERE STS = 'A'
+		   AND USER_ID = #{userId}
+	</update>
+	<!-- 获取用户在某目录下的已授权的功能列表 -->
+	<select id="selectAllocFuncs" parameterType="UserFuncAuthQuery" resultType="UserFuncAlloc">
+		SELECT DISTINCT A.FUNC_NODE_ID funcNodeId, A.DESIGNATE designate
+		  FROM USER_FUNC_ALLOC A, FUNC_NODE B
+		 WHERE A.FUNC_NODE_ID = B.FUNC_NODE_ID
+		   AND B.STS = 'A'
+		   AND A.STS = 'A'
+		   AND A.USER_ID = #{userId}
+		   AND B.NODE_TREE_ID = #{nodeTreeId}
+	</select>
+	<!-- 获取用户的指定功能授权信息 -->
+	<select id="selectAllocFunc" parameterType="UserFuncAlloc" resultType="UserFuncAlloc">
+		SELECT A.USER_FUNC_ALLOC_ID userFuncAllocId,
+		       A.USER_ID            userId,
+		       A.FUNC_NODE_ID       funcNodeId,
+		       A.DESIGNATE          designate,
+		       A.STS                sts,
+		       A.STS_TIME           stsTime,
+		       A.CREATE_TIME        createTime
+		  FROM USER_FUNC_ALLOC A
+		 WHERE A.STS = 'A'
+		   AND A.FUNC_NODE_ID = #{funcNodeId}
+		   AND A.USER_ID = #{userId} limit 0,1
+	</select>
+	<!-- 更新用户功能授权的委派标识 -->
+	<update id="modifyDesignate" parameterType="UserFuncAlloc">
+		UPDATE USER_FUNC_ALLOC
+		   SET DESIGNATE = #{designate}, STS_TIME = NOW()
+		 WHERE USER_FUNC_ALLOC_ID = #{userFuncAllocId}
+	</update>
+</mapper>

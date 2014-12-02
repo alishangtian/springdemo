@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>文件上传</title>
+		
+		<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css">
+		<script src="../../dtui/js/jquery/jquery.js"></script>
+		<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+		<script src="../../dtui/js/dtui.fileupload.js"></script>
+		<link rel="stylesheet" href="../../htmldemo/demos.css">
+		
+		<script type="text/javascript">
+		$(function() {
+			$("#uploadfile").dtfileupload({label:'选择文件', fileControlName:'file'});
+		});
+		</script>
+	</head>
+	<body>
+		<form id="test_form" action="uidemo/uploadmany.action" method="post" enctype="multipart/form-data">
+			<div id = 'uploadfile'></div>
+			<input type="submit">
+		</form>
+	
+	<div class="demo-description">
+		<h3>本实例功能</h3>
+		<ul>
+			<li>选择文件上传</li>
+		</ul>
+	</div>
+	</body>
+</html>
+

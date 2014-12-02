@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>jQuery UI Button - Default functionality</title>
+<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css">
+<script src="../../dtui/js/jquery/jquery.js"></script>
+<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+<script src="../../dtui/js/dtui.util.js"></script>
+<script src="../../dtui/js/dtui.radio.js"></script>
+<script src="../../dtui/js/dtui.button.js"></script>
+<link rel="stylesheet" href="../demos.css">
+<script type="text/javascript">
+	$(function() {
+		function radiogroupChange(event, ui){
+			alert(ui.dtradio('value'));
+			//或者
+			//alert($(this).dtradiogroup('value'));
+		}
+		
+		$('#radiogroup1').dtradiogroup({
+			items : [ {
+				value : 'age10',
+				text : '10-19'
+			}, {
+				value : 'age20',
+				text : '20-29'
+			}, {
+				value : 'age30',
+				text : '30-39'
+			}, {
+				value : 'age40',
+				text : '40-49'
+			}, {
+				value : 'age50',
+				text : '50-59'
+			} ],
+			name : 'person.age',
+			title : '年龄范围',
+			value : 'age30',
+			col : 2,
+			height: 80,
+			width: 160,
+			keyField:'value',
+			valueField:'text',
+			required: true,
+			change: radiogroupChange
+		});
+
+		$('#radiogroup2').dtradiogroup({
+			items : {
+				'age10':'10-19',
+				'age20':'20-29',
+				'age30':'30-39',
+				'age40':'40-49',
+				'age50':'50-59'
+			},
+			name : 'person1.age',
+			title : '年龄范围',
+			value : 'age50',
+			col : 2,
+			height: 80,
+			width: 160,
+			change: radiogroupChange
+		});
+		
+		$('#getValue').dtbutton().click(function(){
+			alert($('#radiogroup1').dtradiogroup('value'));
+		});
+		
+		$('#setValue').dtbutton().click(function(){
+			$('#radiogroup1').dtradiogroup('value', 'age50');
+		});
+	});
+</script>
+</head>
+<body>
+
+
+	<div id="radiogroup1" style='display:block'></div>
+
+<button id='getValue'>getValue</button>
+<button id='setValue'>setValue</button>
+<br>
+	<div id="radiogroup2"></div>
+
+
+	<div class="demo-description">
+	    <h3>本实例功能</h3>
+	    <ul>
+	      <li>通过array或map形式的数据 生成checkgroup</li>
+	      <li>通过按钮获得和设置复选按钮组的值</li>
+	    </ul>
+	</div>
+
+
+
+</body>
+
+</html>

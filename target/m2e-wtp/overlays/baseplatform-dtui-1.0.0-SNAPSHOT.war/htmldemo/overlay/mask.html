@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<TITLE>遮罩层基本用法</TITLE>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css"
+		type="text/css">
+
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/dtui.overlay.js"></script>
+	<link rel="stylesheet" href="../demos.css">
+	<style type="text/css">
+		html,body{
+			height: 100%;
+		}
+		.maskdiv {
+			width : 600px;
+			height: 400px;
+			border: 1px solid #a3bad9;
+			position: relative;
+		}
+	</style>
+	<script type="text/javascript">
+		$(function(){
+       		var overlay = null;
+       		
+       		$('#showbtn').click(function(){
+       			$('.maskdiv').mask('数据加载中...');
+       		});
+       		
+       		$('#hidebtn').click(function(){
+       			$('.maskdiv').unmask();
+       		});
+		});
+	</script>
+ </HEAD>
+
+<BODY>
+	<button id='showbtn'>显示遮罩</button>
+
+	<button id='hidebtn'>隐藏遮罩</button>
+	
+	<div class = "maskdiv">
+		<table>
+			<tr>
+				<th>员工号</th>
+				<td><input ></td>
+			</tr>
+			<tr>
+				<th>姓名</th>
+				<td><input ></td>
+			</tr>
+			<tr>
+				<th>性别</th>
+				<td><input type="radio" value='M'>男<input type="radio" value='F'>女</td>
+			</tr>
+			<tr>
+				<th>学历</th>
+				<td><select style="width: 120px;"></select></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<input type="submit">
+					<input type="reset">
+				</td>
+			</tr>
+		</table>
+	</div>
+	
+	
+	<div class="demo-description">
+	<h3>本实例功能</h3>
+	<ul>
+		<li>使用jquery的扩展方法mask和unmask显示和关闭遮罩层.</li>
+	</ul>
+	</div>
+	
+	
+</BODY>
+</HTML>
+
+
+

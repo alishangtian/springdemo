@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC  
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="busi" namespace="/busi" extends="default">
+		<!-- 施肥管理开始 -->
+		<action name="produceWorksInfoManager" class="com.cattsoft.ny.base.web.ProduceWorksInfoAction">
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<!--主界面 -->
+			<result name="jumpproduceWorksInfoManager">/WEB-INF/pages/business/produceWorksInfo/produceWorksInfoManager.jsp
+			</result>
+			<result type="json" name="getProdWorksInfo">
+				<param name="root">produceWorksInfoResult</param>
+			</result>
+			<result name="addProduceWorksInfo">
+				/WEB-INF/pages/business/produceWorksInfo/addProduceWorksInfo.jsp
+			</result>
+			<result name="viewProduceWorksInfo">
+				/WEB-INF/pages/business/produceWorksInfo/viewProduceWorksInfo.jsp
+			</result>
+			<result name="editProduceWorksInfo">
+				/WEB-INF/pages/business/produceWorksInfo/editProduceWorksInfo.jsp
+			</result>
+			<result name="saveProduceWorksInfo" type="redirect">
+				produceWorksInfoManager.action
+			</result>
+			<result name="updaOk" type="redirect">
+				produceWorksInfoManager.action
+			</result>
+			<result type="json" name="deleteProduceWorksInfo">
+				<param name="root">action</param>
+				<param name="includeProperties">flag,msg</param>
+			</result>
+			<result type="json" name="getPrdcSeasonByGreenHouse">
+				<param name="root">produceSeasonListajax</param>
+			</result>
+			<result type="json" name="treeData">
+				<param name="root">baseLists</param>
+			</result>
+		</action>
+
+		<!-- 施肥管理结束 -->
+		<!-- 用药管理开始 -->
+		<action name="insercticidesWorksInfoAction"
+			class="com.cattsoft.ny.base.web.InsercticidesWorksInfoAction">
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<!--主界面 -->
+			<result name="jumpinsercticidesWorksInfoManager">/WEB-INF/pages/business/insercticidesWorksInfo/InsercticidesWorksInfoManager.jsp
+			</result>
+			<result type="json" name="getinstWorksInfo">
+				<param name="root">insercticidesWorksInfoResult</param>
+			</result>
+			<result name="addInsercticidesWorksInfo">
+				/WEB-INF/pages/business/insercticidesWorksInfo/addInsercticidesWorksInfo.jsp
+			</result>
+			<result name="viewInsercticidesWorksInfo">
+				/WEB-INF/pages/business/insercticidesWorksInfo/viewInsercticidesWorksInfo.jsp
+			</result>
+			<result name="editInsercticidesWorksInfo">
+				/WEB-INF/pages/business/insercticidesWorksInfo/editInsercticidesWorksInfo.jsp
+			</result>
+			<result name="saveInsercticidesWorksInfo" type="redirect">
+				insercticidesWorksInfoAction.action
+			</result>
+			<result name="updaOk" type="redirect">
+				insercticidesWorksInfoAction.action
+			</result>
+			<result type="json" name="deleteInsercticidesWorksInfo">
+				<param name="root">action</param>
+				<param name="includeProperties">flag,msg</param>
+			</result>
+			<result type="json" name="getPrdcSeasonByGreenHouse">
+				<param name="root">produceSeasonListajax</param>
+			</result>
+		</action>
+		<!-- 用药管理结束 -->
+		<!-- 采摘管理开始 -->
+		<action name="pickWorksInfoAction" class="com.cattsoft.ny.base.web.PickWorksInfoAction">
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<!--主界面 -->
+			<result name="jumppickWorksInfoManager">/WEB-INF/pages/business/pickWorksInfo/pickWorksInfoManager.jsp
+			</result>
+			<result type="json" name="getPickWorksInfo">
+				<param name="root">pickWorksInfoResult</param>
+			</result>
+			<result name="addPickWorksInfo">
+				/WEB-INF/pages/business/pickWorksInfo/addPickWorksInfo.jsp
+			</result>
+			<result name="viewPickWorksInfo">
+				/WEB-INF/pages/business/pickWorksInfo/viewPickWorksInfo.jsp
+			</result>
+			<result name="editPickWorksInfo">
+				/WEB-INF/pages/business/pickWorksInfo/editPickWorksInfo.jsp
+			</result>
+			<result name="savePickWorksInfo" type="redirect">
+				pickWorksInfoAction.action
+			</result>
+			<result name="updaOk" type="redirect">
+				pickWorksInfoAction.action
+			</result>
+			<result type="json" name="deletePickWorksInfo">
+				<param name="root">action</param>
+				<param name="includeProperties">flag,msg</param>
+			</result>
+
+			<result type="json" name="getPrdcSeasonByGreenHouse">
+				<param name="root">produceSeasonListajax</param>
+			</result>
+			<result type="json" name="getCropBySeason">
+				<param name="root">action</param>
+				<param name="includeProperties">scropsajax</param>
+			</result>
+		</action>
+		<!-- 采摘管理结束 -->
+		<!-- 操作管理开始 -->
+		<action name="operationWorksInfoManager"
+			class="com.cattsoft.ny.base.web.OperationWorksInfoAction">
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<!--主界面 -->
+			<result name="jumpoperationWorksInfoManager">/WEB-INF/pages/business/operationWorksInfo/operationWorksInfoManager.jsp
+			</result>
+			<result type="json" name="getOptnWorksInfo">
+				<param name="root">operationWorksInfoResult</param>
+			</result>
+			<result name="addOperationWorksInfo">
+				/WEB-INF/pages/business/operationWorksInfo/addOperationWorksInfo.jsp
+			</result>
+			<result name="viewOperationWorksInfo">
+				/WEB-INF/pages/business/operationWorksInfo/viewOperationWorksInfo.jsp
+			</result>
+			<result name="editOperationWorksInfo">
+				/WEB-INF/pages/business/operationWorksInfo/editOperationWorksInfo.jsp
+			</result>
+			<result name="saveOperationWorksInfo" type="redirect">
+				operationWorksInfoManager.action
+			</result>
+			<result name="updaOk" type="redirect">
+				operationWorksInfoManager.action
+			</result>
+			<result type="json" name="deleteOperationWorksInfo">
+				<param name="root">action</param>
+				<param name="includeProperties">flag,msg</param>
+			</result>
+			<result type="json" name="getPrdcSeasonByGreenHouse">
+				<param name="root">produceSeasonListajax</param>
+			</result>
+		</action>
+		<!-- 操作管理结束 -->
+		<!-- 基地维护开始 -->
+
+		<action name="baseInfoManager" class="com.cattsoft.ny.base.web.BaseInfoAction">
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<result name="jumpBaseInfoAction">
+				/WEB-INF/pages/business/baseInfo/baseInfoManager.jsp
+			</result>
+			<result type="json" name="getBaseInfo">
+				<param name="root">baseInfoResult</param>
+			</result>
+			<result type="json" name="getTree">
+				<param name="root">jsonArray</param>
+			</result>
+			<result name="addBaseInfo">
+				/WEB-INF/pages/business/baseInfo/addBaseInfo.jsp
+			</result>
+			<result name="saveBaseInfo" type="redirect">
+				baseGreenHouseInfoAction.action
+			</result>
+			<result type="json" name="deleteBaseInfo">
+				<param name="root">action</param>
+				<param name="includeProperties">flag,msg</param>
+			</result>
+			<result name="viewBaseInfo">
+				/WEB-INF/pages/business/baseInfo/viewBaseInfo.jsp
+			</result>
+			<result name="editBaseInfo">
+				/WEB-INF/pages/business/baseInfo/editBaseInfo.jsp
+			</result>
+			<result name="updaOk" type="redirect">
+				baseGreenHouseInfoAction.action
+			</result>
+			<result name="mapPage">
+				/WEB-INF/pages/business/baseInfo/mapPage.jsp
+			</result>
+			<result name="polygonPage">
+				/WEB-INF/pages/business/baseInfo/polygon.jsp
+			</result>
+			<result name="dialogDemo">
+				/WEB-INF/pages/business/baseInfo/dialogDemo.jsp
+			</result>
+			<result type="json" name="getPrdcSeasonByGreenHouse">
+				<param name="root">produceSeasonListajax</param>
+			</result>
+		</action>
+		<!-- 基地维护结束 -->
+		<!--种植季管理 -->
+		<action name="prdcSeasonManager" class="com.cattsoft.ny.base.web.PrdcSeasonAction">
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<!--主界面 -->
+			<result name="jumpPrdcSeasonManager">/WEB-INF/pages/business/prdcSeason/prdcSeasonManager.jsp
+			</result>
+			<!--生产事故监测页面 -->
+			<result name="produceAccidentManager">/WEB-INF/pages/business/prdcSeason/produceAccidentManager.jsp
+			</result>
+			<!-- 新增URL -->
+			<result name="createPrdcSeasonURL">/WEB-INF/pages/business/prdcSeason/addPrdcSeason.jsp
+			</result>
+			<!-- 新增 -->
+			<result name="createPrdcSeason" type="redirect">prdcSeasonManager.action
+			</result>
+			<!-- 修改URL -->
+			<result name="updatePrdcSeasonURL">/WEB-INF/pages/business/prdcSeason/editPrdcSeason.jsp
+			</result>
+			<!-- 修改 -->
+			<result name="updatePrdcSeason" type="redirect">prdcSeasonManager.action
+			</result>
+			<!-- 根据种植季ID删除种植季信息 -->
+			<result name="removePrdcSeasonById" type="redirect">prdcSeasonManager.action
+			</result>
+			<!-- 根据种植季ID作废种植季信息 -->
+			<result type="json" name="updatePrdcSeason2Unable">
+				<param name="root">action</param>
+				<param name="includeProperties">flag,msg</param>
+			</result>
+			<!-- 根据种植季ID查找种植季信息 -->
+			<result name="getPrdcSeasonById">/WEB-INF/pages/business/prdcSeason/viewPrdcSeason.jsp
+			</result>
+			<!-- 根据条件查询种植季信息列表 -->
+			<result type="json" name="getPrdcSeasonsByQueryBean">
+				<param name="root">prdcSeasonsInfoResult</param>
+			</result>
+			<!-- 根据条件查询生产事故列表 -->
+			<result type="json" name="produceAccidentInfoResult">
+				<param name="root">produceAccidentInfoResult</param>
+			</result>
+
+			<result type="json" name="getCropsById">
+				<param name="includeProperties">crops</param>
+			</result>
+			<result  type="json" name="findPrdcSeasonRelation">
+				<param name="includeProperties">prdcSeasonFlag</param>
+			</result>
+			<result type="json" name="findPrdcSeasonByTime">
+				<param name="includeProperties">BTime,ETime,prdcSeasionTimeFlag</param>
+			</result>
+		</action>
+		<!--种植季管理 -->
+		<!-- 客户管理开始 -->
+		<action name="customerInfoManager" class="com.cattsoft.ny.base.web.CustomerInfoAction">
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<!--主界面 -->
+			<result name="jumpCustomersInfoManager">/WEB-INF/pages/business/customersInfo/customersInfoManager.jsp
+			</result>
+			<!-- 新增客户URL -->
+			<result name="createCustomerURL">/WEB-INF/pages/business/customersInfo/addCustomersInfo.jsp
+			</result>
+			<!-- 新增客户 -->
+			<!-- <result name="createCustomer" type="redirect">getCustomersByQueryBean.action 
+				</result> -->
+			<result name="createCustomer" type="redirect">
+				customerInfoManager.action
+			</result>
+			<!-- 修改客户URL -->
+			<result name="updateCustomerURL">/WEB-INF/pages/business/customersInfo/editCustomersInfo.jsp
+			</result>
+			<!-- 修改客户信息 -->
+			<!-- <result name="updateCustomer" type="redirect">getCustomersByQueryBean.action 
+				</result> -->
+			<result name="updateCustomer" type="redirect">
+				customerInfoManager.action
+			</result>
+			<!-- 根据客户ID删除客户信息 -->
+			<result name="removeCustomerByCustId" type="redirect">getCustomersByQueryBean.action
+			</result>
+			<!-- 根据客户ID作废客户信息 -->
+			<result type="json" name="updateCustomer2Unable">
+				<param name="root">action</param>
+				<param name="includeProperties">flag,msg</param>
+			</result>
+			<!-- 根据客户ID查找客户信息 -->
+			<result name="getCustomerByCustId">/WEB-INF/pages/business/customersInfo/viewCustomersInfo.jsp
+			</result>
+			<!-- 根据条件查询客户信息列表 -->
+			<result type="json" name="getCustomersByQueryBean">
+				<param name="root">customersInfoResult</param>
+			</result>
+			<!-- 获取所有客户列表 -->
+			<result name="getAllCustomers">/WEB-INF/pages/business/customersInfo/getAllCustomersInfo.jsp
+			</result>
+			<!-- 查询客户是否存在 -->
+			<result type="json" name="valiName">
+				<param name="root">action</param>
+				<param name="includeProperties">flag</param>
+			</result>
+			<!-- 根据种植季id查询种植季是否关联 -->
+			
+		</action>
+		<!-- 客户管理结束 -->
+
+		<!-- 温室节点关系维护开始 -->
+		<action name="greenHouseAndPoint"
+			class="com.cattsoft.ny.base.web.GreenHouseAndPointAction">
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<!--主界面 -->
+			<result name="jumpGreenHouseAndPointManager">
+				/WEB-INF/pages/business/greenHouseAndPoint/greenHouseAndPointManager.jsp
+			</result>
+			<result name="controlEquipManager">
+				/WEB-INF/pages/business/greenHouseAndPoint/controlEquipManager.jsp
+			</result>
+			<result type="json" name="viewEquips">
+				<param name="root">greenHousePointList</param>
+			</result>
+			<result type="json" name="synLoadTree">
+				<param name="root">synTreeNodes</param>
+			</result>
+			<result type="json" name="equipControlInfoResult">
+				<param name="root">equipControlInfoResult</param>
+			</result>
+			<result type="json" name="equipNetTopologyResult">
+				<param name="root">equipNetTopologyResult</param>
+			</result>
+			<result type="json" name="saveOk">
+				<param name="root">action</param>
+				<param name="includeProperties">flag,msg</param>
+			</result>
+		</action>
+
+		<!-- 温室节点关系维护结束 -->
+
+		<!--温室管理 -->
+		<action name="baseGreenHouseInfoAction"
+			class="com.cattsoft.ny.base.web.BaseGreenHouseInfoAction">
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<result name="jumpBaseGreenHouseInfo">
+				/WEB-INF/pages/business/baseGreenHouseInfo/baseGreenHouseInfoManager.jsp
+			</result>
+			<result name="addBaseGreenHouseInfo">
+				/WEB-INF/pages/business/baseGreenHouseInfo/addBaseGreenHouseInfo.jsp
+			</result>
+			<result name="savebaseGreenHouseInfo" type="redirect">
+				baseGreenHouseInfoAction.action
+			</result>
+			<result type="json" name="getBaseGreenHouseInfoq">
+				<param name="root">baseGreenHouseInfoResult</param>
+			</result>
+			<result name="viewBaseGreenHouseInfo">
+				/WEB-INF/pages/business/baseGreenHouseInfo/viewBaseGreenHouseInfo.jsp
+			</result>
+			<result name="editBaseGreenHouseInfo">
+				/WEB-INF/pages/business/baseGreenHouseInfo/editBaseGreenHouseInfo.jsp
+			</result>
+			<result name="updaOk" type="redirect">
+				baseGreenHouseInfoAction.action
+			</result>
+			<result type="json" name="deleteBaseGreenHouseInfo">
+				<param name="root">action</param>
+				<param name="includeProperties">flag,msg</param>
+			</result>
+			<result type="json" name="getbaseGreenHouseTreeList">
+				<param name="root">baseGreenHouseTreeList</param>
+			</result>
+		</action>
+		<!-- 设备管理 -->
+		<action name="equipInfoAction" class="com.cattsoft.ny.base.web.EquipInfoAction">
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<result name="jumpEquipInfo">
+				/WEB-INF/pages/business/equipInfo/equipInfoManager.jsp
+			</result>
+			<result name="addEquipInfo">
+				/WEB-INF/pages/business/equipInfo/addEquipInfo.jsp
+			</result>
+			<result name="saveEquipInfo" type="redirect">
+				equipInfoAction.action
+			</result>
+			<result name="welcome">
+				/WEB-INF/pages/welcome.jsp
+			</result>
+			<result name="getOneNews">
+				/WEB-INF/pages/business/equipInfo/PickNewsInfo.jsp
+			</result>
+			<result type="json" name="getEquipInfoq">
+				<param name="root">equipInfoResult</param>
+			</result>
+			<result type="json" name="viewBaseOrGreenHouse">
+				<param name="root">baseOrGreenHouseList</param>
+			</result>
+			<result type="json" name="getEquipTypeq">
+				<param name="root">equipTypeResult</param>
+			</result>
+			<result name="viewEquipInfo">
+				/WEB-INF/pages/business/equipInfo/viewEquipInfo.jsp
+			</result>
+			<result name="editEquipInfo">
+				/WEB-INF/pages/business/equipInfo/editEquipInfo.jsp
+			</result>
+			<result name="equipTypeManager">
+				/WEB-INF/pages/business/equipInfo/equipTypeManager.jsp
+			</result>
+			<result name="toAddEquipTypePage">
+				/WEB-INF/pages/business/equipInfo/addEquipType.jsp
+			</result>
+			<result name="updaOk" type="redirect">
+				equipInfoAction.action
+			</result>
+			<result name="saveEquipTypeOk" type="redirect">
+				equipInfoAction!equipTypeManager.action
+			</result>
+			<result type="json" name="deleteEquipInfo">
+				<param name="root">action</param>
+				<param name="includeProperties">flag,msg</param>
+			</result>
+			<result type="json" name="echoForLoadNextEquipTypes">
+				<param name="root">action</param>
+				<param name="includeProperties">datas</param>
+			</result>
+		</action>
+		<!-- 设备网络拓扑管理开始 -->
+		<action name="equipNetTopologyAction" class="com.cattsoft.ny.base.web.EquipNetTopologyAction">
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<!-- 主界面 -->
+			<result name="jumpproduceWorksInfoManager">
+				/WEB-INF/pages/business/equipNetTopology/baseToEquip.jsp
+			</result>
+			<!-- 根据条件查询拓扑信息列表 -->
+			<result type="json" name="getENTopology">
+				<param name="root">equipNetTopologyResult</param>
+			</result>
+			<!-- 添加拓扑 -->
+			<result name="addEquipNetTopology">
+				/WEB-INF/pages/business/equipNetTopology/addEquip.jsp
+			</result>
+			<result name="saveEquipNetTopology" type="redirect">
+				equipNetTopologyAction.action
+			</result>
+			<result type="json" name="deleteEquipNetTopology">
+				<param name="root">action</param>
+				<param name="includeProperties">flag,msg</param>
+			</result>
+		</action>
+		<!-- 设备网络拓扑管理结束 -->
+		<!-- 数据采集展示 -->
+		<action name="dataAcquisitionDisplayAction"
+			class="com.cattsoft.ny.base.web.DataAcquisitionDisplayAction">
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<!-- 主界面 -->
+			<result name="dataAcquisitionDisplayInfo">
+				/WEB-INF/pages/business/dataAcquisitionDisplay/dataAcquisitionDisplay.jsp
+			</result>
+			<result name="dataAcquisitionDisplay">
+				/WEB-INF/pages/business/dataAcquisitionDisplay/dataAcquisitionDisplay.jsp
+			</result>
+		</action>
+		<!-- 温室查看 -->
+		<action name="greedHoseClickAction" class="com.cattsoft.ny.base.web.GreedHoseClickAction">
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<!-- 主界面 -->
+			<result name="GreedHoseClickInfo">
+				/WEB-INF/pages/business/greedHoseClick/greedHoseClickInfo.jsp
+			</result>
+			<result type="json" name="selectEquipData">
+				<param name="root">edataETypeInfo</param>
+			</result>
+			<result type="json" name="selectControlInfo">
+				<param name="root">equipControlList</param>
+			</result>
+			<result name="getEquipData">
+				/WEB-INF/pages/business/greedHoseClick/getEquipData.jsp
+			</result>
+			<result type="json" name="testAjax">
+				<param name="root">action</param>
+				<param name="includeProperties">testArrayD,testArrayX,equipMM</param>
+			</result>
+			<result type="json" name="findBaseGreenTree">
+				<param name="root">baseGreenHouseTreeList</param>
+			</result>
+			<result type="json" name="getEquipDataInfo">
+				<param name="root">DataInfoResult</param>
+			</result>
+			<result type="json" name="queryEquipNet">
+				<param name="root">action</param>
+				<param name="includeProperties">flag</param>
+			</result>
+			<result type="json" name="queryEquipHouseBaseList">
+				<param name="root">baseInfoResultList</param>
+			</result>
+			<result   name="videosInfo">
+				/WEB-INF/pages/business/greedHoseClick/greedvideosInfo.jsp
+			</result>
+			<result type="json" name="equipControlInfoHisList">
+				<param name="root">econInfoHResult</param>
+			</result>
+			<result type="json" name="findBaseHoseName">
+				<param name="root">listBase</param>
+			</result>
+		</action>
+		<!-- 综合统计开始 -->
+		<action name="statisticsAction" class="com.cattsoft.ny.base.web.StatisticsAction">
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<result name="jumpstatisticsAction">
+				/WEB-INF/pages/business/prdcDataStatistics/prdcDataStatistics.jsp
+			</result>
+			<result name="queryPickData" type="redirect">
+
+			</result>
+			<result type="json" name="getDateForStatistics">
+				<param name="root">action</param>
+				<param name="includeProperties">jsonData,prdcSeasonListJson,cropAmountJson</param>
+			</result>
+			<result type="json" name="getGreenHouseDateForStatistics">
+				<param name="root">action</param>
+				<param name="includeProperties">id,houseCropJson,hl,cl</param>
+			</result>
+		</action>
+		<!-- 综合统计结束 -->
+
+		<!-- 404页面 -->
+		<action name="empty" class="com.cattsoft.ny.base.web.empty">
+			<result name="jump404Page">
+				/WEB-INF/pages/business/404Page/404Page.jsp
+			</result>
+		</action>
+		<!-- 消费安全事故管理 -->
+		<action name="prdcConAcciAction"
+			class="com.cattsoft.ny.base.web.PrdcConsumerAccidentsAction">
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<result name="prdcConsumerAccidentsInfo">
+				/WEB-INF/pages/business/prdcConsumerAccidentsInfo/prdcConsumerAccidentsInfoManager.jsp
+			</result>
+			<result type="json" name="selectPrdcConsAccInfo">
+				<param name="root">prdcConsAccResult</param>
+			</result>
+			<result name="createPrdcConsAccInfo">
+				/WEB-INF/pages/business/prdcConsumerAccidentsInfo/addPrdcConsumerAccidentsInfo.jsp
+			</result>
+			<result type="json" name="listPrdSea">
+				<param name="root">psList</param>
+			</result>
+		</action>
+		<!-- 告警消息 -->
+		<action name="msgAlarmAction" class="com.cattsoft.ny.base.web.MsgAlarmAction">
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<result name="jumpMsgAlarmManager">
+				/WEB-INF/pages/business/prdcDataStatistics/MsgAlarmManager.jsp
+			</result>
+			<result name="viewMsgAlarm">
+				/WEB-INF/pages/business/MsgAlarm/viewMsgAlarm.jsp
+			</result>
+		</action>
+		<!-- 公告类 -->
+		<action name="bulletinAction" class="com.cattsoft.ny.base.web.BulletinAction">
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<result name="view">/WEB-INF/pages/sm/bulletinmanager/bulletinView.jsp
+			</result>
+			<result name="prepareUpdate">/WEB-INF/pages/sm/bulletinmanager/bulletinUpdate.jsp
+			</result>
+			<result name="prepareEdit">/WEB-INF/pages/sm/bulletinmanager/bulletinEdit.jsp
+			</result>
+			<result name="prepareCreate">/WEB-INF/pages/sm/bulletinmanager/bulletinCreate.jsp
+			</result>
+			<result name="preparePublish">/WEB-INF/pages/sm/bulletinmanager/bulletinPublish.jsp
+			</result>
+			<result name="prepareDept">/WEB-INF/pages/sm/bulletinmanager/bulletinPublishDept.jsp
+			</result>
+			<result name="prepareRole">/WEB-INF/pages/sm/bulletinmanager/bulletinPublishRole.jsp
+			</result>
+			<result name="prepareUser">/WEB-INF/pages/sm/bulletinmanager/bulletinPublishUser.jsp
+			</result>
+			<result name="ownerList">/WEB-INF/pages/sm/bulletinview/bulletinViewList.jsp
+			</result>
+			<result name="ownerAllList">/WEB-INF/pages/sm/bulletinview/bulletinViewAllList.jsp
+			</result>
+			<result name="ownerView">/WEB-INF/pages/sm/bulletinview/bulletinView.jsp
+			</result>
+
+			<result name="loginView">/WEB-INF/pages/sm/bulletinview/loginBulletinView.jsp
+			</result>
+			<result name="prepareView">/WEB-INF/pages/sm/bulletinview/loginbulletinList.jsp
+			</result>
+
+			<result type="json">
+				<param name="root">prb</param>
+			</result>
+			<result type="json" name="create">
+				<param name="root">resultMsg</param>
+			</result>
+		</action>
+		<!-- 采购意向 -->
+		<action name="purchaseIntentionAction"
+			class="com.cattsoft.ny.base.web.PurchaseIntentionActiion">
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<result name="jumpPurchaseIntention">
+				/WEB-INF/pages/business/purchaseIntention/purchaseIntentionManager.jsp
+			</result>
+			<result name="viewPurchaseIntention">
+				/WEB-INF/pages/business/purchaseIntention/viewPurchaseIntention.jsp
+			</result>
+		</action>
+		<!-- 采购意向 -->
+		<action name="bulletinAction" class="com.cattsoft.ny.base.web.BulletinAction">
+			<interceptor-ref name="catt.jsonSimpleStack" />
+			<result name="viewBulletin">
+				/WEB-INF/pages/sm/bulletinmanager/bulletinView.jsp
+			</result>
+		</action>
+	</package>
+</struts>

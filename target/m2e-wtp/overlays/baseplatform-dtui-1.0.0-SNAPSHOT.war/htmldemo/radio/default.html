@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>jQuery UI Button - Default functionality</title>
+	<link rel="stylesheet" href="../../dtui/theme/dtui.css" type="text/css">
+	<script src="../../dtui/js/jquery/jquery.js"></script>
+	<script src="../../dtui/js/jqueryui/jquery-ui.js"></script>
+	<script src="../../dtui/js/dtui.util.js"></script>
+	<script src="../../dtui/js/dtui.radio.js"></script>
+	<script src="../../dtui/js/dtui.button.js"></script>
+	<link rel="stylesheet" href="../demos.css">
+	<script type="text/javascript">
+		$(function() {
+			alert('ready');
+			function radioClick(event, ui){
+				alert($(this).dtradio('value'));
+			}
+			
+			$('#ck1').dtradio({value:'M',checked:false,name:'person.sex',text:'男ccccc',click: radioClick, height: 50, width: 200});
+			$('#ck2').dtradio({value:'F',checked:true,name:'person.sex',text:'女ccccc',click: radioClick});
+			
+			$('#setMChecked').dtbutton().click(function(){
+				//$('#ck1').dtradio('option','checked', true);
+				$('#ck1').dtradio('check', true);
+			});
+			$('#switchFState').dtbutton().click(function(){
+				var state = $('#ck2').dtradio('option','disabled');
+				//$('#ck2').dtradio('option','disabled', !state);
+				$('#ck2').dtradio(state?'enable':'disable');
+			});
+			
+			$('#button1').dtbutton().click(function(){
+				alert(1);
+			});
+			$('#button2').dtbutton().click(function(){
+				$('#button1').dtbutton('option','disabled', true);
+			});
+			
+		});
+	</script>
+</head>
+<body>
+
+
+<div id="ck1" ></div> <br>
+<div id="ck2" ></div>
+
+<br>
+<button id='setMChecked'>将男设置为选中状态</button>
+<button id='switchFState'>切换女单选钮的可用状态</button>
+<a id = 'button1' href="javascript:void(0)">测试按钮</a>
+
+<a id = 'button2' href="javascript:void(0)">禁用测试按钮</a>
+<script type="text/javascript">
+	(function(){
+		alert('body');
+	})();
+</script>
+
+<div class="demo-description">
+	<h3>本实例功能</h3>
+	<ul>
+		<li>调用按钮事件切换单选的选项,单选按钮可用状态,测试按钮,测试按钮的禁用</li>
+	</ul>
+</div>
+
+</body>
+
+</html>

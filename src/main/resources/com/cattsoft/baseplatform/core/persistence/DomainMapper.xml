@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.baseplatform.core.persistence.DomainMapper">
+	<resultMap id="Domain_Map" type="Domain">
+		<id property="domainId" column="serviceId" />
+		<result property="domainId" column="DOMAIN_ID" />
+		<result property="domainName" column="DOMAIN_NAME" />
+		<result property="domainCode" column="DOMAIN_CODE" />
+		<result property="domainType" column="DOMAIN_TYPE" />
+		<result property="maxValue" column="MAX_VALUE" />
+		<result property="minValue" column="MIN_VALUE" />
+		<result property="defValue" column="DEF_VALUE" />
+		<result property="remark" column="REMARK" />
+		<result property="sts" column="STS" />
+		<result property="stsTime" column="STS_TIME" />
+	</resultMap>
+	<!-- 查询在用值域 -->
+	<select id="selectDomain" resultMap="Domain_Map">
+		SELECT DOMAIN_ID,DOMAIN_NAME,DOMAIN_CODE,DOMAIN_TYPE,MAX_VALUE,MIN_VALUE,DEF_VALUE, REMARK ,STS,STS_TIME
+		FROM DOMAIN WHERE STS = 'A'
+	</select>
+	<!-- 新增值域 -->
+	<insert id="insertDomain" parameterType="Domain">
+		<selectKey keyProperty="domainId" resultType="long" order="BEFORE">
+			SELECT SEQ_DOMAIN_ID.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO DOMAIN
+		  (DOMAIN_ID,
+		   DOMAIN_NAME,
+		   DOMAIN_CODE,
+		   DOMAIN_TYPE,
+		   MAX_VALUE,
+		   MIN_VALUE,
+		   DEF_VALUE,
+		   REMARK,
+		   STS,
+		   STS_TIME)
+		VALUES
+		  (#{domainId, jdbcType=NUMERIC},
+		   #{domainName, jdbcType=VARCHAR},
+		   #{domainCode, jdbcType=VARCHAR},
+		   #{domainType, jdbcType=VARCHAR},
+		   #{maxValue, jdbcType=VARCHAR},
+		   #{minValue, jdbcType=VARCHAR},
+		   #{defValue, jdbcType=VARCHAR},
+		   #{remark, jdbcType=VARCHAR},
+		   #{sts, jdbcType=VARCHAR},
+		   #{stsTime, jdbcType=TIMESTAMP})
+	</insert>
+	<!-- 更新值域 -->
+	<update id="updateDomain" parameterType="Domain">
+		UPDATE DOMAIN
+		<set>
+			<if test="domainName != null">DOMAIN_NAME = #{domainName},</if>
+			<if test="domainCode != null">DOMAIN_CODE = #{domainCode},</if>
+			<if test="domainType != null">DOMAIN_TYPE = #{domainType},</if>
+			<if test="maxValue != null">MAX_VALUE = #{maxValue},</if>
+			<if test="minValue != null">MIN_VALUE = #{minValue},</if>
+			<if test="defValue != null">DEF_VALUE = #{defValue},</if>
+			<if test="remark != null">REMARK = #{remark},</if>
+			<if test="sts != null">STS = #{sts},</if>
+			STS_TIME = NOW()
+		</set>
+		WHERE DOMAIN_ID = #{domainId}
+	</update>
+	
+	<!-- 查询值域的值域取值 -->
+	<select id="selectDomainValue" parameterType="long" resultType="DomainValue">
+		SELECT DOMAIN_ID     domainId,
+		       VALUE_CODE    valueCode,
+		       VALUE_NAME    valueName,
+		       ENABLED_FLAG  enabledFlag,
+		       DISPLAY_ORDER displayOrder,
+		       STS           sts,
+		       STS_TIME      stsTime
+		  FROM DOMAIN_VALUE
+		 WHERE STS = 'A'
+		   AND DOMAIN_ID = #{domainId}
+		 ORDER BY DISPLAY_ORDER, VALUE_NAME ASC
+	</select>
+	<!-- 新增值域 -->
+	<insert id="insertDomainValue" parameterType="DomainValue">
+		INSERT INTO DOMAIN_VALUE
+		  (DOMAIN_ID,
+		   VALUE_CODE,
+		   VALUE_NAME,
+		   ENABLED_FLAG,
+		   DISPLAY_ORDER,
+		   STS,
+		   STS_TIME)
+		VALUES
+		  (#{domainId, jdbcType=NUMERIC},
+		   #{valueCode, jdbcType=VARCHAR},
+		   #{valueName, jdbcType=VARCHAR},
+		   #{enabledFlag, jdbcType=VARCHAR},
+		   #{displayOrder, jdbcType=NUMERIC},
+		   #{sts, jdbcType=VARCHAR},
+		   #{stsTime, jdbcType=TIMESTAMP})
+	</insert>
+	<!-- 更新值域 -->
+	<update id="updateDomainValue" parameterType="DomainValue">
+		UPDATE DOMAIN_VALUE
+		<set>
+			<if test="valueName != null">VALUE_NAME = #{valueName},</if>
+			<if test="enabledFlag != null">ENABLED_FLAG = #{enabledFlag},</if>
+			<if test="displayOrder != null">DISPLAY_ORDER = #{displayOrder},</if>
+			<if test="sts != null">STS = #{sts},</if>
+			STS_TIME = NOW()
+		</set>
+		WHERE DOMAIN_ID = #{domainId} AND VALUE_CODE = #{valueCode}
+	</update>
+</mapper>

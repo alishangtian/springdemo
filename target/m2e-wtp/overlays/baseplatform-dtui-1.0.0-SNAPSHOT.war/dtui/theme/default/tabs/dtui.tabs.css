@@ -1,0 +1,31 @@
+.dtui-tabs-iframe{
+	background-color:transparent;
+}
+.dtui-tabs-tablist-container{
+	overflow: hidden;
+	position: relative;
+	height: 2.6em;
+}
+.dtui-tabs-scroll .dtui-tabs-tablist-container{
+	margin: 0 2.6em 0 2em;
+}
+.ui-tabs-nav{
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+.dtui-tab-header-left, .dtui-tab-header-right{
+	display: none;
+	margin: 0.2em 0.1em;
+	height: 2em;
+	width: 2em;
+}
+.dtui-tabs-scroll .dtui-tab-header-left, .dtui-tabs-scroll .dtui-tab-header-right{
+	display: block;
+}
+.dtui-tab-header-left{
+	float: left;
+}
+.dtui-tab-header-right{
+	float: right;
+}

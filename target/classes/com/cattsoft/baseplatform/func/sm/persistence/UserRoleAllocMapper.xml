@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.cattsoft.baseplatform.func.sm.persistence.UserRoleAllocMapper">
+	<insert id="insert" parameterType="UserRoleAlloc" useGeneratedKeys="true" keyProperty="userRoleAllocId">
+		INSERT INTO USER_ROLE_ALLOC(USER_ID, ROLE_ID, DESIGNATE, STS, STS_TIME, CREATE_TIME)
+		VALUES(#{userId}, #{roleId}, #{designate}, #{sts}, #{stsTime}, #{createTime})
+	</insert>
+	<!-- 收回用户角色授权信息 -->
+	<update id="retake" parameterType="UserRoleAuthQuery">
+		UPDATE USER_ROLE_ALLOC
+		   SET STS = 'P', STS_TIME = NOW()
+		 WHERE STS = 'A'
+		   AND USER_ID = #{userId}
+		   AND ROLE_ID = #{roleId}
+	</update>
+	<!-- 角色注销时，将角色相关的用户授权信息注销 -->
+	<update id="destroyRole" parameterType="long">
+		UPDATE USER_ROLE_ALLOC
+		   SET STS = 'P', STS_TIME = NOW()
+		 WHERE STS = 'A'
+		   AND ROLE_ID = #{roleId}
+	</update>
+	<!-- 用户注销时，将用户相关的角色授权信息注销 -->
+	<update id="destroyUser" parameterType="long">
+		UPDATE USER_ROLE_ALLOC
+		   SET STS = 'P', STS_TIME = NOW()
+		 WHERE STS = 'A'
+		   AND USER_ID = #{userId}
+	</update>
+	<!-- 查询用户已授权的角色列表 -->
+	<select id="selectAllocRoles" parameterType="long" resultType="UserRoleAlloc">
+		SELECT DISTINCT A.ROLE_ID roleId, A.DESIGNATE designate
+		  FROM USER_ROLE_ALLOC A, IDEA_ROLE B
+		 WHERE A.ROLE_ID = B.ROLE_ID
+		   AND B.STS = 'A'
+		   AND A.STS = 'A'
+		   AND A.USER_ID = #{userId}
+	</select>
+	<!-- 查询用户的所有可委派的角色 -->
+	<select id="selectDesignateRoles" parameterType="long" resultType="SysRole">
+		SELECT A.ROLE_ID     roleId,
+		       A.ROLE_NAME   roleName,
+		       A.ROLE_DESC   roleDesc,
+		       A.STS         sts,
+		       A.STS_TIME    stsTime,
+		       A.CREATE_TIME createTime
+		  FROM IDEA_ROLE A, USER_ROLE_ALLOC B
+		 WHERE A.ROLE_ID = B.ROLE_ID
+		   AND B.DESIGNATE = 'Y'
+		   AND A.STS = 'A'
+		   AND B.STS = 'A'
+		   AND B.USER_ID = #{userId}
+	</select>
+	<!-- 指定用户的指定角色的授权信息 -->
+	<select id="selectUserRoleAlloc" parameterType="UserRoleAlloc" resultType="UserRoleAlloc">
+		SELECT A.USER_ROLE_ALLOC_ID userRoleAllocId,
+		       A.USER_ID            userId,
+		       A.ROLE_ID            roleId,
+		       A.DESIGNATE          designate,
+		       A.STS                sts,
+		       A.STS_TIME           stsTime,
+		       A.CREATE_TIME        createTime
+		  FROM USER_ROLE_ALLOC A
+		 WHERE A.ROLE_ID = #{roleId}
+		   AND A.USER_ID = #{userId}
+		   AND A.STS = 'A' limit 0,1
+	</select>
+</mapper>

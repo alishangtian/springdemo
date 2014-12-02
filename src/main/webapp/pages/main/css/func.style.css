@@ -1,0 +1,124 @@
+/* 页面颜色 */
+.wrap{
+	background-color: #F3F6F7;
+}
+/*头*/
+.wrap .head{
+	background-color:#FFFFFF;
+	font:12px "宋体";
+}
+.wrap .top span{
+	color:#CB0010;
+}
+/*页签*/
+.tabs li a{
+}
+.tabs li a.selected {
+	color: #000000;
+	background:url(../image/tab1.jpg) no-repeat;
+}
+/*页签内容*/
+.tabContent .topNav{
+}
+.arrow-icon{
+	background-image: url(../image/icon/arrow.png);
+}
+.down-icon{
+	background-position: -67px 0px;
+}
+.left-icon{
+	background-position: -47px 0px;
+}
+.right-icon{
+	background-position: -24px 0px;
+	background-repeat: no-repeat;
+}
+.tabContent .upIcon{
+	background-position: 0px 0px;
+}
+/*功能菜单*/
+/*.listContent{
+	background:url(../image/left-bg.jpg) no-repeat;
+	border-right:1px #CB0010 solid;
+	border-top:1px #CB0010 solid;
+	border-left:1px #CB0010 solid;
+}
+.listContent .h{
+	font-size:12px;
+	font-weight:bold;
+}*/
+
+.listContent{
+	background:url(../image/left-bg.png) repeat-y;
+	border-right:1px #CB0010 solid;
+	border-top:1px #CB0010 solid;
+	border-left:1px #CB0010 solid;
+}
+.listContent .h{
+	font-size:12px;
+	font-weight:bold;
+	background:url(../image/h_bg.png) no-repeat;
+}
+.listContent .foot{
+	height:19px;
+	background:url(../image/b_bg.png) no-repeat;
+}
+/*功能列表*/
+.block1{
+	background:url(../image/m_bg.png) repeat-y;
+}
+.block1 a {
+	color:#333333;
+	font-size:12px;
+}
+.block2 a:hover{
+	text-decoration: underline;
+}
+/*快捷方式*/
+.block2{
+	background:url(../image/m_bg.png) repeat-y;
+}
+.block2 a {
+	color:#333333;
+	font-size:12px;
+}
+.block2 a:hover{
+	text-decoration: underline;
+}
+/*右侧页签*/
+.rightTop a {
+	color:#333333;
+}
+.rightTop a.selected{
+	color:#CC000F;
+}
+.rightContent{
+	background:#FFFFFF;
+}
+.line a{
+	color:#000000;
+}
+/*右侧按钮*/
+.rbox .btn{
+	background:url(../image/btn.png) no-repeat;
+	color:#FFFFFF;
+}
+.box .boxHead{
+	background:url(../image/b-bg.png) repeat-x;
+}
+.box .bhTitle{
+	background:url(../image/icon/boxIcon.png) no-repeat 10px 10px;
+}
+.box .btl{
+	background:url(../image/icon/btl.png);
+}
+.box .btr{
+	background:url(../image/icon/btr.png);
+}
+.boxContent{
+	color:#4FA7FF;
+}
+.boxContent a{
+	font-size:12px;
+	color:#868686;
+}

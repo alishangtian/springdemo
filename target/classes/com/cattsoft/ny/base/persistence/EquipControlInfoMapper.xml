@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattsoft.ny.base.persistence.EquipControlInfoMapper">
+
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="com.cattsoft.ny.base.entity.EquipControlInfo"
+		useGeneratedKeys="true" keyProperty="id">
+		<![CDATA[
+			INSERT INTO EQUIP_PORT_INFO
+		]]>
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="type != null">
+				TYPE,
+			</if>
+			<if test="name != null">
+				NAME,
+			</if>
+			<if test="port != null">
+				PORT,
+			</if>
+			<if test="equipId != null">
+				EQUIP_INFO_ID
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="port != null">
+				#{port},
+			</if>
+			<if test="equipId != null">
+				#{equipId},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="long">
+		<![CDATA[
+			DELETE FROM EQUIP_PORT_INFO
+				WHERE ID = #{id}
+		]]>
+	</delete>
+
+	<!-- 更新记录 -->
+	<update id="update" parameterType="com.cattsoft.ny.base.entity.EquipControlInfo">
+	    <![CDATA[
+			UPDATE EQUIP_PORT_INFO
+	    ]]>
+		<set>
+			<if test="type != null">
+    	<![CDATA[ TYPE = #{type}, ]]>
+			</if>
+			<if test="name != null">
+    	<![CDATA[ NAME = #{name}, ]]>
+			</if>
+			<if test="port != null">
+    	<![CDATA[ PORT = #{port}, ]]>
+			</if>
+			<if test="equipId != null">
+    	<![CDATA[ EQUIP_INFO_ID = #{equipId}, ]]>
+			</if>
+		</set>
+	    <![CDATA[
+	        WHERE ID = #{id}
+	    ]]>
+	</update>
+
+	<!-- 根据主键查询记录 -->
+	<select id="findOne" parameterType="long" resultMap="resultList">
+		<include refid="sqlSelectAll" />
+		<![CDATA[
+			WHERE ID = #{id}
+		]]>
+	</select>
+
+	<!-- 条件查询所有记录 -->
+	<select id="find"
+		parameterType="com.cattsoft.ny.base.entity.querybean.EquipControlInfoQB"
+		resultMap="resultList">
+		<include refid="sqlSelectAll" />
+		<include refid="whereListSql" />
+	</select>
+
+	<!-- 分页条件查询所有记录 -->
+	<select id="selectPage" parameterType="PagingQueryBean"
+		resultMap="resultList">
+		<include refid="sqlSelectAll" />
+		<include refid="wherePageSql" />
+		<include refid="pagingFooter" />
+	</select>
+	<!-- 查询记录总数 -->
+	<select id="selectCount" parameterType="PagingQueryBean"
+		resultType="int">
+		<include refid="countingHeader" />
+		<include refid="wherePageSql" />
+	</select>
+	<!-- 结果集 -->
+	<resultMap id="resultList" type="com.cattsoft.ny.base.entity.EquipControlInfo">
+		<result property="id" column="ID" />
+		<result property="type" column="TYPE" />
+		<result property="name" column="NAME" />
+		<result property="port" column="PORT" />
+		<result property="equipId" column="EQUIP_INFO_ID" />
+	</resultMap>
+	<!-- 分页条件语句 -->
+	<sql id="wherePageSql">
+		<where>
+			<if test="queryBean.type != null">
+		<![CDATA[ TYPE = #{queryBean.type} ]]>
+			</if>
+			<if test="queryBean.name != null">
+		<![CDATA[ AND NAME = #{queryBean.name} ]]>
+			</if>
+			<if test="queryBean.port != null">
+		<![CDATA[ AND PORT = #{queryBean.port} ]]>
+			</if>
+			<if test="queryBean.equipId != null">
+		<![CDATA[ AND EQUIP_INFO_ID = #{queryBean.equipId} ]]>
+			</if>
+		</where>
+	</sql>
+	<!-- 列表条件语句 -->
+	<sql id="whereListSql">
+		<where>
+			<if test="id != null">
+			<![CDATA[ ID = #{id} ]]>
+			</if>
+			<if test="type != null">
+			<![CDATA[ AND TYPE = #{type} ]]>
+			</if>
+			<if test="name != null">
+			<![CDATA[ AND NAME = #{name} ]]>
+			</if>
+			<if test="port != null">
+			<![CDATA[ AND PORT = #{port} ]]>
+			</if>
+			<if test="equipId != null">
+			<![CDATA[ AND EQUIP_INFO_ID = #{equipId} ]]>
+			</if>
+		</where>
+	</sql>
+
+	<sql id="sqlSelectAll">
+		SELECT
+		<include refid="sqlColumn" />
+		FROM EQUIP_PORT_INFO
+	</sql>
+
+	<sql id="sqlColumn">
+		ID,TYPE,NAME,PORT,EQUIP_INFO_ID
+	</sql>
+
+	<sql id="pagingFooter"> limit ${pagingInfo.startIdx-1},#{pagingInfo.pageRows}
+	</sql>
+	<sql id="countingHeader">SELECT COUNT(*) FROM EQUIP_PORT_INFO</sql>
+</mapper>
